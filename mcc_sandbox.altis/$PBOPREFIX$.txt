@@ -1,0 +1,6 @@
+mcc_sandbox.altis
+======<HEADER>=======
+prefix=mcc_sandbox.altis
+Pbo Type is: Arma Mission Addon
+Sha: 'DE6ACAF80D40FCC6428F97688C052AEDC7B4AB64'
+======</HEADER>============
