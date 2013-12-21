@@ -36,7 +36,7 @@ _group = group _unit;
 _waypointNo = currentWaypoint _group;
 _group setVariable ["GarrisonWPNo",_waypointNo];
 _group setVariable ["Garrisoning",true];
-_group setvariable ["defending",_stationary];
+_group setVariable ["defending",_stationary];
 _groupUnits = units _group;
 
 nul = [_group,_groupUnits] execVM "Garrison_fncs\leaving_check.sqf"; // leaving check;
@@ -49,8 +49,8 @@ nul = [_group,_groupUnits] execVM "Garrison_fncs\leaving_check.sqf"; // leaving 
 }foreach _groupUnits;
 _side = side _unit;
 
-missionnamespace setvariable [format ["group1%1",name _unit],createGroup _side];
-_patrolgroup = missionnamespace getvariable (format ["group1%1",name _unit]);
+missionNameSpace setVariable [format ["group1%1",name _unit],createGroup _side];
+_patrolgroup = missionNameSpace getVariable (format ["group1%1",name _unit]);
 
 _objectslist = nearestObjects [_unit,["House"],_radius];
 _buildingslist = [];

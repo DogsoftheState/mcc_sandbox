@@ -159,12 +159,8 @@ _groups				= _this select 3;
 							_wp setWaypointSpeed (_wpArray select 3);
 							_wp setWaypointBehaviour (_wpArray select 4);
 							//_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
-							_wp setWaypointStatements ["true", "[this,200,true,[60,4],false,true] execVM 'Garrison_script.sqf';"];
+							_wp setWaypointStatements ["true", "nul = [this,200,true,[60,4],false,true] execVM 'Garrison_script.sqf';"];
 							_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-							
-							_wp2 = _wpObject addWaypoint [_wpLoc, 0];
-							_wp2 setWaypointType "GUARD";
-							_wp synchronizeWaypoint [_wp2];
 						};
 						
 					default
