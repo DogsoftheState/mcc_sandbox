@@ -42,7 +42,7 @@ class Mission
 	};
 	class Groups
 	{
-		items=7;
+		items=9;
 		class Item0
 		{
 			side="WEST";
@@ -64,250 +64,6 @@ class Mission
 		};
 		class Item1
 		{
-			side="EAST";
-			class Vehicles
-			{
-				items=1;
-				class Item0
-				{
-					position[]={47.716038,0.31204507,52.464844};
-					azimut=180;
-					id=1;
-					side="EAST";
-					vehicle="O_Soldier_F";
-					leader=1;
-					skill=0.60000002;
-					text="F2_Precompile_East";
-					init="f_fnc_assignGear = compile preprocessFileLineNumbers ""f\common\folk_assignGear.sqf""; nul = [""r"",this] call f_fnc_assignGear; this setskill 0; this allowdamage false;";
-				};
-			};
-		};
-		class Item2
-		{
-			side="GUER";
-			class Vehicles
-			{
-				items=1;
-				class Item0
-				{
-					position[]={14688.84,17.858521,16399.77};
-					id=2;
-					side="GUER";
-					vehicle="I_officer_F";
-					player="PLAYER COMMANDER";
-					leader=1;
-					rank="LIEUTENANT";
-					skill=0.60000002;
-					description="Green Big Boss";
-				};	
-			};
-		};
-		class Item3
-		{
-			side="GUER";
-			class Vehicles
-			{
-				items=9;
-				class Item0
-				{
-					position[]={14688.84,17.858521,16399.77};
-					id=3;
-					side="GUER";
-					vehicle="I_Soldier_SL_F";
-					player="PLAYER COMMANDER";
-					leader=1;
-					rank="LIEUTENANT";
-					skill=0.60000002;
-					description="Green Alpha Squad Leader";
-				};
-				class Item1
-				{
-					position[]={14689.995,17.857635,16399.277};
-					id=4;
-					side="GUER";
-					vehicle="I_medic_F";
-					player="PLAY CDG";
-					rank="SERGEANT";
-					skill=0.60000002;
-					description="Green Alpha Medic";
-				};
-				class Item2
-				{
-					position[]={14694.454,17.860001,16392.258};
-					id=5;
-					side="GUER";
-					vehicle="I_Soldier_repair_F";
-					player="PLAY CDG";
-					rank="SERGEANT";
-					skill=0.60000002;
-					description="Green Alpha Engineer";
-				};
-				class Item3
-				{
-					position[]={14702.016,17.864851,16383.86};
-					id=6;
-					side="GUER";
-					vehicle="I_Sniper_F";
-					player="PLAY CDG";
-					skill=0.60000002;
-					description="Green Alpha Sniper";
-				};
-				class Item4
-				{
-					position[]={14702.016,17.864851,16383.86};
-					id=7;
-					side="GUER";
-					vehicle="I_Spotter_F";
-					player="PLAY CDG";
-					skill=0.60000002;
-					description="Green Alpha Spotter";
-				};
-				class Item5
-				{
-					position[]={14687.455,17.860001,16395.102};
-					id=8;
-					side="GUER";
-					vehicle="I_Soldier_AR_F";
-					player="PLAY CDG";
-					skill=0.60000002;
-					description="Green Alpha Automatic Rifleman";
-				};
-				class Item6
-				{
-					position[]={14687.455,17.860001,16395.102};
-					id=9;
-					side="GUER";
-					vehicle="I_Soldier_F";
-					player="PLAY CDG";
-					skill=0.60000002;
-					description="Green Alpha Rifleman";
-				};
-				class Item7
-				{
-					position[]={14687.455,17.860001,16395.102};
-					id=10;
-					side="GUER";
-					vehicle="I_Soldier_F";
-					player="PLAY CDG";
-					skill=0.60000002;
-					description="Green Alpha Rifleman";
-				};
-				class Item8
-				{
-					position[]={14687.455,17.860001,16395.102};
-					id=11;
-					side="GUER";
-					vehicle="I_Soldier_UAV_F";
-					player="PLAY CDG";
-					skill=0.60000002;
-					description="Green Alpha UAV Operator";
-				};
-			};
-		};
-		class Item4
-		{
-			side="GUER";
-			class Vehicles
-			{
-				items=9;
-				class Item0
-				{
-					position[]={14688.84,17.858521,16399.77};
-					id=12;
-					side="GUER";
-					vehicle="I_Soldier_SL_F";
-					player="PLAY CDG";
-					leader=1;
-					rank="LIEUTENANT";
-					skill=0.60000002;
-					description="Green Bravo Squad Leader";
-				};
-				class Item1
-				{
-					position[]={14689.995,17.857635,16399.277};
-					id=13;
-					side="GUER";
-					vehicle="I_medic_F";
-					player="PLAY CDG";
-					rank="SERGEANT";
-					skill=0.60000002;
-					description="Green Bravo Medic";
-				};
-				class Item2
-				{
-					position[]={14694.454,17.860001,16392.258};
-					id=14;
-					side="GUER";
-					vehicle="I_Soldier_repair_F";
-					player="PLAY CDG";
-					rank="SERGEANT";
-					skill=0.60000002;
-					description="Green Bravo Engineer";
-				};
-				class Item3
-				{
-					position[]={14702.016,17.864851,16383.86};
-					id=15;
-					side="GUER";
-					vehicle="I_Sniper_F";
-					player="PLAY CDG";
-					skill=0.60000002;
-					description="Green Bravo Sniper";
-				};
-				class Item4
-				{
-					position[]={14702.016,17.864851,16383.86};
-					id=16;
-					side="GUER";
-					vehicle="I_Spotter_F";
-					player="PLAY CDG";
-					skill=0.60000002;
-					description="Green Bravo Spotter";
-				};
-				class Item5
-				{
-					position[]={14687.455,17.860001,16395.102};
-					id=17;
-					side="GUER";
-					vehicle="I_Soldier_AR_F";
-					player="PLAY CDG";
-					skill=0.60000002;
-					description="Green Bravo Automatic Rifleman";
-				};
-				class Item6
-				{
-					position[]={14687.455,17.860001,16395.102};
-					id=18;
-					side="GUER";
-					vehicle="I_Soldier_F";
-					player="PLAY CDG";
-					skill=0.60000002;
-					description="Green Bravo Rifleman";
-				};
-				class Item7
-				{
-					position[]={14687.455,17.860001,16395.102};
-					id=19;
-					side="GUER";
-					vehicle="I_Soldier_F";
-					player="PLAY CDG";
-					skill=0.60000002;
-					description="Green Bravo Rifleman";
-				};
-				class Item8
-				{
-					position[]={14687.455,17.860001,16395.102};
-					id=20;
-					side="GUER";
-					vehicle="I_Soldier_UAV_F";
-					player="PLAY CDG";
-					skill=0.60000002;
-					description="Green Bravo UAV Operator";
-				};
-			};
-		};
-		class Item5
-		{
 			side="WEST";
 			class Vehicles
 			{
@@ -315,7 +71,7 @@ class Mission
 				class Item0
 				{
 					position[]={14724.463,17.83,16311.764};
-					id=21;
+					id=1;
 					side="WEST";
 					vehicle="B_recon_TL_F";
 					player="PLAYER COMMANDER";
@@ -327,7 +83,7 @@ class Mission
 				class Item1
 				{
 					position[]={14725.12,17.83,16309.35};
-					id=22;
+					id=2;
 					side="WEST";
 					vehicle="B_recon_F";
 					player="PLAY CDG";
@@ -338,7 +94,7 @@ class Mission
 				class Item2
 				{
 					position[]={14726.689,17.83,16309.451};
-					id=23;
+					id=3;
 					side="WEST";
 					vehicle="B_recon_M_F";
 					player="PLAY CDG";
@@ -349,7 +105,7 @@ class Mission
 				class Item3
 				{
 					position[]={14728.278,17.83,16309.416};
-					id=24;
+					id=4;
 					side="WEST";
 					vehicle="B_recon_JTAC_F";
 					player="PLAY CDG";
@@ -360,7 +116,7 @@ class Mission
 				class Item4
 				{
 					position[]={14729.763,17.83,16309.467};
-					id=25;
+					id=5;
 					side="WEST";
 					vehicle="B_recon_exp_F";
 					player="PLAY CDG";
@@ -371,7 +127,7 @@ class Mission
 				class Item5
 				{
 					position[]={14731.231,17.83,16309.533};
-					id=26;
+					id=6;
 					side="WEST";
 					vehicle="B_recon_medic_F";
 					player="PLAY CDG";
@@ -381,7 +137,27 @@ class Mission
 				};
 			};
 		};
-		class Item6
+		class Item2
+		{
+			side="EAST";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={47.716038,0.31204507,52.464844};
+					azimut=180;
+					id=7;
+					side="EAST";
+					vehicle="O_Soldier_F";
+					leader=1;
+					skill=0.60000002;
+					text="F2_Precompile_East";
+					init="f_fnc_assignGear = compile preprocessFileLineNumbers ""f\common\folk_assignGear.sqf""; nul = [""r"",this] call f_fnc_assignGear; this setskill 0; this allowdamage false;";
+				};
+			};
+		};
+		class Item3
 		{
 			side="EAST";
 			class Vehicles
@@ -390,7 +166,7 @@ class Mission
 				class Item0
 				{
 					position[]={14721.215,17.82077,16238.206};
-					id=27;
+					id=8;
 					side="EAST";
 					vehicle="O_recon_TL_F";
 					player="PLAY CDG";
@@ -402,18 +178,18 @@ class Mission
 				class Item1
 				{
 					position[]={14721.892,17.82081,16235.784};
-					id=28;
+					id=9;
 					side="EAST";
 					vehicle="O_recon_JTAC_F";
 					player="PLAY CDG";
 					rank="CORPORAL";
 					skill=0.60000002;
-					description="Iran Special Forces Team 1 Automatic Riffleman";
+					description="Iran Special Forces Team 1 Automatic Rifleman";
 				};
 				class Item2
 				{
 					position[]={14723.517,17.825424,16235.827};
-					id=29;
+					id=10;
 					side="EAST";
 					vehicle="O_recon_M_F";
 					player="PLAY CDG";
@@ -424,7 +200,7 @@ class Mission
 				class Item3
 				{
 					position[]={14725.1,17.829987,16235.87};
-					id=30;
+					id=11;
 					side="EAST";
 					vehicle="O_recon_F";
 					player="PLAY CDG";
@@ -435,7 +211,7 @@ class Mission
 				class Item4
 				{
 					position[]={14726.683,17.831934,16235.909};
-					id=31;
+					id=12;
 					side="EAST";
 					vehicle="O_recon_exp_F";
 					player="PLAY CDG";
@@ -446,13 +222,273 @@ class Mission
 				class Item5
 				{
 					position[]={14728.142,17.833712,16235.952};
-					id=32;
+					id=13;
 					side="EAST";
 					vehicle="O_recon_medic_F";
 					player="PLAY CDG";
 					rank="CORPORAL";
 					skill=0.60000002;
 					description="Iran Special Forces Team 1 Medic";
+				};
+			};
+		};
+		class Item4
+		{
+			side="GUER";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14688.84,17.858521,16399.77};
+					id=14;
+					side="GUER";
+					vehicle="I_officer_F";
+					player="PLAYER COMMANDER";
+					leader=1;
+					rank="LIEUTENANT";
+					skill=0.60000002;
+					description="Green Big Boss";
+				};	
+			};
+		};
+		class Item5
+		{
+			side="GUER";
+			class Vehicles
+			{
+				items=8;
+				class Item0
+				{
+					position[]={14688.84,17.858521,16399.77};
+					id=15;
+					side="GUER";
+					vehicle="I_Soldier_SL_F";
+					player="PLAYER COMMANDER";
+					leader=1;
+					rank="LIEUTENANT";
+					skill=0.60000002;
+					description="Green Alpha Squad Leader";
+				};
+				class Item1
+				{
+					position[]={14689.995,17.857635,16399.277};
+					id=16;
+					side="GUER";
+					vehicle="I_medic_F";
+					player="PLAY CDG";
+					rank="SERGEANT";
+					skill=0.60000002;
+					description="Green Alpha Medic";
+				};
+				class Item2
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=17;
+					side="GUER";
+					vehicle="I_Soldier_repair_F";
+					player="PLAY CDG";
+					rank="SERGEANT";
+					skill=0.60000002;
+					description="Green Alpha Engineer";
+				};
+				class Item3
+				{
+					position[]={14702.016,17.864851,16383.86};
+					id=18;
+					side="GUER";
+					vehicle="I_Soldier_M_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Alpha Marksman";
+				};
+				class Item4
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=20;
+					side="GUER";
+					vehicle="I_Soldier_AR_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Alpha Automatic Rifleman";
+				};
+				class Item5
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=21;
+					side="GUER";
+					vehicle="I_Soldier_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Alpha Rifleman";
+				};
+				class Item6
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=22;
+					side="GUER";
+					vehicle="I_Soldier_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Alpha Rifleman";
+				};
+				class Item7
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=23;
+					side="GUER";
+					vehicle="I_Soldier_UAV_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Alpha UAV Operator";
+				};
+			};
+		};
+		class Item6
+		{
+			side="GUER";
+			class Vehicles
+			{
+				items=8;
+				class Item0
+				{
+					position[]={14688.84,17.858521,16399.77};
+					id=24;
+					side="GUER";
+					vehicle="I_Soldier_SL_F";
+					player="PLAY CDG";
+					leader=1;
+					rank="LIEUTENANT";
+					skill=0.60000002;
+					description="Green Bravo Squad Leader";
+				};
+				class Item1
+				{
+					position[]={14689.995,17.857635,16399.277};
+					id=25;
+					side="GUER";
+					vehicle="I_medic_F";
+					player="PLAY CDG";
+					rank="SERGEANT";
+					skill=0.60000002;
+					description="Green Bravo Medic";
+				};
+				class Item2
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=26;
+					side="GUER";
+					vehicle="I_Soldier_repair_F";
+					player="PLAY CDG";
+					rank="SERGEANT";
+					skill=0.60000002;
+					description="Green Bravo Engineer";
+				};
+				class Item3
+				{
+					position[]={14702.016,17.864851,16383.86};
+					id=27;
+					side="GUER";
+					vehicle="I_Soldier_M_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Bravo Marksman";
+				};
+				class Item5
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=29;
+					side="GUER";
+					vehicle="I_Soldier_AR_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Bravo Automatic Rifleman";
+				};
+				class Item6
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=30;
+					side="GUER";
+					vehicle="I_Soldier_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Bravo Rifleman";
+				};
+				class Item7
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=31;
+					side="GUER";
+					vehicle="I_Soldier_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Bravo Rifleman";
+				};
+				class Item8
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=32;
+					side="GUER";
+					vehicle="I_Soldier_UAV_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Bravo UAV Operator";
+				};
+			};
+		};
+		class Item7
+		{
+			side="GUER";
+			class Vehicles
+			{
+				items=2;
+				class Item0
+				{
+					position[]={14702.016,17.864851,16383.86};
+					id=33;
+					side="GUER";
+					vehicle="I_Sniper_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Charlie Sniper";
+				};
+				class Item1
+				{
+					position[]={14702.016,17.864851,16383.86};
+					id=34;
+					side="GUER";
+					vehicle="I_Spotter_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Charlie Spotter";
+				};
+			};
+		};
+		class Item8
+		{
+			side="GUER";
+			class Vehicles
+			{
+				items=2;
+				class Item0
+				{
+					position[]={14702.016,17.864851,16383.86};
+					id=35;
+					side="GUER";
+					vehicle="I_Sniper_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Delta Sniper";
+				};
+				class Item1
+				{
+					position[]={14702.016,17.864851,16383.86};
+					id=36;
+					side="GUER";
+					vehicle="I_Spotter_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Green Delta Spotter";
 				};
 			};
 		};

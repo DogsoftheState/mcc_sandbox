@@ -7,7 +7,7 @@ http://www.blacktemplars.altervista.org/
 */
 
 ////////////////// EDITABLE \\\\\\\\\\\\\\\\\\\\\\\\\\
-BTC_r_new_system    = 1; //WIP - set 1 to activate it
+BTC_r_new_system    = 0; //WIP - set 1 to activate it
 BTC_r_wait_for_revive = 1;//If BTC_r_new_system set to 1 you can choose if you want or not a revive time available after death (Similar to wounding system in ACE)
 BTC_r_action        = 0;//[NOT IMPLEMENTED] - 0 if you don't want the healing animation (ACE style), 1 if you want the animations (You can't stop the animation)
 BTC_r_med_fa        = 1;//0 for only first aid kit, 1 if you don't have a medikit you need a first aid kit, 2 only medikit

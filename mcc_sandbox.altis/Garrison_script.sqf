@@ -294,12 +294,14 @@ if ((count _objectslist) >= 1) then
 
 								_unit = _this select 0;
 
-								while {sleep 2;alive _unit} do 
+								while {alive _unit} do 
 								{	
 									_indoors = [_unit] call fnc_indoors;
 									_uh = (getposATL _unit) select 2;
 
 									if ((_indoors) or (_uh < 2)) exitwith {_unit setunitpos "AUTO";};
+									
+									sleep 2;
 								};
 
 							}; 
@@ -455,12 +457,14 @@ if ((count _objectslist) >= 1) then
 
 										_unit = _this select 0;
 										
-										while {sleep 3;alive _unit} do {
+										while {alive _unit} do {
 							
 											_indoors = [_unit] call fnc_indoors;
 											_uh = (getposATL _unit) select 2;
 
 											if ((_indoors) or (_uh < 2)) exitwith {_unit setunitpos "AUTO";};
+											
+											sleep 3;
 										};
 									};
 								};
@@ -573,7 +577,7 @@ if ((count units _patrolgroup) > 0) then
 	_t = time;
 	_gnumber = 2;
 
-	while {sleep 1;true} do 
+	while {true} do 
 	{
 		waituntil {((count units _patrolgroup) > 4) or ((time - _t) > 120)};
 	
@@ -597,5 +601,7 @@ if ((count units _patrolgroup) > 0) then
 	
 			nul = [leader _newgroup,_patrolCenter,_patrolRadius,true] spawn fnc_Patrol;
 		};
+		
+		sleep 1;
 	};
 };
