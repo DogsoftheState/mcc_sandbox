@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='UTF-8'?>
-<!-- This document was created with Syntext Serna Free. -->
+
 <Project ID="Arma2">
   <Package ID="Missions">
     <Container ID="">
@@ -661,3 +661,56 @@
 		</Key>
 	</Package>
 </Project>
+
+<Key ID="STR_TAA_TAG_ENABLE">
+        <English>Enable or disable tag name</English>
+        <French>Activer ou désactiver tag name</French>
+</Key>
+<Key ID="STR_TAA_TAG_DISTANCE">
+        <English>Change distance value in meters.( current : %1)</English>
+        <French>Changer la distance d'affichage en métres.( actuelle :%1)</French>
+</Key>
+<Key ID="STR_TAA_TAG_DISTANCE_TXT">
+        <English>Distance :</English>
+        <French>Distance :</French>
+</Key>
+<Key ID="STR_TAA_TAG_COLOR_TXT">
+        <English>Color :</English>
+        <French>Couleur :</French>
+</Key>
+<Key ID="STR_TAA_TAG_RED">
+        <English>Red</English>
+        <French>Rouge</French>
+</Key>
+<Key ID="STR_TAA_TAG_BLUE">
+        <English>Blue</English>
+        <French>Bleu</French>
+</Key>
+<Key ID="STR_TAA_TAG_GREEN">
+        <English>Green</English>
+        <French>Vert</French>
+</Key>
+<Key ID="STR_TAA_TAG_OK">
+        <English>Ok</English>
+        <French>Valider</French>
+</Key>
+<Key ID="STR_TAA_TAG_CANCEL">
+        <English>Cancel</English>
+        <French>Annuler</French>
+</Key>
+<Key ID="STR_TAA_TAG_ASSIGN">
+        <English>Assign a new key to display name tags</English>
+        <French>Assigner une nouvelle touche pour afficher le tag des noms</French>
+</Key>
+<Key ID="STR_TAA_TAG_ASSIGN_TXT">
+        <English>Assign</English>
+        <French>Assigner</French>
+</Key>
+<Key ID="STR_TAA_TAG_APPLY_TXT">
+        <English>Apply color</English>
+        <French>Appliquer la couleur</French>
+</Key>
+<Key ID="STR_TAA_TAG_ENABLE_DISABLE">
+        <English>Enable or disable :</English>
+        <French>Activer désactiver :</French>
+</Key>

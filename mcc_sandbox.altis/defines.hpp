@@ -38,7 +38,12 @@
 #include "=BTC=_revive\=BTC=_respawn.h"
 #include "bon_artillery\dialog\Artillery.hpp"
 #include "VAS\menu.hpp"
+#include "TAA_name\GUI\TAA_INCLUDE.hpp"
+#include "TAA_name\GUI\TAA_ui_name.hpp"
+#include "TAA_name\GUI\TAA_ui_custom.hpp"
+
 //---------------------------Functions------------------------------------------------
+
 class CfgFunctions
 {
 	class MCC
@@ -534,6 +539,8 @@ class CfgObjectCompositions
 class RscTitles
 {
 	#include "=BTC=_Logistic\=BTC=_Lift\=BTC=_Hud.h"
+	#include "TAA_name\GUI\TAA_dynamic_name.hpp"
+	
 	titles[]={"img"};
 
 	class img

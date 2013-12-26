@@ -246,8 +246,10 @@ class Mission
 					vehicle="I_G_officer_F";
 					player="PLAYER COMMANDER";
 					leader=1;
-					rank="LIEUTENANT";
+					rank="COLONEL";
 					skill=0.60000002;
+					text="UnitGR_ASL_SL";
+					init="GrpGR_ASL = group this; nul = [""dc"",this] call f_fnc_assignGear;";
 					description="High Command";
 				};	
 			};
@@ -266,9 +268,11 @@ class Mission
 					vehicle="I_G_Soldier_SL_F";
 					player="PLAYER COMMANDER";
 					leader=1;
-					rank="LIEUTENANT";
+					rank="CORPORAL";
 					skill=0.60000002;
-					description="Green Alpha Squad Leader";
+					text="UnitGR_A1_FTL";
+					init="GrpGR_A1 = group this;";
+					description="Green Alpha Fireteam Leader";
 				};
 				class Item1
 				{
@@ -277,8 +281,9 @@ class Mission
 					side="GUER";
 					vehicle="I_G_medic_F";
 					player="PLAY CDG";
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_A1_MED";
+					init="GrpGR_A1 = group this;";
 					description="Green Alpha Medic";
 				};
 
@@ -290,6 +295,8 @@ class Mission
 					vehicle="I_G_Soldier_M_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					text="UnitGR_A1_MRK";
+					init="GrpGR_A1 = group this;";
 					description="Green Alpha Marksman";
 				};
 				class Item3
@@ -300,6 +307,8 @@ class Mission
 					vehicle="I_G_Soldier_AR_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					text="UnitGR_A1_AR";
+					init="GrpGR_A1 = group this;";
 					description="Green Alpha Automatic Rifleman";
 				};
 				class Item4
@@ -310,6 +319,8 @@ class Mission
 					vehicle="I_G_Soldier_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					text="UnitGR_A1_R";
+					init="GrpGR_A1 = group this;";
 					description="Green Alpha Rifleman";
 				};
 				class Item5
@@ -320,6 +331,8 @@ class Mission
 					vehicle="I_G_Soldier_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					text="UnitGR_A1_R";
+					init="GrpGR_A1 = group this;";
 					description="Green Alpha Rifleman";
 				};
 			};
@@ -339,6 +352,8 @@ class Mission
 					player="PLAY CDG";
 					leader=1;
 					skill=0.60000002;
+					text="UnitGR_SN1_SN";
+					init="GrpGR_SN1 = group this;";
 					description="Green Alpha Sniper";
 				};
 				class Item1
@@ -349,6 +364,8 @@ class Mission
 					vehicle="I_Spotter_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					text="UnitGR_SN1_SP";
+					init="GrpGR_SN1 = group this;";
 					description="Green Alpha Spotter";
 				};
 			};
@@ -367,8 +384,9 @@ class Mission
 					vehicle="I_helipilot_F";
 					player="PLAY CDG";
 					leader=1;
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_AH1_P";
+					init="GrpGR_AH1 = group this;";
 					description="Green Alpha Heli Pilot";
 				};
 				class Item1
@@ -378,8 +396,9 @@ class Mission
 					side="GUER";
 					vehicle="I_Soldier_repair_F";
 					player="PLAY CDG";
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_AH1_E";
+					init="GrpGR_AH1 = group this;";
 					description="Green Alpha Engineer";
 				};
 			};
@@ -398,8 +417,10 @@ class Mission
 					vehicle="I_G_Soldier_SL_F";
 					player="PLAY CDG";
 					leader=1;
-					rank="LIEUTENANT";
+					rank="CORPORAL";
 					skill=0.60000002;
+					text="UnitGR_A2_FTL";
+					init="GrpGR_A2 = group this;";
 					description="Green Bravo Squad Leader";
 				};
 				class Item1
@@ -409,8 +430,9 @@ class Mission
 					side="GUER";
 					vehicle="I_G_medic_F";
 					player="PLAY CDG";
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_A2_MED";
+					init="GrpGR_A2 = group this;";
 					description="Green Bravo Medic";
 				};
 				class Item2
@@ -421,6 +443,8 @@ class Mission
 					vehicle="I_G_Soldier_M_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					text="UnitGR_A2_MRK";
+					init="GrpGR_A2 = group this;";
 					description="Green Bravo Marksman";
 				};
 				class Item3
@@ -431,6 +455,8 @@ class Mission
 					vehicle="I_G_Soldier_AR_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					text="UnitGR_A1_AR";
+					init="GrpGR_A2 = group this;";
 					description="Green Bravo Automatic Rifleman";
 				};
 				class Item4
@@ -441,6 +467,8 @@ class Mission
 					vehicle="I_G_Soldier_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					text="UnitGR_A2_R";
+					init="GrpGR_A2 = group this;";
 					description="Green Bravo Rifleman";
 				};
 				class Item5
@@ -451,6 +479,8 @@ class Mission
 					vehicle="I_G_Soldier_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					text="UnitGR_A2_R";
+					init="GrpGR_A2 = group this;";
 					description="Green Bravo Rifleman";
 				};
 			};
@@ -470,6 +500,8 @@ class Mission
 					player="PLAY CDG";
 					leader=1;
 					skill=0.60000002;
+					text="UnitGR_SN2_SN";
+					init="GrpGR_SN2 = group this;";
 					description="Green Bravo Sniper";
 				};
 				class Item1
@@ -480,6 +512,8 @@ class Mission
 					vehicle="I_Spotter_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					text="UnitGR_SN2_SP";
+					init="GrpGR_SN2 = group this;";
 					description="Green Bravo Spotter";
 				};
 			};
@@ -498,8 +532,9 @@ class Mission
 					vehicle="I_helipilot_F";
 					player="PLAY CDG";
 					leader=1;
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_TH1_P";
+					init="GrpGR_TH1 = group this;";
 					description="Green Bravo Heli Pilot";
 				};
 				class Item1
@@ -509,8 +544,9 @@ class Mission
 					side="GUER";
 					vehicle="I_Soldier_repair_F";
 					player="PLAY CDG";
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_TH1_E";
+					init="GrpGR_TH1 = group this;";
 					description="Green Bravo Engineer";
 				};
 			};
@@ -529,8 +565,10 @@ class Mission
 					vehicle="I_Soldier_repair_F";
 					player="PLAY CDG";
 					leader=1;
-					rank="SERGEANT";
+					rank="CORPORAL";
 					skill=0.60000002;
+					text="UnitGR_ENG1_TL";
+					init="GrpGR_ENG1 = group this;";
 					description="Green Charlie Engineer";
 				};
 				class Item1
@@ -540,8 +578,9 @@ class Mission
 					side="GUER";
 					vehicle="I_Soldier_exp_F";
 					player="PLAY CDG";
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_ENG1_EXP";
+					init="GrpGR_ENG1 = group this;";
 					description="Green Charlie Explosives Specialist";
 				};
 				class Item2
@@ -551,8 +590,9 @@ class Mission
 					side="GUER";
 					vehicle="I_soldier_UAV_F";
 					player="PLAY CDG";
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_ENG1_UAV";
+					init="GrpGR_ENG1 = group this;";
 					description="Green Charlie UAV Operator";
 				};
 				class Item3
@@ -562,8 +602,9 @@ class Mission
 					side="GUER";
 					vehicle="I_soldier_UAV_F";
 					player="PLAY CDG";
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_ENG1_UAV";
+					init="GrpGR_ENG1 = group this;";
 					description="Green Charlie UAV Operator";
 				};
 			};
@@ -582,8 +623,10 @@ class Mission
 					vehicle="I_diver_TL_F";
 					player="PLAY CDG";
 					leader=1;
-					rank="SERGEANT";
+					rank="CORPORAL";
 					skill=0.60000002;
+					text="UnitGR_SF1_TL";
+					init="GrpGR_SF1 = group this;";
 					description="Green Delta Diver Team Leader";
 				};
 				class Item1
@@ -593,8 +636,9 @@ class Mission
 					side="GUER";
 					vehicle="I_diver_F";
 					player="PLAY CDG";
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_SF1_D";
+					init="GrpGR_SF1 = group this;";
 					description="Green Delta Diver";
 				};
 				class Item2
@@ -604,8 +648,9 @@ class Mission
 					side="GUER";
 					vehicle="I_diver_F";
 					player="PLAY CDG";
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_SF1_D";
+					init="GrpGR_SF1 = group this;";
 					description="Green Delta Diver";
 				};
 				class Item3
@@ -616,8 +661,9 @@ class Mission
 					vehicle="I_diver_TL_F";
 					player="PLAY CDG";
 					leader=1;
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_SF1_TL";
+					init="GrpGR_SF1 = group this;";
 					description="Green Delta Diver Team Leader";
 				};
 				class Item4
@@ -627,8 +673,9 @@ class Mission
 					side="GUER";
 					vehicle="I_diver_F";
 					player="PLAY CDG";
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_SF1_D";
+					init="GrpGR_SF1 = group this;";
 					description="Green Delta Diver";
 				};
 				class Item5
@@ -638,8 +685,9 @@ class Mission
 					side="GUER";
 					vehicle="I_diver_F";
 					player="PLAY CDG";
-					rank="SERGEANT";
 					skill=0.60000002;
+					text="UnitGR_SF1_D";
+					init="GrpGR_SF1 = group this;";
 					description="Green Delta Diver";
 				};
 			};
@@ -658,8 +706,9 @@ class Mission
 					vehicle="I_G_resistanceLeader_F";
 					player="PLAY CDG";
 					leader=1;
-					rank="SERGEANT";
+					rank="LIEUTENANT";
 					skill=0.60000002;
+					text="Stavros";
 					description="Stavros";
 				};
 				class Item1
@@ -671,6 +720,7 @@ class Mission
 					player="PLAY CDG";
 					rank="SERGEANT";
 					skill=0.60000002;
+					text="Miller";
 					description="Miller";
 				};
 			};

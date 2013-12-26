@@ -1,0 +1,109 @@
+////////////////////////////////////////////////////////
+// GUI EDITOR OUTPUT START (by Black Puma, v1.063, #Saripe)
+////////////////////////////////////////////////////////
+
+class RscFrame_1800: RscFrame
+{
+	idc = 1800;
+	x = 0.29375 * safezoneW + safezoneX;
+	y = 0.225 * safezoneH + safezoneY;
+	w = 0.4125 * safezoneW;
+	h = 0.396 * safezoneH;
+};
+class RscListbox_1500: RscListbox
+{
+	idc = 1500;
+	x = 0.304062 * safezoneW + safezoneX;
+	y = 0.247 * safezoneH + safezoneY;
+	w = 0.144375 * safezoneW;
+	h = 0.352 * safezoneH;
+};
+class RscButton_1600: RscButton
+{
+	idc = 1600;
+	text = "hide tag"; //--- ToDo: Localize;
+	x = 0.45875 * safezoneW + safezoneX;
+	y = 0.555 * safezoneH + safezoneY;
+	w = 0.0773437 * safezoneW;
+	h = 0.022 * safezoneH;
+};
+class RscButton_1601: RscButton
+{
+	idc = 1601;
+	text = "apply for player"; //--- ToDo: Localize;
+	x = 0.45875 * safezoneW + safezoneX;
+	y = 0.467 * safezoneH + safezoneY;
+	w = 0.0773437 * safezoneW;
+	h = 0.022 * safezoneH;
+};
+class RscSlider_1900: RscSlider
+{
+	idc = 1900;
+	x = 0.45875 * safezoneW + safezoneX;
+	y = 0.291 * safezoneH + safezoneY;
+	w = 0.232031 * safezoneW;
+	h = 0.022 * safezoneH;
+};
+class RscSlider_1901: RscSlider
+{
+	idc = 1901;
+	x = 0.45875 * safezoneW + safezoneX;
+	y = 0.357 * safezoneH + safezoneY;
+	w = 0.237187 * safezoneW;
+	h = 0.022 * safezoneH;
+};
+class RscSlider_1902: RscSlider
+{
+	idc = 1902;
+	x = 0.45875 * safezoneW + safezoneX;
+	y = 0.423 * safezoneH + safezoneY;
+	w = 0.237187 * safezoneW;
+	h = 0.022 * safezoneH;
+};
+class RscButton_1602: RscButton
+{
+	idc = 1602;
+	text = "apply for group"; //--- ToDo: Localize;
+	x = 0.45875 * safezoneW + safezoneX;
+	y = 0.511 * safezoneH + safezoneY;
+	w = 0.0773437 * safezoneW;
+	h = 0.022 * safezoneH;
+};
+class RscButtonMenu_2400: RscButtonMenu
+{
+	idc = 2400;
+	x = 0.628906 * safezoneW + safezoneX;
+	y = 0.621 * safezoneH + safezoneY;
+	w = 0.0773437 * safezoneW;
+	h = 0.022 * safezoneH;
+};
+class RscText_1000: RscText
+{
+	idc = 1000;
+	text = "Red :"; //--- ToDo: Localize;
+	x = 0.45875 * safezoneW + safezoneX;
+	y = 0.247 * safezoneH + safezoneY;
+	w = 0.0670312 * safezoneW;
+	h = 0.022 * safezoneH;
+};
+class RscText_1001: RscText
+{
+	idc = 1001;
+	text = "Green :"; //--- ToDo: Localize;
+	x = 0.45875 * safezoneW + safezoneX;
+	y = 0.324 * safezoneH + safezoneY;
+	w = 0.0670312 * safezoneW;
+	h = 0.022 * safezoneH;
+};
+class RscText_1002: RscText
+{
+	idc = 1002;
+	text = "Blue :"; //--- ToDo: Localize;
+	x = 0.45875 * safezoneW + safezoneX;
+	y = 0.39 * safezoneH + safezoneY;
+	w = 0.0721875 * safezoneW;
+	h = 0.022 * safezoneH;
+};
+////////////////////////////////////////////////////////
+// GUI EDITOR OUTPUT END
+////////////////////////////////////////////////////////
