@@ -19,8 +19,8 @@ TAA_name_HUD_available			= 	true;
 TAA_ui_IG						= 	true;
 TAA_name_HUD_max_player			= 	64;
 // Distance : number Display distance(meters)(recommended : 750)
-TAA_name_HUD_distance		= 	150;
-TAA_name_HUD_distance_max	= 	150;
+TAA_name_HUD_distance		= 	75;
+TAA_name_HUD_distance_max	= 	75;
 //Color player : string(html value) Display friendly (recommended : "#FFFFFF")	
 TAA_name_HUD_color_side			=   "#0098FF";
 //Color player in group : string(html value) (recommended : "#A3FF00")	
@@ -68,11 +68,11 @@ TAA_cursor_enable			= true;
 ****************Distance settings************
 *********************************************/
 // Distance infantry : number Display distance(meters)(recommended : 150)	
-TAA_name_distance_Infantry		= 250;
+TAA_name_distance_Infantry		= 150;
 // Distance land vehicle	: number Display distance(meters)(recommended : 300)	
-TAA_name_distance_Land_Vehicle	= 500;
+TAA_name_distance_Land_Vehicle	= 300;
 // Distance air  vehicle	: number Display distance(meters)(recommended : 600)	
-TAA_name_distance_Air_Vehicle	= 1000;
+TAA_name_distance_Air_Vehicle	= 600;
 
 /********************************************
 ****************Display settings*************
