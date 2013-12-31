@@ -59,6 +59,11 @@ call compile preprocessFile "=BTC=_Logistic\=BTC=_logistic_Init.sqf";
 
 [] execVM "TAA_name\TAA_name_init.sqf";
 
+//----------------------MB Skillset----------------------------------------------
+// Source: http://www.armaholic.com/page.php?id=21320
+
+[] execVM "MB_SkillSet\initMBSkillSet.sqf";
+
 //----------------------IED settings---------------------------------------------
 // IED types the first one is display name the second is the classname [displayName, ClassName]
 MCC_ied_small = [["Plastic Crates","Land_CratesPlastic_F"],["Plastic Canister","Land_CanisterPlastic_F"],["Sack","Land_Sack_F"],["Road Cone","RoadCone"],["Tyre","Land_Tyre_F"],["Radio","Land_SurvivalRadio_F"],["Suitcase","Land_Suitcase_F"],["Grinder","Land_Grinder_F"],
