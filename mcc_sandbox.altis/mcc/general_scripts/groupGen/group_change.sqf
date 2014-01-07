@@ -126,13 +126,13 @@ if (_action == 2) then {			//Clear the array
 	};
 	
 
-	_comboBox = _mccdialog displayCtrl MCC_GroupGenCurrentGroup_IDD;		//Update units
-	lbClear _comboBox;
-		{
-			_displayname = _x select 0;
-			_index = _comboBox lbAdd _displayname;
-		} foreach MCC_groupGenCurrenGroupArray;
-		_comboBox lbSetCurSel 0;
+_comboBox = _mccdialog displayCtrl MCC_GroupGenCurrentGroup_IDD;		//Update units
+lbClear _comboBox;
+	{
+		_displayname = getText (configFile >> "cfgVehicles" >> (_x select 0) >> "displayName");
+		_index = _comboBox lbAdd _displayname;
+	} foreach MCC_groupGenCurrenGroupArray;
+	_comboBox lbSetCurSel 0;
 	
 
 	

@@ -6,6 +6,7 @@
 #include "mcc\dialogs\mcc_guiTab2.hpp"
 #include "mcc\dialogs\mcc_guiTab3.hpp"
 #include "mcc\dialogs\mcc_guiTab4.hpp"
+#include "mcc\dialogs\mcc_guiTab5.hpp"
 
 #include "mcc\dialogs\mcc_guiTabLoading.hpp"
 
@@ -19,6 +20,8 @@
 #include "mcc\Dialogs\MCC_playerConsole3.hpp"
 #include "mcc\Dialogs\mcc_playerConsoleLoading.hpp"
 #include "mcc\Dialogs\mcc_missionSettings.hpp"
+
+#include "mcc\Dialogs\MCCMW_briefingMap.hpp"
 
 //--------------------------------CP------------------------------------------------
 
@@ -41,9 +44,7 @@
 #include "TAA_name\GUI\TAA_INCLUDE.hpp"
 #include "TAA_name\GUI\TAA_ui_name.hpp"
 #include "TAA_name\GUI\TAA_ui_custom.hpp"
-
 //---------------------------Functions------------------------------------------------
-
 class CfgFunctions
 {
 	class MCC
@@ -163,6 +164,26 @@ class CfgFunctions
 			{
 				description = "Sync the player with the server.";
 			};
+			
+			class objectMapper
+			{
+				description = "Takes an array of data about a dynamic object template and creates the objects.";
+			};
+			
+			class findRoadsLeadingZone
+			{
+				description = "Find Road segments leading to an area.";
+			};
+			
+			class nearestRoad
+			{
+				description = "Return a Road segments array near positions";
+			};
+			
+			class garrison
+			{
+				description = "Populate soldiers inside empty houses";
+			};
 		};
 		
 		class ui
@@ -207,6 +228,26 @@ class CfgFunctions
 			class IedDisablingExplosion
 			{
 				description = "Create a disabling explosion.";
+			};
+			
+			class ACSingle
+			{
+				description = "Create an armed civilian at the given position.";
+			};
+			
+			class trapSingle
+			{
+				description = "Create an IED at the given position.";
+			};
+			
+			class iedHit
+			{
+				description = "Determine what will happened when an IED got hit.";
+			};
+			
+			class ambushSingle
+			{
+				description = "Create an ambush group.";
 			};
 		};
 		
@@ -262,6 +303,16 @@ class CfgFunctions
 			
 		};
 		
+		class groupGen
+		{
+			file = "mcc\fnc\groupGen";
+
+			class groupGenRefresh
+			{
+				description = "Refresh the group gen markers";
+			};
+		};
+		
 		class console
 		{
 			file = "mcc\fnc\console";
@@ -271,7 +322,111 @@ class CfgFunctions
 				description = "Define icon behaviot when clicked on the MCC Console";
 			};
 		};
-
+		
+		class missionWizard
+		{
+			file = "mcc\fnc\missionWizard";
+			
+			class MWFindMissionCenter
+			{
+				description = "Find the mission Wizard's center";
+			};
+			
+			class MWbuildLocations
+			{
+				description = "If the map have locations system it will build the locations";
+			};
+			
+			class MWCreateTask
+			{
+				description = "Create Task";
+			};
+			
+			class MWFindbuildingPos
+			{
+				description = "Scan for buildings and building's pos";
+			};
+			
+			class MWfindObjectivePos
+			{
+				description = "Create objective position";
+			};
+			
+			class MWObjectiveHVT
+			{
+				description = "Create an HVT objective";
+			};
+			
+			class MWObjectiveDestroy
+			{
+				description = "Create a destory objective";
+			};
+			
+			class MWObjectiveIntel
+			{
+				description = "Create a pick intel objective";
+			};
+			
+			class MWObjectiveClear
+			{
+				description = "Create a clear area objective";
+			};
+			
+			class MWObjectiveDisable
+			{
+				description = "Create a disable IED area objective";
+			};
+			
+			class MWCreateUnitsArray
+			{
+				description = "Create units array by type";
+			};
+			
+			class MWUpdateZone
+			{
+				description = "Create or update a new zone";
+			};
+			
+			class MWSpawnInZone
+			{
+				description = "Spawn units or groups in a zone";
+			};
+			
+			class MWSpawnInfantry
+			{
+				description = "Spawn infantry groups in the zone.";
+			};
+			
+			class MWSpawnVehicles
+			{
+				description = "Spawn vehicles in the zone.";
+			};
+			
+			class buildRoadblock
+			{
+				description = "Create a road block in the given position and direction.";
+			};
+			
+			class MWopenBriefing
+			{
+				description = "Create The breifings.";
+			};
+			
+			class MWMapTooltip
+			{
+				description = "Create The tooltips on breifings.";
+			};
+		};
+		
+		class ai
+		{
+			file = "mcc\fnc\ai";
+			
+			class garrisonBehavior
+			{
+				description = "Contorol units under garrison behavior.";
+			};
+		};
 	};
 	
 	class VAS
@@ -316,6 +471,7 @@ class CfgFunctions
 			class transferNetwork {};
 			class transferSaveMenu {};
 			class transferSaveGear {};
+			class VASP {};
 		};
 	};
 };
@@ -431,6 +587,42 @@ class CfgObjectCompositions
 	{
 		faction = "CIV_F";
 		displayName = "Villa";
+	};
+	
+	class c_campSite
+	{
+		faction = "CIV_F";
+		displayName = "Camp Site";
+	};
+	
+	class c_slums
+	{
+		faction = "CIV_F";
+		displayName = "Slums Site";
+	};
+	
+	class c_nestBig
+	{
+		faction = "CIV_F";
+		displayName = "Nest Big";
+	};
+	
+	class c_nestSmall
+	{
+		faction = "CIV_F";
+		displayName = "Nest Small";
+	};
+	
+	class c_hanger
+	{
+		faction = "CIV_F";
+		displayName = "Fortified hanger";
+	};
+	
+	class c_roadBlock
+	{
+		faction = "CIV_F";
+		displayName = "Roadblock";
 	};
 //------------------OPF-----------------------------
 	class o_campSIte

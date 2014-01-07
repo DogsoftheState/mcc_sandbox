@@ -1,4 +1,8 @@
-#include "macro.sqf"
+#ifdef MCCMODE
+ #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
+#else
+ #include "macro.sqf"
+#endif
 /*
 	@version: 2.0
 	@file_name: fn_loadGear.sqf

@@ -27,4 +27,7 @@ switch (MCC_mcc_screen) do
    case 5:
    { _ok = createDialog "mcc_groupGen";
 	 if !(_ok) exitWith { hint "createDialog failed" };};
+   case 6:
+   { _ok = createDialog "MCC_Sandbox5";
+	 if !(_ok) exitWith { hint "createDialog failed" };};
 };

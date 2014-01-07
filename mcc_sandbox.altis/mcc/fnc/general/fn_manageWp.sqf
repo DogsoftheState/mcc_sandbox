@@ -2,7 +2,7 @@
 // Create and control AI WP on map
 // Example [] call MCC_fnc_manageWp or [[action,WPlocation,[WPType,WPcombat,WPformation,WPspeed,WPbehavior,WPcondition, WPstatment,WPtimeout],[selectedGroup1,selectedGroup2......] ]],"MCC_fnc_manageWp", group, false] spawn BIS_fnc_MP;
 // actrion: Integer, 0 - ADD WP,  1 - Replace WP, 2-Delete all WP
-//		WPType: Integer, a indecator from this array ["MOVE", "DESTROY", "GETIN", "SAD", "JOIN", "LEADER", "GETOUT", "CYCLE", "LOAD", "UNLOAD", "TR UNLOAD", "HOLD", "SENTRY","GUARD","SUPPORT","GETIN NEAREST","DISMISS","GARRISON"];
+//		WPType: Integer, a indecator from this array ["MOVE", "DESTROY", "GETIN", "SAD", "JOIN", "LEADER", "GETOUT", "CYCLE", "LOAD", "UNLOAD", "TR UNLOAD", "HOLD", "SENTRY","GUARD","SUPPORT","GETIN NEAREST","DISMISS"];
 //		WPcombat: string, ["NO CHANGE", "BLUE", "GREEN", "WHITE", "YELLOW", "RED"]
 //		WPformation: string, ["NO CHANGE", "COLUMN", "STAG COLUMN", "WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "LINE", "FILE", "DIAMOND"]
 //		WPspeed: string, ["UNCHANGED", "LIMITED", "NORMAL", "FULL"]
@@ -21,7 +21,7 @@ if (count _wpArray > 0) then
 	{
 	_WPTypeIndecator 	= _wpArray select 0; 
 	
-	_wpTypes = ["MOVE", "DESTROY", "GETIN", "SAD", "JOIN", "LEADER", "GETOUT", "CYCLE", "LOAD", "UNLOAD", "TR UNLOAD", "HOLD", "SENTRY","GUARD","SUPPORT","GETIN NEAREST","DISMISS","GARRISON"];
+	_wpTypes = ["MOVE", "DESTROY", "GETIN", "SAD", "JOIN", "LEADER", "GETOUT", "CYCLE", "LOAD", "UNLOAD", "TR UNLOAD", "HOLD", "SENTRY","GUARD","SUPPORT","GETIN NEAREST","DISMISS"];
 	_wpType  = _wpTypes select _WPTypeIndecator; 
 	};
 _groups				= _this select 3; 
@@ -147,20 +147,6 @@ _groups				= _this select 3;
 							_wp2 = _wpObject addWaypoint [_wpLoc, 0];
 							_wp2 setWaypointType "JOIN";
 							_wp synchronizeWaypoint [_wp2];
-						};
-						
-					case "GARRISON":
-						{
-							//Garrison_script syntax: nul = [unit,radius,stationary?(,[occupy percentage,maximum],warping?,allUseCQC_AI?)] execVM "Garrison_script.sqf"
-							
-							_wp = _x addWaypoint [_wpLoc, 0];
-							_wp setWaypointType _wpType;
-							_wp setWaypointFormation (_wpArray select 2);
-							_wp setWaypointSpeed (_wpArray select 3);
-							_wp setWaypointBehaviour (_wpArray select 4);
-							//_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
-							_wp setWaypointStatements ["true", "nul = [this,200,true,[60,4],false,true] execVM 'Garrison_script.sqf';"];
-							_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
 						};
 						
 					default

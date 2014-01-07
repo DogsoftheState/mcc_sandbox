@@ -11,7 +11,8 @@
 #define MCC_MSCONSOLEGPS 8407
 #define MCC_MSCONSOLESHOWFRIENDS 8408
 #define MCC_MSCONSOLECOMMANDAI 8409
- 
+#define MCC_IDCNAMETAGS 8410
+
 
 //-----------------------------------------------------------------------------
 // Main dialog
@@ -53,12 +54,24 @@ class missionSettings {
 	ConsoleShowFriendlyWP,
 	ConsoleCanCommandAI,
 	ConsoleCanCommandAITittle,
+	mcc_nameTags,
+	mcc_nameTagsCombo,
 	confirmButton,
-	CancelButton
+	CancelButton	
   };
   
 //========================================= Background========================================
-	class RscPicture_1200: MCC_RscText {idc = -1;moving = true;x = 0.28125 * safezoneW + safezoneX;	y = 0.272481 * safezoneH + safezoneY;	w = 0.39375 * safezoneW; h = 0.455038 * safezoneH; text = "";colorBackground[] = { 0, 0, 0, 0.6 };};
+	class RscPicture_1200: MCC_RscText 
+	{
+		idc = -1;
+		moving = true;
+		x = 0.286417 * safezoneW + safezoneX;
+		y = 0.26909 * safezoneH + safezoneY;
+		w = 0.366667 * safezoneW;
+		h = 0.483811 * safezoneH;
+		text = "";
+		colorBackground[] = { 0, 0, 0, 0.6 };
+	};
 //Tittle
 	class missionSettingsTittle: MCC_RscText
 	{
@@ -192,10 +205,10 @@ class missionSettings {
 		action = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\mission_settings_change.sqf'");
 
 		text = "Confirm"; //--- ToDo: Localize;
-		x = 0.346917 * safezoneW + safezoneX;
-		y = 0.657459 * safezoneH + safezoneY;
+		x = 0.505729 * safezoneW + safezoneX;
+		y = 0.686927 * safezoneH + safezoneY;
 		w = 0.120313 * safezoneW;
-		h = 0.0525043 * safezoneH;
+		h = 0.0439828 * safezoneH;
 	};
 	class CancelButton: MCC_RscButton
 	{
@@ -203,10 +216,10 @@ class missionSettings {
 		action = "closeDialog 0";
 
 		text = "Cancel"; //--- ToDo: Localize;
-		x = 0.5 * safezoneW + safezoneX;
-		y = 0.657459 * safezoneH + safezoneY;
+		x = 0.301656 * safezoneW + safezoneX;
+		y = 0.689346 * safezoneH + safezoneY;
 		w = 0.120313 * safezoneW;
-		h = 0.0525043 * safezoneH;
+		h = 0.0439828 * safezoneH;
 	};
 	class ConsoleGPSTittle: MCC_RscText
 	{
@@ -263,6 +276,26 @@ class missionSettings {
 		x = 0.305208 * safezoneW + safezoneX;
 		y = 0.587966 * safezoneH + safezoneY;
 		w = 0.25 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+	
+	class mcc_nameTags: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Name Tags:"; //--- ToDo: Localize;
+		x = 0.305208 * safezoneW + safezoneX;
+		y = 0.620953 * safezoneH + safezoneY;
+		w = 0.25 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+	class mcc_nameTagsCombo: MCC_RscCombo
+	{
+		idc = MCC_IDCNAMETAGS;
+
+		x = 0.557292 * safezoneW + safezoneX;
+		y = 0.620953 * safezoneH + safezoneY;
+		w = 0.06875 * safezoneW;
 		h = 0.0219914 * safezoneH;
 	};
  };

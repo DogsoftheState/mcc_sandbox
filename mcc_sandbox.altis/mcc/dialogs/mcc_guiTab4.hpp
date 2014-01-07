@@ -5,6 +5,7 @@
 #define MCC_SANDBOX2_IDD 2000
 #define MCC_SANDBOX3_IDD 3000
 #define MCC_SANDBOX4_IDD 4000
+#define MCC_SANDBOX5_IDD 6000
 
 #define MCC_MINIMAP 9000
 #define MAIN 1050
@@ -18,9 +19,9 @@
 #define MCCDELETEBRUSH 1030
 #define MCC_ZONE_LOC 1026
 
-#define MCC_airdropTypeCombo 1031
-#define MCC_airdropClassCombo 1032
-#define MCC_airdropArrayCombo 1033
+#define MCC_AIRDROPTYPE 1031
+#define MCC_airdropClass 1032
+#define MCC_airdropArray 1033
 
 #define MCC_UM_LIST 3069
 #define MCC_UM_PIC 3070
@@ -158,6 +159,7 @@ class MCC_Sandbox4 {
 		h = 0.0510023 * safezoneH;
 		colorText[] = {1,1,1,1};
 		colorBackground[] = {0,0,0,1};
+		onButtonClick = __EVAL ("[6] execVM '"+MCCPATH+"mcc\dialogs\mcc_PopupMenu2.sqf'");
 	}
 	class MCC_factioTittle: MCC_RscText	{idc = -1;text = "Faction:";
 		x = 0.184896 * safezoneW + safezoneX;
@@ -571,6 +573,15 @@ class MCC_Sandbox4 {
 		w = 0.360938 * safezoneW;
 		h = 0.0549786 * safezoneH;
 	};
+	class MCC_m4f7: MCC_RscFrame
+	{
+		idc = -1;
+
+		x = 0.167708 * safezoneW + safezoneX;
+		y = 0.554979 * safezoneH + safezoneY;
+		w = 0.360938 * safezoneW;
+		h = 0.131949 * safezoneH;
+	};
 	class MCC_deleteBrushTittle: MCC_RscText
 	{
 		idc = -1;
@@ -622,16 +633,16 @@ class MCC_Sandbox4 {
 	};
 	class MCC_airdropTypeCombo: MCC_RscCombo
 	{
-		idc = MCC_airdropTypeCombo;
+		idc = MCC_AIRDROPTYPE;
 		x = 0.179167 * safezoneW + safezoneX;
 		y = 0.609957 * safezoneH + safezoneY;
 		w = 0.0973958 * safezoneW;
 		h = 0.0219914 * safezoneH;
-		onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\cas\cas_change.sqf'");
+		onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\cas\airdropReq.sqf'");
 	};
 	class MCC_airdropClassCombo: MCC_RscCombo
 	{
-		idc = MCC_airdropClassCombo;
+		idc = MCC_airdropClass;
 		x = 0.288021 * safezoneW + safezoneX;
 		y = 0.609957 * safezoneH + safezoneY;
 		w = 0.0973958 * safezoneW;
@@ -639,7 +650,7 @@ class MCC_Sandbox4 {
 	};
 	class MCC_airdropArrayCombo: MCC_RscCombo
 	{
-		idc = MCC_airdropArrayCombo;
+		idc = MCC_airdropArray;
 		x = 0.265104 * safezoneW + safezoneX;
 		y = 0.642944 * safezoneH + safezoneY;
 		w = 0.120313 * safezoneW;
@@ -666,7 +677,7 @@ class MCC_Sandbox4 {
 		w = 0.0572917 * safezoneW;
 		h = 0.0219914 * safezoneH;
 		tooltip = "Add this item to the current airdrop list"; //--- ToDo: Localize;
-		onButtonClick = __EVAL ("[1] execVM '"+MCCPATH+"mcc\general_scripts\cas\cas_change.sqf'");
+		onButtonClick = __EVAL ("[1] execVM '"+MCCPATH+"mcc\general_scripts\cas\airdropReq.sqf'");
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
 	class MCC_airdropClear: MCC_RscButton
@@ -678,7 +689,7 @@ class MCC_Sandbox4 {
 		w = 0.0572917 * safezoneW;
 		h = 0.0219914 * safezoneH;
 		tooltip = "Clear the current airdrop list"; //--- ToDo: Localize;
-		onButtonClick = __EVAL ("[2] execVM '"+MCCPATH+"mcc\general_scripts\cas\cas_change.sqf'");
+		onButtonClick = __EVAL ("[2] execVM '"+MCCPATH+"mcc\general_scripts\cas\airdropReq.sqf'");
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
 	class MCC_airdropCall: MCC_RscButton
@@ -705,14 +716,5 @@ class MCC_Sandbox4 {
 		onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\cas\cas_request.sqf'");
 		tooltip = "Add the current airdrop to the player's console"; //--- ToDo: Localize;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-	};
-	class MCC_m4f7: MCC_RscFrame
-	{
-		idc = -1;
-
-		x = 0.167708 * safezoneW + safezoneX;
-		y = 0.554979 * safezoneH + safezoneY;
-		w = 0.360938 * safezoneW;
-		h = 0.131949 * safezoneH;
 	};
 };

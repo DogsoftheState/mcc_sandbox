@@ -1,9 +1,9 @@
 /*
-	@version: 2.1
+	@version: 2.2
 	@file_name: fn_handleItem.sqf
 	@file_author: TAW_Tonic
-	@file_edit: 11/6/2013
-	@file_description: Handles the incoming requests and adds or removes it, returns true if operation done sucessfully or false for failing.
+	@file_edit: 12/7/2013
+	@file_description: Handles the incoming requests and adds or removes it.
 */
 private["_item","_details","_bool","_ispack","_items","_isgun","_ongun","_override","_toUniform","_toVest"];
 _item = [_this,0,"",[""]] call BIS_fnc_param;
@@ -83,20 +83,11 @@ if(_bool) then
 		
 		case "CfgMagazines":
 		{
+			if(_toUniform) exitWith {player addItemToUniform _item;};
+			if(_toVest) exitWith {player addItemToVest _item;};
+			if(_ispack) exitWith {player addItemToBackpack _item;};
 			
-			//The below code does not work in v1.05 stable, it is confirmed working in dev-branch
-			//if(_toUniform) exitWith {player addItemToUniform _item;};
-			//if(_toVest) exitWith {player addItemToVest _item;};
-			//if(_ispack) exitWith {player addItemToBackpack _item;};
-			
-			if(_ispack) then
-			{
-				(unitBackpack player) addMagazineCargoGlobal [_item,1];
-			}
-				else
-			{
-				player addMagazine _item;
-			};
+			player addMagazine _item;
 		};
 		
 		case "CfgWeapons":

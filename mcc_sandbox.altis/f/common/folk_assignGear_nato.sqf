@@ -215,6 +215,7 @@ _crewRig = "V_TacVest_khk";
 _typeofUnit = toLower (_this select 0);			// Tidy input for SWITCH/CASE statements, expecting something like : r = Rifleman, co = Commanding Officer, rat = Rifleman (AT)
 _unit = _this select 1;					// expecting name of unit; originally passed by using 'this' in unit init
 
+if (!local _unit) exitWith {diag_log "Error: Trying to change non local unit gear"};
 // ====================================================================================
 
 // HANDLE CLOTHES

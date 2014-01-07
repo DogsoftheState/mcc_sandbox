@@ -34,9 +34,10 @@
 #define MCC_ZONE_LOC 1026
 #define MCCENABLECP 1027
 
-private ["_mccdialog","_comboBox","_displayname","_it","_x"];
+private ["_mccdialog","_comboBox","_displayname","_it","_x","_index"];
 disableSerialization;
-
+MCC_GUI1initDone = false; 
+ 
 ctrlEnable [MAIN,false]; //Disable switching menus till the init is done
 ctrlEnable [MENU2,false];
 ctrlEnable [MENU3,false];
@@ -191,7 +192,8 @@ _comboBox = _mccdialog displayCtrl SPAWNBEHAVIOR;		//fill combobox BEHAVIOR
 lbClear _comboBox;
 {
 	_displayname = format ["%1",_x select 0];
-	_comboBox lbAdd _displayname;
+	_index = _comboBox lbAdd _displayname;
+	lbSetTooltip [SPAWNBEHAVIOR, _index, _x select 2];
 } foreach MCC_spawn_behavior;
 _comboBox lbSetCurSel MCC_behavior_index;
 
@@ -215,7 +217,7 @@ if (mcc_missionmaker == (name player)) then
 	ctrlEnable [MENU2,true];
 	ctrlEnable [MENU3,true];
 	ctrlEnable [MENU4,true];
-	ctrlEnable [MENU5,false];
+	ctrlEnable [MENU5,true];
  };
  
 if (MCCFirstOpenUI) then //First Lunch
@@ -225,6 +227,7 @@ if (MCCFirstOpenUI) then //First Lunch
 	[0] execVM "mcc\dialogs\mcc_PopupMenu2.sqf"
 	};
 
+MCC_GUI1initDone = true; 
 //-------------------------------------------------FPS Loop  -----------------------------
 while {dialog} do 
 {

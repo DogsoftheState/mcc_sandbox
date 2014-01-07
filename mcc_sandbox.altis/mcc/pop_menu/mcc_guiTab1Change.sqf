@@ -361,7 +361,7 @@ if (_task ==2) then 											//Change Branch Units
 				_comboBox = _mccdialog displayCtrl SPAWNCLASS;		
 				lbClear _comboBox;
 					{
-						_displayname = format ["%1",_x select 3];
+						_displayname = format ["%1 (%2 Units)",_x select 3,_x select 4];
 						_comboBox lbAdd _displayname;
 					} foreach MCC_groupArray;
 				_comboBox lbSetCurSel 0;

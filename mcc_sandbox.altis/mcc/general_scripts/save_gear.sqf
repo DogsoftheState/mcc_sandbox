@@ -26,8 +26,12 @@ _vestItems = vestItems _unit;
 _primaryWeapon = primaryWeapon _unit;
 _secondaryWeapon = secondaryWeapon _unit;
 _handgunWeapon = handgunWeapon _unit; 
-_magazines = magazines _unit;	
-_unit removeAction mcc_actionInedx;
+_magazines = magazines _unit;
+
+if (!isnil "mcc_actionInedx") then
+{	
+	_unit removeAction mcc_actionInedx;
+};
 
 WaitUntil {alive player};
 
@@ -112,7 +116,7 @@ _muzzles = getArray(configFile>>"cfgWeapons" >> _primaryWeapon >> "muzzles");
 player selectWeapon (_muzzles select 0);
 
 	
-if (player getvariable "MCC_allowed") then 
+if (player getvariable ["MCC_allowed",false]) then 
 	{
 		mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= Mission generator =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 		//player setvariable ["MCC_allowed",true,true];

@@ -58,7 +58,5 @@ while {alive _suspect && _check} do
 
 	};
 if (!alive _suspect) then {_suspect removeaction 0;};
-if (alive _suspect && damage _suspect < 0.5) then	{
-	_null = [_suspect,iedside,25,_weapon,_mag] execVM MCC_path + "mcc\general_scripts\traps\cw.sqf";
-	};
+
 if (true) exitWith {};

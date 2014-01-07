@@ -1,13 +1,10 @@
 #define MCC_SANDBOX2_IDD 2000
 
-#define AIRDROP_CLASS 5508
-#define AIRDROP_TYPE 5509 
-
 #define MCC_CASPLANETYPE 2002
 #define MCC_CASTYPE 2003
 
 disableSerialization;
-private ["_type","_dlg"];
+private ["_type","_dlg","_indecator"];
 _type = _this select 0;
 _dlg = findDisplay MCC_SANDBOX2_IDD;
 
@@ -22,7 +19,17 @@ switch (_type) do
 	    case 1:		//CAS 
 		{
 			MCC_spawnkind	= [MCC_CASBombs select (lbCurSel MCC_CASTYPE)];
-			MCC_planeType	= [(MCC_CASPlanes select (lbCurSel MCC_CASPLANETYPE)) select 1];
+			_indecator 		= (lbCurSel MCC_CASPLANETYPE); 
+			MCC_planeType 	= if (_indecator <= (count (U_GEN_AIRPLANE)-1)) then 
+								{
+									[(U_GEN_AIRPLANE select _indecator) select 1];
+								}
+								else 
+								{
+									_indecator = _indecator - (count U_GEN_AIRPLANE);
+									[(U_GEN_HELICOPTER select _indecator) select 1];
+								};
+			//MCC_planeType	= [(MCC_CASPlanes select (lbCurSel MCC_CASPLANETYPE)) select 1];
 		};
 		
 		 case 2:	//CAS Add		

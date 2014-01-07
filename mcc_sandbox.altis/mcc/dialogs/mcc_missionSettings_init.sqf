@@ -9,6 +9,7 @@
 #define MCC_MSCONSOLEGPS 8407
 #define MCC_MSCONSOLESHOWFRIENDS 8408
 #define MCC_MSCONSOLECOMMANDAI 8409
+#define MCC_IDCNAMETAGS 8410
 
 private ["_mccdialog","_comboBox","_displayname"];
 disableSerialization;
@@ -84,4 +85,12 @@ _comboBox = _mccdialog displayCtrl MCC_MSCONSOLECOMMANDAI; //Console Command AI
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["True","False"];
+_comboBox lbSetCurSel 0;
+
+_comboBox = _mccdialog displayCtrl MCC_IDCNAMETAGS; //Show name tags
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["Disabled","Enabled"];
 _comboBox lbSetCurSel 0;

@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='UTF-8'?>
-
+<!-- This document was created with Syntext Serna Free. -->
 <Project ID="Arma2">
   <Package ID="Missions">
     <Container ID="">
@@ -521,9 +521,6 @@
 			<Russian>Загрузить при появлении</Russian>
 			<Spanish>Equipar En Respawn</Spanish>
 		</Key>
-		<Key ID="STR_VAS_Load_TransferBtn">
-			<Original>Transfer</Original>
-		</Key>
 		<Key ID="STR_VAS_Load_btnLoad">
 			<Original>Load</Original>
 			<German>Laden</German>
@@ -580,26 +577,6 @@
 			<Spanish>Nombre De Equipamiento Customizado</Spanish>
 		</Key>
 	</Package>
-	<Package name="VASTransferMenu">
-		<Key ID="STR_VAS_Transfer_MainMenu">
-			<Original>Virtual Ammobox System - Transfer Menu</Original>
-		</Key>
-		<Key ID="STR_VAS_Transfer_SaveMenu">
-			<Original>Virtual Ammobox System - Save Transfer</Original>
-		</Key>
-		<Key ID="STR_VAS_Transfer_Request">
-			<Original>wants to transfer you their saved loadout.</Original>
-		</Key>
-		<Key ID="STR_VAS_Transfer_Request2">
-			<Original>Would you like to receive this request and save it?</Original>
-		</Key>
-		<Key ID="STR_VAS_Transfer_NoSlotSelection">
-			<Original>You either did not select a slot that you wanted to transfer to another user or the slot had no information.</Original>
-		</Key>
-		<Key ID="STR_VAS_Transfer_BadUnit">
-			<Original>The selected user either doesn't exist.</Original>
-		</Key>
-	</Package>
 	<Package name="VASPrompts">
 		<Key ID="STR_VAS_Prompt_selectSlotFail">
 			<Original>You didn't select a slot to delete!</Original>
@@ -624,12 +601,10 @@
 		<Key ID="STR_VAS_Prompt_deleteYes">
 			<Original>Yes</Original>
 			<Italian>Sì</Italian>
-			<Spanish>Sì</Spanish>
 		</Key>
 		<Key ID="STR_VAS_Prompt_deleteNo">
 			<Original>No</Original>
 			<Italian>No</Italian>
-			<Spanish>No</Spanish>
 		</Key>
 		<Key ID="STR_VAS_Prompt_slotNoInfo">
 			<Original>You didn't select a slot!</Original>

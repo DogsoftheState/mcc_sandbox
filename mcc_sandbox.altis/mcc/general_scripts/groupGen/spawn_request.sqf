@@ -34,7 +34,7 @@ if !mcc_isloading then	{
 										];
 							[[_pos, MCC_groupGenCurrenGroupArray, MCC_groupGenGroupcount, mcc_hc],'MCC_fnc_groupSpawn',true,false] spawn BIS_fnc_MP;
 							onMapSingleClick """";";
-			_nul=[1,MCC_groupGenGroupStatus] execVM MCC_path + "mcc\general_scripts\groupGen\group_manage.sqf";	//Refresh the group WP
+			_nul=[MCC_groupGenGroupStatus] execVM MCC_path + "mcc\general_scripts\groupGen\group_manage.sqf";	//Refresh the group WP
 		};
 		
 	if (_type==1) then	{											//Add WP
@@ -68,7 +68,7 @@ if !mcc_isloading then	{
 			hint "WP Cleared";
 			[[2,[],[],[MCC_groupGenGroupWP]],'MCC_fnc_manageWp',true,false] call BIS_fnc_MP;
 			sleep 1; 
-			_nul=[1,MCC_groupGenGroupStatus] execVM MCC_path + "mcc\general_scripts\groupGen\group_manage.sqf";	//Refresh the group WP
+			_nul=[MCC_groupGenGroupStatus] execVM MCC_path + "mcc\general_scripts\groupGen\group_manage.sqf";	//Refresh the group WP
 			};
 		};
 	};

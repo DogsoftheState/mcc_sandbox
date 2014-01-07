@@ -1,19 +1,19 @@
-//Made by Shay_Gman (c) 10.13
-#define MCC_SANDBOX4_IDD 4000
+//Made by Shay_Gman (c) 09.10
+#define ExtrasDialog_IDD 2998
 
-#define MCC_airdropTypeCombo 1031
-#define MCC_airdropClassCombo 1032
-#define MCC_airdropArrayCombo 1033
+#define AIRDROP_CLASS 5508
+#define AIRDROP_TYPE 5509 
+#define AIRDROP_ITEMS 5510 
 
 private ["_action", "_type", "_comboBox", "_mccdialog", "_groupArray","_displayname","_dummy"];
 disableSerialization;
 
 _action =_this select 0;
-_mccdialog = findDisplay MCC_SANDBOX4_IDD;	
+_mccdialog = findDisplay ExtrasDialog_IDD;	
 
-if (_action==0) then 		//Refresh list
+if (_action==0) then 
 	{
-	_type = lbCurSel MCC_airdropTypeCombo;
+	_type = lbCurSel AIRDROP_CLASS;
 	switch (_type) do		//Which unit do we want
 		{
 		   case 0:	//Car
@@ -31,20 +31,20 @@ if (_action==0) then 		//Refresh list
 				_groupArray = U_GEN_MOTORCYCLE;
 			};
 			
-			case 3:	//Ship 
-			{
-				_groupArray = U_GEN_SHIP;
-			};
-			
-			case 4:	//Ammo
+			case 3:	//Ammo 
 			{
 				_groupArray = U_AMMO;
 			};
+			
+			case 4:	//Ace ammo
+			{
+				_groupArray = U_ACE_AMMO;
+			};
 		};
 		
-	_comboBox = _mccdialog displayCtrl MCC_airdropClassCombo;		
+	_comboBox = _mccdialog displayCtrl AIRDROP_TYPE;		
 	lbClear _comboBox;
-	if (_type<4) then 
+	if (_type<3) then 
 		{
 			{
 				_displayname = format ["%1",(_x select 3) select 0];
@@ -61,9 +61,9 @@ if (_action==0) then 		//Refresh list
 	_comboBox lbSetCurSel 0;
 	};
 	
-if (_action==1) then 		//Add airdrop to list
+if (_action==1) then 
 	{	
-	_type = lbCurSel MCC_airdropTypeCombo;
+	_type = lbCurSel AIRDROP_CLASS;
 	switch (_type) do		//Which unit do we want
 		{
 		   case 0:	//Car
@@ -81,31 +81,30 @@ if (_action==1) then 		//Add airdrop to list
 				_groupArray = U_GEN_MOTORCYCLE;
 			};
 			
-			case 3:	//Ship 
-			{
-				_groupArray = U_GEN_SHIP;
-			};
-			
-			case 4:	//Ammo
+			case 3:	//Ammo 
 			{
 				_groupArray = U_AMMO;
 			};
+			
+			case 4:	//Ace ammo
+			{
+				_groupArray = U_ACE_AMMO;
+			};
 		};
-	_dummy = (_groupArray select (lbCurSel MCC_airdropClassCombo)) select 1;
+	_dummy = (_groupArray select (lbCurSel AIRDROP_TYPE)) select 1;
 	MCC_airDropArray set[count MCC_airDropArray , _dummy];
-	
-	_comboBox = _mccdialog displayCtrl MCC_airdropArrayCombo;		//added objects
+	_comboBox = _mccdialog displayCtrl AIRDROP_ITEMS;		//added objects
 	lbClear _comboBox;
 		{
-			_displayname = getText(configFile >> "CfgVehicles" >> _x >> "displayname") ;
-			_comboBox lbAdd _displayname;
+			_displayname = _x;
+			_index = _comboBox lbAdd _displayname;
 		} foreach MCC_airDropArray;
 		_comboBox lbSetCurSel 0;
 	};
 	
-if (_action==2) then 				//Clear Airdrop
+if (_action==2) then 
 	{	
 	MCC_airDropArray = [];
-	_comboBox = _mccdialog displayCtrl MCC_airdropArrayCombo;		//added objects
+	_comboBox = _mccdialog displayCtrl AIRDROP_ITEMS;		//added objects
 	lbClear _comboBox;
 	};

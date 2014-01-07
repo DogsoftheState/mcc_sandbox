@@ -19,6 +19,7 @@ switch(_cfg) do
 {
 	case "CfgWeapons":
 	{
+		if(!isNil {uiNamespace getVariable "VASP_weapons"}) exitWith {["CfgWeapons"] call VAS_fnc_VASP;};
 		_temp = [];
 		_ret = [];
 		_ret2 = [];
@@ -82,6 +83,7 @@ switch(_cfg) do
 	
 	case "CfgMagazines":
 	{
+		if(!isNil {uiNamespace getVariable "VASP_magazines"}) exitWith {["CfgMagazines"] call VAS_fnc_VASP;};
 		if(count VAS_magazines > 0) exitWith {}; //Don't waste CPU-processing on something that isn't required.
 		_temp = [];
 		_ret = [];
@@ -114,6 +116,7 @@ switch(_cfg) do
 	
 	case "CfgVehicles":
 	{
+		if(!isNil {uiNamespace getVariable "VASP_backpacks"}) exitWith {["CfgVehicles"] call VAS_fnc_VASP;};
 		if(count VAS_backpacks > 0) exitWith {}; //Don't waste CPU-processing on something that isn't required.
 		_ret = [];
 		_master = configFile >> _cfg;
@@ -146,6 +149,7 @@ switch(_cfg) do
 	
 	case "CfgGlasses":
 	{
+		if(!isNil {uiNamespace getVariable "VASP_glasses"}) exitWith {["CfgGlasses"] call VAS_fnc_VASP;};
 		if(count VAS_glasses > 0) exitWith {}; //Don't waste CPU-processing on something that isn't required.
 		_temp = [];
 		_ret = [];

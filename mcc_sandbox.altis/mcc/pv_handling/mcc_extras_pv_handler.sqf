@@ -1,6 +1,5 @@
 //==============================================================================XEH================================================================================================
 MCC_3D_PLACER = compile preProcessFileLineNumbers format["%1mcc\pop_menu\3rd_placer.sqf",MCC_path];
-MCC_objectMapper = compile preProcessFileLineNumbers format["%1mcc\general_scripts\objectMapper.sqf",MCC_path];
 
 MCC_fnc_makeMarker = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5), (_this select 6), (_this select 7)] execVM MCC_path + "mcc\pop_menu\markers_add.sqf"};
 MCC_fnc_makeBriefing = {[(_this select 0), (_this select 1)] execVM MCC_path + "mcc\pop_menu\briefing_add.sqf"};
@@ -121,24 +120,6 @@ if (isServer) then
 //==============================================================================================================================================================================
 	MCC_fnc_startConvoy = {[(_this select 0), (_this select 1)] execVM MCC_path + "mcc\general_scripts\convoy\start_convoy_execute.sqf"};
 	
-//===================================================================MCC_fnc_trapSingle======================================================================================
-// Create an IED
-//Example:[[pos,IEDkind,IEDVolume,IEDExplosionType,IEDDisarmTime,IEDJammable,IEDTriggerType,IEDdistance,IEDside,IEDMarkerName,IEDDir],'MCC_fnc_trapSingle',true,false] call BIS_fnc_MP;
-// Params: 
-// 	pos: array, trap position
-// 	IEDkind: string, any oject's vehicleClass
-// 	IEDVolume: stirng, explosion radius - "small","medium","large"
-//	IEDExplosionType: number, explosion type: 0-deadly, 1 - disabling (will cripple vehicles and soldiers but will not kill) 2 - Fake, will not or lightly wound soldiers. 
-//	IEDDisarmTime: number, time in second it will take to disarm the IED
-//	IEDJammable: boolean, true - if jammer vheicle (defined in MCC_IEDJammerVehicles) can jame this IED false if not
-//	IEDTriggerType: number, 0- Proximity, will explode if unit from the targer side will move faster then a slow crouch, 1- radio will explode if unit from the targer side will get close to it, if assigned to spotter the spotter must be alive, 2- manual detontion, only mission maker
-//	IEDdistance: number, minimum distance which target unit have to get close to the IED to set it off
-//	IEDside: side, [west, east, resistance, civilian]
-//	IEDMarkerName: string, custom marker name for the IED
-// 	IEDDir: number, direction of the IED
-//==============================================================================================================================================================================	
-	MCC_fnc_trapSingle = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5), (_this select 6), (_this select 7), (_this select 8), (_this select 9), (_this select 10)] execVM MCC_path + "mcc\general_scripts\traps\put_trap.sqf"};
-
 //===================================================================MCC_fnc_mineSingle======================================================================================
 // Create a mine field
 //Example:[[IEDkind,IEDMarkerName,centerPos,minefieldSize],"MCC_fnc_mineSingle",true,false] call BIS_fnc_MP;
@@ -149,18 +130,6 @@ if (isServer) then
 //	minefieldSize: array, [x,y] size of the minefield in meters
 //==============================================================================================================================================================================
 	MCC_fnc_mineSingle = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3)] execVM MCC_path + "mcc\general_scripts\traps\put_mine.sqf"};
-
-//===================================================================MCC_fnc_ACSingle======================================================================================
-// Create an armed civilian that will randomly open fire on target faction's units
-//Example:[[pos,vehicleClass,side,markerName,direction],"MCC_fnc_ACSingle",true,false] call BIS_fnc_MP;
-// Params: 
-// 	pos: array, armerd civilian position.
-//	vehicleClass: string, unit vehicle class
-//	side: side, [west, east, resistance, civilian]
-//	markerName: string, the name of the marker that will be deleted once the unit will die
-//	direction: number, the unit direction 0-360
-//==============================================================================================================================================================================
-	MCC_fnc_ACSingle =  {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4)] execVM MCC_path + "mcc\general_scripts\traps\put_ac.sqf"};
 
 //===================================================================MCC_fnc_SBSingle======================================================================================
 // Create a suiside bombers  that will randomly run ove and explode himself on target faction's units
@@ -175,29 +144,10 @@ if (isServer) then
 //==============================================================================================================================================================================	
 	MCC_fnc_SBSingle = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5)] execVM MCC_path + "mcc\general_scripts\traps\put_sb.sqf"};
 
-//===================================================================MCC_fnc_ambushSingle======================================================================================
-//Not to be used outside MCC
-//==============================================================================================================================================================================		
-	MCC_fnc_ambushSingle = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5), (_this select 6), (_this select 7)] execVM MCC_path + "mcc\general_scripts\traps\put_ambush.sqf"};
-
 //===================================================================MCC_fnc_iedSync======================================================================================
 //Note to be used outside MCC
 //==============================================================================================================================================================================
 	MCC_fnc_iedSync = {[(_this select 0), (_this select 1), (_this select 2)] execVM MCC_path + "mcc\general_scripts\traps\ied_sync.sqf"};
-	
-
-//===================================================================MCC_fnc_garrison======================================================================================
-// Create a suiside bombers  that will randomly run ove and explode himself on target faction's units
-//Example:[[center,radius,action,intanse,faction,side],"MCC_fnc_garrison",true,false] call BIS_fnc_MP;
-// Params: 
-// 	center: array, center of the town to garrison.
-//	radius: number,radius in meters units will garrison buildings.
-//	action:  number, 0 - do not spawn empty vehicles 1 - spawn empty vehicles. 
-//	intanse:  number, probability of a garrison units between 0-10 the higher the number more units will show
-//	faction: units will garrison from the same faction. 
-//	side: side, [west, east, resistance, civilian]
-//==============================================================================================================================================================================	
-	MCC_fnc_garrison = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5)] execVM MCC_path + "mcc\general_scripts\garrison\garrison.sqf"};
 	
 	/*	
 	["uav", {[(_this select 0), (_this select 1), (_this select 2)] spawn uav}] call CBA_fnc_addEventHandler;

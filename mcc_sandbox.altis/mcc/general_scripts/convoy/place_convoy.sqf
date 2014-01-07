@@ -64,7 +64,7 @@ if (_vipclass=="0") then 	{
 				_cargo1 assignAsCargo car3;
 				_cargo1 MoveInCargo car3;
 				};
-		_dummy = _vipclass createunit [_pos1, _group,"this setcaptive true; this assignAsCargo car3;this MoveInCargo car3;_null = this addaction [""Secure HVT"",'"+MCC_path+"mcc\general_scripts\hostages\hostage.sqf',0,6,true,false];
+		_dummy = _vipclass createunit [_pos1, _group,"this setcaptive true; this assignAsCargo car3;this MoveInCargo car3;_null = this addaction [""Secure HVT"",'"+MCC_path+"mcc\general_scripts\hostages\hostage.sqf',[0],6,true,false];
 	removeAllWeapons this ;this allowFleeing 0;"];
 	sleep 1;
 	(units _group) joinsilent (car1 select 2);

@@ -18,7 +18,7 @@ if (!MCC_natureIsRuning) then
 									sleep 1;
 									_suspect setvariable ["armed",false,true];
 									_suspect removeaction _index;
-									_suspect addAction ["Secure suspect", MCC_path + "mcc\general_scripts\hostages\hostage.sqf", 0];
+									_suspect addAction ["Secure suspect", MCC_path + "mcc\general_scripts\hostages\hostage.sqf", [0]];
 									} else
 										{
 										if (random 10 > 5) then {[[[netid _suspect,_suspect], "hell"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP} else {[[[netid _suspect,_suspect], "alone"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP};

@@ -8,8 +8,7 @@ removeUniform _unit;
 removeheadgear _unit;
 removevest _unit;
 
-
-	// use the type of the unit to figure out who gear they need
+// use the type of the unit to figure out who gear they need
 switch (_typeofUnit) do 
 	{
 		case "p":

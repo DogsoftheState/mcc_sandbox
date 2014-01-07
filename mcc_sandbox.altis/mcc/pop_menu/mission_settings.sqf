@@ -41,9 +41,12 @@ switch (_type) do
 	{		
 		case 1:	//Set grass (CS)
 		{
-			_grass = (MCC_grass_array select (lbCurSel MCCGRASSDENSITY)) select 1;
-			setTerrainGrid _grass; 
-			MCC_grass_index = (lbCurSel MCCGRASSDENSITY);
+			if (MCC_GUI1initDone) then
+			{
+				_grass = (MCC_grass_array select (lbCurSel MCCGRASSDENSITY)) select 1;
+				setTerrainGrid _grass; 
+				MCC_grass_index = (lbCurSel MCCGRASSDENSITY);
+			}
 		};
 	
 	    case 2:	//Set viewdistance (CS)

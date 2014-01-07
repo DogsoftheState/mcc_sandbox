@@ -16,7 +16,7 @@ if (isServer) then
 	{
 		#define MCC_SANDBOX_IDD 1000
 		#define MCCMISSIONMAKERNAME 1020
-		private ["_p_mcc_player","_p_mcc_player_name","_p_mcc_request","_mccdialog"];
+		private ["_p_mcc_player","_p_mcc_player_name","_p_mcc_request","_mccdialog","_isAdmin"];
 				
 				disableSerialization;
 				
@@ -25,6 +25,7 @@ if (isServer) then
 				_p_mcc_player = _this select 0;
 				_p_mcc_player_name = _this select 1;
 				_p_mcc_request = _this select 2;
+				_isAdmin = _this select 3;
 			
 				switch (mcc_missionmaker) do {			//MM is logging out
 					case _p_mcc_player_name:
@@ -40,6 +41,17 @@ if (isServer) then
 							[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Access granted to: %2",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
 							publicVariable "mcc_missionmaker";
 							ctrlSetText [MCCMISSIONMAKERNAME, format["%1",mcc_missionmaker]];
+						};
+						
+					default 							//Check if admin
+						{
+							if (_isAdmin) then
+							{
+								mcc_missionmaker = _p_mcc_player_name;
+								[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Admin have taken control over MCC: %2",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+								publicVariable "mcc_missionmaker";
+								ctrlSetText [MCCMISSIONMAKERNAME, format["%1",mcc_missionmaker]];
+							};
 						};
 				};
 	};
@@ -421,7 +433,7 @@ my_pv_handler =
 						if (_p_mcc_spawntype == "DOC") then
 							{
 								//Well we need a dynamic object composition to spawn so we us a BIS function for that.
-								_unitspawned =[ _safepos, _spawndirection, _p_mcc_spawnname] call MCC_objectMapper;			
+								_unitspawned =[ _safepos, _spawndirection, _p_mcc_spawnname] call MCC_fnc_objectMapper;			
 								[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned type %2.",_p_mcc_request,_p_mcc_spawnname], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
 								
 								

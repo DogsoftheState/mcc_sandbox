@@ -1,4 +1,8 @@
-#include "macro.sqf"
+#ifdef MCCMODE
+ #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
+#else
+ #include "macro.sqf"
+#endif
 /*
 	File: fn_onRespawn.sqf
 	Author: Bryan "Tonic" Boardwine
@@ -8,7 +12,7 @@
 	current respawn handler if it exists.
 */
 VAS_slot = lbCurSel VAS_load_list;
-if(VAS_slot == -1) exitWith {hint localize "STR_VAS_Prompt_onRespawnFail"; if(!isNil "VAS_Respawn_Handler") then {player removeEventHandler["Respawn",VAS_Respawn_Handler]; VAS_Respawn_Handler = nil;};
+if(VAS_slot == -1) exitWith {hint localize "STR_VAS_Prompt_onRespawnFail"; if(!isNil "VAS_Respawn_Handler") then {player removeEventHandler["Respawn",VAS_Respawn_Handler]; VAS_Respawn_Handler = nil;}};
 
 if(isNil "VAS_Respawn_Handler") then
 {

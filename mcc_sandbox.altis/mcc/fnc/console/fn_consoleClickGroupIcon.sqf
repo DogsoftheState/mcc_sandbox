@@ -1,4 +1,4 @@
-//==================================================================MCC_fnc_buildingPosCount===============================================================================================
+//==================================================================MCC_fnc_consoleClickGroupIcon===============================================================================================
 // Define what will happen once a group icon has been pressed in the MCC conosle
 // Example:[_group,_button,_pos,_shift,_ctrl,_alt] call MCC_fnc_consoleClickGroupIcon;
 // _group	 = group

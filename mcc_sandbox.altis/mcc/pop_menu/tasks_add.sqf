@@ -9,7 +9,8 @@ if (isnil "_stringDescription") then {_stringDescription = ""};
 switch (_type) do
 {
    case 0:		//create task
-   {_exe = player createSimpleTask [_stringName];
+   {
+	_exe = player createSimpleTask [_stringName];
     _exe setSimpleTaskDescription [_stringDescription, _stringName, _stringName];
 	MCC_tasks set [count MCC_tasks,[_stringName,_exe,_stringDescription]];
 	MCC_sync=MCC_sync + FORMAT ['_type=%1;
@@ -122,6 +123,17 @@ switch (_type) do
 							,_stringDescription
 							,_pos
 							];
+  };
+  case 8:		//create task and WP Mission Wizard
+   {
+	_exe = player createSimpleTask [_stringName];
+    _exe setSimpleTaskDescription [_stringDescription, _stringName, _stringName];
+	MCC_tasks set [count MCC_tasks,[_stringName,_exe,_stringDescription]];
+	_exe setSimpleTaskDestination _pos;
+   	_markerstr = createMarker[_stringName,_pos];
+	_markerstr setMarkerShape "mil_objective";
+	_stringName setMarkerType "Warning";
+	['TaskAssigned',[_stringName,_stringName]] call bis_fnc_showNotification;
   };
  };
  publicVariable "MCC_sync"; 

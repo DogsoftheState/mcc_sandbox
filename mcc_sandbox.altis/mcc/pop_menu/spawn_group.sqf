@@ -37,25 +37,25 @@ if (mcc_missionmaker == (name player)) then {
 				   case 0:	//Light
 					{
 						_action 	= 0;
-						_intanse 	= 3;
+						_intanse 	= 0.5;
 					};
 					
 					 case 1:	//Light -vehicles
 					{
 						_action 	= 1;
-						_intanse 	= 3;
+						_intanse 	= 0.5;
 					};
 					
 					 case 2:	//Heavy
 					{
 						_action 	= 0;
-						_intanse 	= 6;
+						_intanse 	= 1.5;
 					};
 					
 					 case 3:	//Heavy -vehicles
 					{
 						_action 	= 1;
-						_intanse 	= 6;
+						_intanse 	= 1.5;
 					};
 				};
 			if (MCC_capture_state) then	{
@@ -80,7 +80,7 @@ if (mcc_missionmaker == (name player)) then {
 						,_faction
 						,mcc_sidename
 						];
-						[[_center,_radius,_action,_intanse,_faction,mcc_sidename],"MCC_fnc_garrison",true,false] call BIS_fnc_MP;;
+						[[_center,_radius,_action,_intanse,_faction,mcc_sidename],"MCC_fnc_garrison",false,false] call BIS_fnc_MP;
 					};
 			};
 			

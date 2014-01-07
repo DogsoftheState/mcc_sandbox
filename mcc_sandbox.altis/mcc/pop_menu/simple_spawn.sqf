@@ -59,6 +59,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 							if (_name != "") then {
 								[[[netid (_dummy select 0),(_dummy select 0)], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
 								};
+							_init= _init +	FORMAT ["group _this setFormDir %1",_dir];
 							[[[netid (_dummy select 0),(_dummy select 0)], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 						} else
 						{
@@ -101,7 +102,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 				
 				case "DOC":	
 				{
-					_unitspawned =[ _pos, _dir, _class] call MCC_objectMapper;	
+					_unitspawned =[ _pos, _dir, _class] call MCC_fnc_objectMapper;	
 				};
 			};
 	if (!isnil "_dummy") then {MCC_lastSpawn = MCC_lastSpawn + [_dummy]}; 

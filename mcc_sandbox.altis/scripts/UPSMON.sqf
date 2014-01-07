@@ -865,7 +865,6 @@ _loop=true;
 scopeName "main"; 
 while {_loop} do {
 
-
 //if (KRON_UPS_Debug>0) then {player sidechat format["%1: _cycle=%2 _currcycle=%3 _react=%4 _waiting=%5",_grpidx,_cycle,_currcycle,_react,_waiting]}; 
 	if (isnil "_react") then {_react = 0}; 
 	_timeontarget=_timeontarget+_currcycle;
@@ -907,7 +906,7 @@ while {_loop} do {
 	} else {
 		// did the leader die?
 		_npc = [_npc,_members] call MON_getleader;							
-		if (!alive _npc || !canmove _npc || isplayer _npc ) exitwith {_exit=true;};	
+		if (!alive _npc || !canmove _npc || isplayer _npc || ((group _npc) getVariable ["MCC_disableUPSMON", false])) exitwith {_exit=true;};	
 	};
 		
 	//exits from loop
@@ -1179,6 +1178,17 @@ while {_loop} do {
 		
 		//Ambush ==========================================================================================================
 		if (_ambush && !_ambushed) then {
+			_roads = (position _npc) nearroads 300;
+			if ((count _roads) > 0) then
+			{
+				private "_wp"; 
+				_wp = _grp addWaypoint [_roads select 0,100];
+				_wp setWaypointSpeed "FULL";
+				_wp setWaypointType "MOVE"; 
+		
+				while {((leader _grp) distance (_roads select 0)) > 100} do {sleep 1}; 
+
+			};
 			_ambushed = true;
 			_nowp = true;
 			_currcycle = 2;		

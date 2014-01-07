@@ -33,46 +33,48 @@ for "_i" from 0 to ((count CONFIG) - 1)  do
 				_Cfgtype = (_cfgfaction select _k); 
 				if (isClass(_cfgtype)) then
 					{
-					    _cfgname = configname(_cfgtype );
-						if (_cfgname == _type) then
+					_cfgname = configname(_cfgtype );
+					if (_cfgname == _type) then
+						{
+						for "_m" from 0 to ((count _cfgtype) -1) do
 							{
-								for "_m" from 0 to ((count _cfgtype) -1) do
+							   _cfgclasstype =( _cfgtype select _m);
+							   if (isClass(_cfgclasstype)) then
 								{
-								   _cfgclasstype =( _cfgtype select _m);
-								   if (isClass(_cfgclasstype)) then
+									
+									if ((getText(_cfgclasstype >> "faction"))== _faction) then 
 									{
-									    
-										if ((getText(_cfgclasstype >> "faction"))== _faction) then 
-										{
-										    
-											
-											_cfgname  =  getText(_cfgclasstype >> "name");
-											
-											_cfgclass = configname(_cfgclasstype );
-											_cfgentry = format ["configFile >> ""CfgGroups"" >>""%1"">>""%2"">>""%3"">>""%4"" ",(configname (_Cfgside)),(configname (_Cfgfaction)),(configname (_Cfgtype)),(configname (_cfgclasstype))];
-											_grp_array set[_indexar,[_classtype,_cfgclass,_cfgentry,_cfgname]];										
-											_indexar = _indexar + 1;
-											
-										};
 										
 										
+										_cfgname  =  getText(_cfgclasstype >> "name");
 										
+										_cfgclass = configname(_cfgclasstype );
+										_cfgentry = format ["configFile >> ""CfgGroups"" >>""%1"">>""%2"">>""%3"">>""%4"" ",(configname (_Cfgside)),(configname (_Cfgfaction)),(configname (_Cfgtype)),(configname (_cfgclasstype))];
+										
+										//Lets count the units in a group
+										private ["_count","_CfgUnit"];
+										_count = 0; 
+										for "_n" from 0 to ((count _cfgclasstype) - 1) do	
+											{
+											_CfgUnit = (_cfgclasstype select _n); 
+											if (isClass(_CfgUnit)) then
+												{
+													_count = _count + 1;
+												};
+											};
+											
+										_grp_array set[_indexar,[_classtype,_cfgclass,_cfgentry,_cfgname,_count]];										
+										_indexar = _indexar + 1;
+
 									};
 								};
-							
 							};
+						};
 					};
 				};
-		
-			  
-			
-			  
 			};
 		 };
-
     };
-
-
 };
 
 

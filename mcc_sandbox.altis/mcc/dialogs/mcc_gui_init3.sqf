@@ -208,5 +208,5 @@ ctrlEnable [MAIN,true]; //Enable switching menus
 ctrlEnable [MENU2,true];
 ctrlEnable [MENU3,false];
 ctrlEnable [MENU4,true];
-ctrlEnable [MENU5,false];
+ctrlEnable [MENU5,true];
 

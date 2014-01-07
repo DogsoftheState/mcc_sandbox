@@ -12,10 +12,8 @@ if (!isnil "MCC_Rain") then {0 setRain MCC_Rain};
 if (!isnil "MCC_Lightnings") then {0 setLightnings MCC_Lightnings};
 if (!isnil "MCC_Fog") then {0 setFog MCC_Fog};
 
-skipTime 2;
-sleep 2;
-skipTime -2;
-//simulWeatherSync;
+skipTime 1;
+sleep 5;
 
 if (!isnil "MCC_date") then {setDate MCC_date};
 if (!isnil "MCC_sync") then 
@@ -24,3 +22,4 @@ if (!isnil "MCC_sync") then
 	waituntil {scriptdone _ok};
 	};
 mcc_sync_status = true; 
+skipTime -1;

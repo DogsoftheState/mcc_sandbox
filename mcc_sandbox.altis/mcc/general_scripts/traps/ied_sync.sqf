@@ -24,7 +24,11 @@ if (count _nearObjectsA > 0 && count _nearObjectsB > 0) then	{
 			_triggerA setvariable ["iedTrigered", true, true];	//blow the IED
 			_loop = false;
 		};
-		sleep 0.1;
+		sleep 0.3;
 	};
-	[[2,compile format ["deletemarkerlocal 'line_%1';",_IEDLineName]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;	//delete IED marker 
+	
+	if (_IEDLineName != 9999) exitWith 
+	{
+		[[2,compile format ["deletemarkerlocal 'line_%1';",_IEDLineName]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;	//delete IED marker 
+	};
 };

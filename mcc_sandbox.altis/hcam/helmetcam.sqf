@@ -66,13 +66,13 @@ _camOn = false;
 // start cam-update loop
 if (!isnil "hcam_cam") then
 	{
-		while {hcam_cam != ObjNull} do {	
+		while {!isNull hcam_cam} do {	
 			// destroy camera and cancel the loop if player closes the liveFeed or takes off his tactical glasses.
 			if ( !( (goggles player) in hcam_goggles ) ) then {
 				hcam_cam cameraEffect ["TERMINATE", "BACK"];
 				_camOn = false;
 				camDestroy hcam_cam;
-				hcam_cam = nil;
+				hcam_cam = objNull;
 			} else {
 			
 				_units = hcam_units;
@@ -145,6 +145,7 @@ if (!isnil "hcam_cam") then
 					sleep 1;
 				};
 			};
+			if (isnil "hcam_cam") then {hcam_cam = ObjNull};
 		};
 };
 // loop ended, cleanup

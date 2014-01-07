@@ -15,7 +15,7 @@ scriptName "objectGrabber.sqf";
 	Success flag (Boolean)
 	
 	init:
-	null = [getpos this,200] execvm "objectGrabber.sqf";
+	null = [getpos player,200] execvm "mcc\general_scripts\docobject\objectGrabber.sqf";
 */
 
 //Validate parameter count

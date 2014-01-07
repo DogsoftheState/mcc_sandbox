@@ -7,7 +7,7 @@
 disableSerialization;
 
 private ["_type", "_name", "_worldPos","_dummy", "_unitpos", "_ok", "_markerColor", "_leader", "_markerType", "_tempMarkers", "_tempLines", "_tempVehicles",
-		"_targetUnit","_oldUnit","_group","_params","_ctrl","_pressed","_shift","_ctrlKey","_mccdialog","_comboBox","_nul","_dummyUnit","_control","_cam"];
+		"_targetUnit","_oldUnit","_group","_params","_ctrl","_pressed","_shift","_ctrlKey","_mccdialog","_comboBox","_nul","_dummyUnit","_control","_cam","_side"];
 
 _mccdialog = findDisplay MCC_SANDBOX4_IDD;
 _comboBox = _mccdialog displayCtrl MCC_UM_LIST;
@@ -112,12 +112,18 @@ _type = _this select 0;
 												{
 												_markerColor = "ColorGreen";
 												};
+												
+											default
+												{
+												_markerColor = "ColorWhite";
+												}
 											};
 										if ((vehicle _x) != _x) then 
 											{
 											if (!((vehicle _x) in _tempVehicles)) then
 												{
 												_tempVehicles set [count _tempVehicles, vehicle _x];
+												_markerType = "mil_dot"; 
 												if ((vehicle _x) iskindof "Car") then {_markerType = "b_mech_inf";};
 												if ((vehicle _x) iskindof "Tank") then {_markerType = "b_armor";};
 												if ((vehicle _x) iskindof "Air") then {_markerType = "b_air";};
@@ -422,6 +428,7 @@ _type = _this select 0;
 	
 
 if (_type == 8 || _type == 4) exitWIth {}; // Fail safe for loading list only if unit deleted or houn other
+
 //-------------------------------Reset list managment--------------------------------------------------------------------------------------------------------------
 MCC_UMunitsNames = [];
 UMgroupNames = [];
@@ -452,89 +459,54 @@ if (MCC_UMstatus == 0) then //player
 				};
 	};
 	
-if (MCC_UMstatus == 1) then 	//East
-	{	
-		if (MCC_UMUnit==0) then 
-			{
-				{
-				if (alive _x && side _x == east && !(isPlayer _x)) then	//Unit
-					{
-						_displayname =  format ["%1",typeOf (vehicle _x)];
-						if ((_x != vehicle _x) && ((driver (vehicle _x))==_x)) then {_displayname = format ["%1 (Driver)",_displayname]};
-						if ((_x != vehicle _x) && ((gunner (vehicle _x))==_x)) then {_displayname =  format ["%1 (Gunner)",_displayname]};
-						if ((_x != vehicle _x) && ((commander (vehicle _x))==_x)) then {_displayname =  format ["%1 (Commander)",_displayname]};
-						_comboBox lbAdd _displayname;
-						MCC_UMunitsNames = MCC_UMunitsNames + [_x];
-					};
-				} forEach allUnits;
-			} else
-				{
-					{
-					if ((side (leader _x) == east) && !(isPlayer leader _x)) then	//group
-						{
-							_displayname =  format ["%1", _x];
-							_comboBox lbAdd _displayname;
-							UMgroupNames = UMgroupNames + [_x];
-						};
-					} forEach  allgroups;
-				};
+switch (MCC_UMstatus) do
+{
+	case 1:		
+	{
+		_side =east;
 	};
-
-if (MCC_UMstatus == 2) then 	//West
-	{	
-		if (MCC_UMUnit==0) then 
-			{
-				{
-				if (alive _x && side _x == west && !(isPlayer _x)) then
-					{
-						_displayname =  format ["%1",typeOf (vehicle _x)];
-						if ((_x != vehicle _x) && ((driver (vehicle _x))==_x)) then {_displayname = format ["%1 (Driver)",_displayname]};
-						if ((_x != vehicle _x) && ((gunner (vehicle _x))==_x)) then {_displayname =  format ["%1 (Gunner)",_displayname]};
-						if ((_x != vehicle _x) && ((commander (vehicle _x))==_x)) then {_displayname =  format ["%1 (Commander)",_displayname]};
-						_comboBox lbAdd _displayname;
-						MCC_UMunitsNames = MCC_UMunitsNames + [_x];
-					};
-				} forEach allUnits;
-			} else
-				{
-					{
-					if ((side (leader _x) == west) && !(isPlayer leader _x)) then	//group
-						{
-							_displayname =  format ["%1", _x];
-							_comboBox lbAdd _displayname;
-							UMgroupNames = UMgroupNames + [_x];
-						};
-					} forEach  allgroups;
-				};
+	
+	case 2:		
+	{
+		_side =west;
 	};
+	
+	case 3:		
+	{
+		_side =resistance;
+	};
+	
+	default
+	{
+		_side =civilian;
+	};
+};
 
-if (MCC_UMstatus == 3) then 
-	{	
-		if (MCC_UMUnit==0) then 
-			{
-				{
-				if (alive _x && side _x == resistance && !(isPlayer _x)) then
-					{
-						_displayname =  format ["%1",typeOf (vehicle _x)];
-						if ((_x != vehicle _x) && ((driver (vehicle _x))==_x)) then {_displayname = format ["%1 (Driver)",_displayname]};
-						if ((_x != vehicle _x) && ((gunner (vehicle _x))==_x)) then {_displayname =  format ["%1 (Gunner)",_displayname]};
-						if ((_x != vehicle _x) && ((commander (vehicle _x))==_x)) then {_displayname =  format ["%1 (Commander)",_displayname]};
-						_comboBox lbAdd _displayname;
-						MCC_UMunitsNames = MCC_UMunitsNames + [_x];
-					};
-				} forEach allUnits;
-			} else
-				{
-					{
-					if ((side (leader _x) == resistance) && !(isPlayer leader _x)) then	//group
-						{
-							_displayname =  format ["%1", _x];
-							_comboBox lbAdd _displayname;
-							UMgroupNames = UMgroupNames + [_x];
-						};
-					} forEach  allgroups;
-				};
-	};	
+if (MCC_UMUnit==0) then 
+{
+	{
+		if (alive _x && side _x == _side && !(isPlayer _x)) then	//Unit
+		{
+			_displayname = getText (configfile >> "CfgVehicles" >> typeOf (vehicle _x)  >> "displayName"); 
+			if ((_x != vehicle _x) && ((driver (vehicle _x))==_x)) then {_displayname = format ["%1 (Driver)",_displayname]};
+			if ((_x != vehicle _x) && ((gunner (vehicle _x))==_x)) then {_displayname =  format ["%1 (Gunner)",_displayname]};
+			if ((_x != vehicle _x) && ((commander (vehicle _x))==_x)) then {_displayname =  format ["%1 (Commander)",_displayname]};
+			_comboBox lbAdd _displayname;
+			MCC_UMunitsNames = MCC_UMunitsNames + [_x];
+		};
+	} forEach allUnits;
+} 
+else
+{
+	{
+		if ((side (leader _x) == _side) && !(isPlayer leader _x)) then	//group
+		{
+			_displayname =  format ["%1", _x];
+			_comboBox lbAdd _displayname;
+			UMgroupNames = UMgroupNames + [_x];
+		};
+	} forEach  allgroups;
+};	
 
 
 	

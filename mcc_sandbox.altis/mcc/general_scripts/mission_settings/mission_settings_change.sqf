@@ -10,6 +10,7 @@
 #define MCC_MSCONSOLEGPS 8407
 #define MCC_MSCONSOLESHOWFRIENDS 8408
 #define MCC_MSCONSOLECOMMANDAI 8409
+#define MCC_IDCNAMETAGS 8410
 
 private ["_string", "_resistanceHostile", "_AiSkill","_value","_ACEReviveTime","_ACESpectator","_t2t","_code"];
 disableSerialization;
@@ -79,11 +80,17 @@ if !mcc_isloading then	{
 	MCC_ConsoleOnlyShowUnitsWithGPS = if ((lbCurSel MCC_MSCONSOLEGPS) == 0) then {true} else {false};	//CONSOLE
 	publicvariable "MCC_AI_Command";
 	
-	MCC_ConsoleDrawWP = if ((lbCurSel MCC_MSCONSOLESHOWFRIENDS) == 0) then {true} else {false};	//CONSOLE
+	MCC_ConsoleDrawWP = if ((lbCurSel MCC_MSCONSOLESHOWFRIENDS) == 0) then {true} else {false};		//CONSOLE
 	publicvariable "MCC_AI_Command";
+	
+	MCC_ConsolePlayersCanSeeWPonMap = if ((lbCurSel MCC_MSCONSOLESHOWFRIENDS) == 0) then {true} else {false};		//CONSOLE
+	publicvariable "MCC_ConsolePlayersCanSeeWPonMap";
 	
 	MCC_ConsoleCanCommandAI = if ((lbCurSel MCC_MSCONSOLECOMMANDAI) == 0) then {true} else {false};	//CONSOLE
 	publicvariable "MCC_AI_Command";
+	
+	MCC_nameTags = if ((lbCurSel MCC_IDCNAMETAGS) == 0) then {false} else {true};	//NameTags
+	publicvariable "MCC_nameTags";
 	
 	/*
 	MCC_AI_Command = _AiSkill; 

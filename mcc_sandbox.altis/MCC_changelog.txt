@@ -1,3 +1,112 @@
+Change log r14:
+
+--- New feature: Missions Wizard ---
+
+	Mission Wizard (MW) is a quick one press missions generator for MCC. It is in MCC's menu 5. 
+	The mission wizard will read any map and scan its' locations to find the best location for the mission. 
+	Each mission is called operation and can have up to three different objectives. 
+	The MW will handle BIS default factions and any addon faction or island. 
+	It will spawn units, groups, vehicles and static weapons with different behaviors, it will automatically create zones and populate them.
+	It will automatically create tasks and triggers. 
+	It will change the weather, date and time of day to fit the mission. 
+	It will even generate custom briefings on a new custom stratigic map.
+	
+	The mission maker should define a few parameters before pressing "Generate Mission":
+		- Rival faction: who are we fighting? 
+		- # players: The ammount of players the mission is built for (more players equal more enemy's units and greater distance between objectives). 
+		- Difficulty: The higher the difficulty the more enemy's units the player should expect. 
+		- CQB: 	No - The mission will not be inside a residential area.
+				Yes Without Civilians - The mission will be in a city or a village you can expect enemy forces garrison the area but no civilians.  
+				Yes with Civilians -  The mission will be in a city or a village you can expect enemy forces garrison the area and civilians' units and vehicles in the area.  
+		- Stealth: If stealth is on the mission will be a night op and incase the players get detected they should expect alarms going off and reinforcement comming in. 
+		- Objectives 1 to 3: Up to 3 objectives per operation:
+				- Random: will randomly select an objective type. 
+				- Secure HVT: Rescue mission. Save a hostage from the enemy hands. 
+				- Kill HVT: Assassinate one of the enemy's high ranks officer. 
+				- Destroy Object: Sabotage the enemy war efforts by destroying objects ranging from: fuel dumps, ammo cash, radar, prototype vehicles and plans, artillery, AA and many more. 
+				- Pick Intel: Snatch an important information out of the enemy's hand it can be hidden in suitcases, folders exc. 
+				- Clear Area: Capture an enemy's strong point, clear it and defend against might be counter attacks. 
+				- Disarm IED: Disarm a massive IED placed by the enemy. 
+		- Vehicles: Should there be enemy's vehicles on scene. 
+		- Armor: Should there be enemy's armor on scene. 		
+		- IEDs: If turned on MW will place IEDs and ambushes on roads leading to the objectives.
+		- Suicide Bombers: If turned on MW will place suicide bombers around the objectives.
+		- Armed Civilians: If turned on MW will place armed civilians around the objectives.
+		- Roadblocks: If turned on MW will place roadblock on the roads leading to the objectives.
+		
+--- Group Generator ---
+Totally reworked Group gen:
+- Changed: 	Get total control on the AI with a new RTS like interface and functionality:
+ 
+			Groups will have NATO symbols to represents group's size and type. They will change color to indicate they are in combat. 
+			Choosing groups will be done by clicking on their icon or by drawing a box around them or by holding Ctrl for multi-selection.
+			Right clicking on a group icon will show additional details as:
+				- Group leader's name.
+				- Group infantry count.
+				- Group vehicles.
+				- Group behavior.
+			To issue waypoints choose one or more groups and double click anywhere on the minimap to issue WP.
+			Group Gen support all sides and can address waypoints that are will not work with BIS high command such as: get in, load, join exc. 
+			Mission maker will stop UPSMON if issuing custom WP to an UPSMON controlled group.
+ 
+--- Garrison ----
+- Added: Garrison units will patrol between nearby buildings. 
+- Fixed: Garrison will now work on bunkers. 
+- Fixed: Garrison will not spawn snipers/aa/at and such. 
+- Fixed: Garrison unit's density reduced by half. 
+- Fixed: Vehicles in garrison will no longer explode and the vehicles will be spawned on the roads' shoulders.  
+
+--- VAS ---
+- Fixed: Updated to latest VAS version. 
+- Fixed: MCC VAS will not overwrite missions' VAS and will not collide with existing mission's VAS if present.
+
+--- UI --- 
+- Added: Name tags - you can turn name tags on and off from mission settings. Name tags will show name and rank of nearby friendly units and while in vehicle it will 
+		 show the names of the crew. 
+- Added: A number of units per group indecator while spawning groups.
+- Added: Info to how to disable IED when choosing to be an EOD or engineer class. 
+- Fixed: Map Alpha has been reduced to show map markers. 
+- Fixed: Unit Managment (Menu 4) will display the vehicles' display name rather then the class name. 
+- Fixed: MCC changes terrain grid sometimes (Floating rocks problem). 
+- Fixed: Time on map and actual time were different. 
+
+--- Misc ---
+- Fixed: Disbanding hostage will not make you leave your group. 
+- Fixed: Some triggers didn't saved correctly. 
+- Added: Mod's mission now have BTC.
+
+--- Commander Console --- 
+- Fixed: By default players won't be able to see WP assigned to them unless defined by Mission Settings.
+
+--- 3D Editor ---
+- Fixed: 3D preset - destroy by satchel only wasn't working
+- Fixed: When spawning vehicles in 3D editor the turret will look the same direction the vehicle is pointing
+
+--- Engine ---
+- Changed: Mod version is no longer requires CBA. 
+- Changed: CAS airplanes are read from configs instead of premade list - you can call CAS with your favorite addon's plane. 
+- Changed: Groups placed with Ambush behavior will look further away for roads to place mines. 
+- Added: In mission version MCC_allowedPlayers variable for controling who will have MCC access. Host or server's admin can always access MCC. Leave "all" for free access
+- Added: MCC will delete empty groups.
+- Added: Admin or server host can kick out mission maker.
+- Added: If the mission maker DC he will leave MCC.
+
+
+- TODO: JIP briefings
+- TODO: 3D editor save to sqf
+- TODO: Satmap button
+- TODO: ai spawn in buildings
+- Players: more players will make the mission's objectives to scatter around wider area and to have more resistance. 
+
+
+startloadingscreen ["","RscDisplayLoadingBlack"];
+endloadingscreen;
+startloadingscreen ["","RscDisplayLoadMission"];
+startloadingscreen ["","RscDisplayLocWeaponInfo"];
+sleep 3; 
+endloadingscreen;
+
+
 Change log r13:
 - Fixed: Loading issues from clipboard.
 - Fixed: Reading units from mods such as Hellenic Armed Forces.

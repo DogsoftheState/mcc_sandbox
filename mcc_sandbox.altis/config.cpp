@@ -7,7 +7,7 @@ class CfgPatches {
 		requiredAddons[] = {};
 		author[] = {"shay_gman"};
 		versionDesc = "MCC Sandbox 3";
-		version = "0.82";
+		version = "0.9";
 	};
 };	
 
@@ -24,12 +24,6 @@ class CfgMissions {
 		{
 			directory = "mcc_sandbox_mod\sampleMissions\MCC_Template.Altis";		
 		};
-	};
-};
-
-class Extended_PreInit_EventHandlers	{
-	class mcc_sandbox_initialize	{
-		init = "if (isNil 'mcc_sandbox') then { mcc_sandbox = true;[] execVM '\mcc_sandbox_mod\init.sqf'};"; 
 	};
 };
 

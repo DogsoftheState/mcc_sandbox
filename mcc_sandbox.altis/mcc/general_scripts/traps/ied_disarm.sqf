@@ -1,6 +1,13 @@
 private ["_ied","_fakeIed","_men","_index","_rand","_randsound","_disarmTime", "_footer", "_html", "_break","_dummyMarker","_isEngineer"];
 _fakeIed = _this select 0;
 _ied = _fakeIed getvariable "realIed";
+
+if (isnil "_ied") then
+{
+	_ied = _this select 0;
+	_fakeIed = _ied getvariable "fakeIed";
+}; 
+
 _men = _this select 1;
 _index = _this select 2;
 _rand= random 1;

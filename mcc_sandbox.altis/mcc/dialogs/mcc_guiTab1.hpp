@@ -4,6 +4,9 @@
 
 #define MCC_SANDBOX_IDD 1000
 #define MCC_SANDBOX2_IDD 2000
+#define MCC_SANDBOX3_IDD 3000
+#define MCC_SANDBOX4_IDD 4000
+#define MCC_SANDBOX5_IDD 6000
 
 #define MAIN 1050
 #define MENU2 1051
@@ -215,6 +218,7 @@ class MCC_Menu5: MCC_RscButtonMenu	{idc = MENU5;text = "Menu 5";x = 0.729466 * s
 	h = 0.0510023 * safezoneH;
 	colorText[] = {1,1,1,1};
 	colorBackground[] = {0,0,0,1};
+	onButtonClick = __EVAL ("[6] execVM '"+MCCPATH+"mcc\dialogs\mcc_PopupMenu2.sqf'");
 }
 class MCC_factioTittle: MCC_RscText	{idc = -1;text = "Faction:";
 	x = 0.3625 * safezoneW + safezoneX;
@@ -308,6 +312,7 @@ class MCC_spawnButton: MCC_RscButton {idc = -1;	text = "Spawn";
 	w = 0.0849875 * safezoneW;
 	h = 0.0510023 * safezoneH;
 	onButtonClick = __EVAL("[false] execVM '"+MCCPATH+"mcc\pop_menu\spawn_group.sqf'");
+	tooltip = "Spawn the selected unit/group inside the zone with the given behavior"; 
 };
 class MCC_spawnEmptyTittle: MCC_RscText {idc = -1;	text = "Empty:";
 	x = 0.3625 * safezoneW + safezoneX;
@@ -750,7 +755,7 @@ class MCC_FOBWest: MCC_RscButton
 	w = 0.0458333 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	colorText[] = {0,0,1,1};
-	tooltip = "Set west FOB"; //--- ToDo: Localize;
+	tooltip = "Set west FOB (will work only if Role Selection is on)"; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
 class MCC_FOBEast: MCC_RscButton
@@ -764,7 +769,7 @@ class MCC_FOBEast: MCC_RscButton
 	w = 0.0458333 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	colorText[] = {1,0,0,1};
-	tooltip = "Set east FOB"; //--- ToDo: Localize;
+	tooltip = "Set east FOB (will work only if Role Selection is on)"; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
 class MCC_FOBGuar: MCC_RscButton
@@ -778,7 +783,7 @@ class MCC_FOBGuar: MCC_RscButton
 	w = 0.0458333 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	colorText[] = {0,1,0,1};
-	tooltip = "Set resistance FOB"; //--- ToDo: Localize;
+	tooltip = "Set resistance FOB (will work only if Role Selection is on)"; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
 //---------------------FRAMES---------------------------------------------

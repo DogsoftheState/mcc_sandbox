@@ -3,6 +3,9 @@
 ////////////////////////////////////////////////////////
 #define MCC_SANDBOX_IDD 1000
 #define MCC_SANDBOX2_IDD 2000
+#define MCC_SANDBOX3_IDD 3000
+#define MCC_SANDBOX4_IDD 4000
+#define MCC_SANDBOX5_IDD 6000
 
 #define MCC_MINIMAP 9000
 #define MAIN 1050
@@ -234,6 +237,7 @@ class MCC_Menu5: MCC_RscButtonMenu	{idc = MENU5;text = "Menu 5";x = 0.729466 * s
 	h = 0.0510023 * safezoneH;
 	colorText[] = {1,1,1,1};
 	colorBackground[] = {0,0,0,1};
+	onButtonClick = __EVAL ("[6] execVM '"+MCCPATH+"mcc\dialogs\mcc_PopupMenu2.sqf'");
 }
 class MCC_factioTittle: MCC_RscText	{idc = -1;text = "Faction:";
 	x = 0.356771 * safezoneW + safezoneX;

@@ -8,14 +8,14 @@ loadScreen = "data\mcc_loadingScreen.paa";
 onLoadMission = MCC Sandbox is a dynamic mission environment when one can set missions and play them on the fly;
 
 respawn      = "BASE";
-respawndelay = 10;
+respawndelay = 4;
 disabledAI   = 1;
 
 class Header
 {
 	gameType = Coop;
 	minPlayers = 1;
-	maxPlayers = 36;
+	maxPlayers = 149;
 };
 
 //================================================================F3=======================================================================

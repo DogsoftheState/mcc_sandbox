@@ -27,7 +27,8 @@ if (player in _synced)then {
 	while { !alive player && isnil "MCC_path"} do {sleep 1}; 
 	_null = [] execVM MCC_path + "hcam\hcam_init.sqf";
 	player setVariable ["mcc_sf",true,true];
-	sleep 10; 
+	sleep 1; 
+	waituntil {!(IsNull (findDisplay 46))};
 	["<t font='TahomaB'>You have just been assigned as Special Forces member</t>
 	<br/><img size='9' img image='"+MCC_path+"data\sf.paa' />
 	<br/>You can access your group helmet camera using <t font='TahomaB'><t underline='true'>User key 1</t></t> key.

@@ -3,7 +3,7 @@ Advance IED script by Shay_Gman 12.10
 */
 private ["_dummy","_trapvolume","_IEDExplosionType","_IEDJammable","_IEDTriggerType","_trapdistance","_iedside","_targets",
 		"_loop","_nearObjects","_nearTargets","_nrsd","_count","_target","_dummyMarker","_armed", "_triggered","_pos",
-		"_IedExplosion","_wh","_randomChanceCREW","_explode","_targetSpeed"];
+		"_IedExplosion","_wh","_randomChanceCREW","_explode","_targetSpeed","_isJammable","_effect"];
 
 _dummy 				= _this select 0;	//the hiden targer
 _trapvolume 		= _this select 1;	//How big the explosion
@@ -40,23 +40,31 @@ if (_IEDTriggerType==2) then	{		//manual detonation
 						_nrsd = [];
 						{if(side _x == _iedside) then {_nrsd = _nrsd + [_x]}} forEach _nearTargets;
 						_count=count _nrsd;
-						for [{_x=0},{_x<_count},{_x=_x+1}] do	{
-							_target = _nrsd select _x;
-								if (_IEDJammable==0) then	{	//If the IED is jammable
-										if((_target getvariable "MCC_ECM") && ((_target distance _dummy) <= 80)) then {//check if it's a CREW vehicle
-											_randomChanceCREW = random 100;
-											while {((_target distance _dummy) < 80) && (_randomChanceCREW>1)} do {_randomChanceCREW = random 100;sleep 2};	//While CREW is near IED got only 1% per 2 second to go off
-											if (_randomChanceCREW <=1) exitWith {_loop=false; _dummy setvariable ["iedTrigered",true,true];}
-										}; 
 						
-								if (_loop) then	{		//If we come this far someone is near the IED
+						for [{_x=0},{_x<_count},{_x=_x+1}] do	
+						{
+							_target = _nrsd select _x;
+							_isJammable = (_target getvariable "MCC_ECM");
+							if (isnil "_isJammable") then {_isJammable = false}; 
+								if (_IEDJammable==0) then	//If the IED is jammable
+								{	
+									if(_isJammable && ((_target distance _dummy) <= 80)) then //check if it's a CREW vehicle
 									{
-									_targetSpeed = if (_IEDTriggerType==1) then {true} else {(speed _target) > 5}; //if it is radio IED speed dosen't matter 
-									if((_target isKindOf _x) && ((_target distance _dummy) <= _trapdistance) && _targetSpeed)exitWith {_loop=false;_dummy setvariable ["iedTrigered",true,true]};
-									} forEach _targets;
+										_randomChanceCREW = random 100;
+										while {((_target distance _dummy) < 80) && (_randomChanceCREW>1)} do {_randomChanceCREW = random 100;sleep 2};	//While CREW is near IED got only 1% per 2 second to go off
+										if (_randomChanceCREW <=1) exitWith {_loop=false; _dummy setvariable ["iedTrigered",true,true];}
+									}; 
+						
+									if (_loop) then	//If we come this far someone is near the IED
+									{		
+										{
+										_targetSpeed = if (_IEDTriggerType==1) then {true} else {(speed _target) > 7}; //if it is radio IED speed dosen't matter 
+										if((_target isKindOf _x) && ((_target distance _dummy) <= _trapdistance) && _targetSpeed)exitWith {_loop=false;_dummy setvariable ["iedTrigered",true,true]};
+										} forEach _targets;
+									};
 								};
-							};
 						};
+						
 					_armed = _dummy getvariable "armed";
 					if (isnil "_armed") then {_armed = false}; 
 					};
@@ -118,9 +126,11 @@ sleep 0.5;
 if (_explode) then {
 	if (_fakeIed isKindOf "Car") then	{	//If IED is a car lets make it burn
 		_fakeIed setdamage 1;
-		//- TO DO make the care burn
+		_effect = "test_EmptyObjectForFireBig" createVehicle (getpos _fakeIed); _effect attachto [_fakeIed,[0,0,0]];
 	} else {deletevehicle _fakeIed};
 };
 sleep 10;	//fail safe give the game enough time to read the variable from it before deleting it.
+
+if ((typeof _fakeIed) in MCC_MWIED) then {deletevehicle _fakeIed;}; 
 deletevehicle _dummy;	//Delete the dummyIED
 if (true) exitWith {};

@@ -83,9 +83,10 @@ _comboBox = _mccdialog displayCtrl FACTIONCOMBO;		//fill combobox CFG factions
 _comboBox = _mccdialog displayCtrl MCC_CASPLANETYPE;		//fill combobox CAS Plane Type
 	lbClear _comboBox;
 	{
-		_displayname = format ["%1",_x select 0];
-		_comboBox lbAdd _displayname;
-	} foreach MCC_CASPlanes;
+		_displayname =  format ["%1",(_x select 3)select 0];
+		_index = _comboBox lbAdd _displayname;		
+		_comboBox lbsetpicture [_index, (_x select 3) select 1];
+	} foreach (U_GEN_AIRPLANE+U_GEN_HELICOPTER);
 	_comboBox lbSetCurSel 0;
 
 _comboBox = _mccdialog displayCtrl MCC_CASTYPE;		//fill combobox CAS Bomb Type
@@ -316,5 +317,5 @@ ctrlEnable [MAIN,true]; //Enable switching menus
 ctrlEnable [MENU2,false];
 ctrlEnable [MENU3,true];
 ctrlEnable [MENU4,true];
-ctrlEnable [MENU5,false];
+ctrlEnable [MENU5,true];
 
