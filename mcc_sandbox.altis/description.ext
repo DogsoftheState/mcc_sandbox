@@ -108,7 +108,7 @@ class Params
                 title = "BTC Lifes (requires BTC Revive ON";
                 values[] = {30,20,10,5,4,3,2,1};
                 texts[] = {"30","20","10","5","4","3","2","1"};
-                default = 3;
+                default = 10;
                 code = "f_var_BTCLifes = %1";
         };
 

@@ -80,6 +80,21 @@ call compile preprocessFile "=BTC=_Logistic\=BTC=_logistic_Init.sqf";
 
 [] execVM "group_manager.sqf";
 
+//----------------------Task Force Radio-----------------------------------------
+// Source: https://github.com/michail-nikolaev/task-force-arma-3-radio/blob/master/README_EN.md
+
+tf_no_auto_long_range_radio = true;
+
+tf_same_sw_frequencies_for_side = true;
+tf_freq_west = 31;
+tf_freq_east = 31;
+tf_freq_guer = 31;
+
+tf_same_lr_frequencies_for_side = true;
+tf_freq_west_lr = 51;
+tf_freq_east_lr = 51;
+tf_freq_guer_lr = 51;
+
 //----------------------IED settings---------------------------------------------
 // IED types the first one is display name the second is the classname [displayName, ClassName]
 MCC_ied_small = [["Plastic Crates","Land_CratesPlastic_F"],["Plastic Canister","Land_CanisterPlastic_F"],["Sack","Land_Sack_F"],["Road Cone","RoadCone"],["Tyre","Land_Tyre_F"],["Radio","Land_SurvivalRadio_F"],["Suitcase","Land_Suitcase_F"],["Grinder","Land_Grinder_F"],
