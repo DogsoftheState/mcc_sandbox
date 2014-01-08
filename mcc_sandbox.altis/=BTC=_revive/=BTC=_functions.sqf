@@ -16,33 +16,34 @@ BTC_assign_actions =
 BTC_get_gear =
 {
 	private ["_array_mag","_id","_display_name","_count","_array_class","_array_bullet","_array_class_x","_array_bullet_x","_r_mag_d","_h_mag_d","_brack"];
+	_unit = _this select 0;
 	_gear = [];
 	_weapons = [];
-	_prim_weap = primaryWeapon player;
-	_prim_items = primaryWeaponItems player;
-	_sec_weap = secondaryWeapon player;
-	_sec_items = secondaryWeaponItems player;
-	_items_assigned = assignedItems player;
-	_handgun = handgunWeapon player;
-	_handgun_items = handgunItems player;
+	_prim_weap = primaryWeapon _unit;
+	_prim_items = primaryWeaponItems _unit;
+	_sec_weap = secondaryWeapon _unit;
+	_sec_items = secondaryWeaponItems _unit;
+	_items_assigned = assignedItems _unit;
+	_handgun = handgunWeapon _unit;
+	_handgun_items = handgunItems _unit;
 	if (_prim_weap != "") then {_weapons = _weapons + [_prim_weap]};
 	if (_sec_weap != "") then {_weapons = _weapons + [_sec_weap]};
 	if (_handgun != "") then {_weapons = _weapons + [_handgun]};
-	_goggles = goggles player;
-	_headgear = headgear player;
-	_uniform = uniform player;
-	_uniform_items = uniformItems player;
-	_vest = vest player;
-	_vest_items = vestItems player;
-	_back_pack = backpack player;
-	_back_pack_items = backpackItems player;
-	_back_pack_weap = getWeaponCargo (unitBackpack player);
-	_weap_sel = currentWeapon player;
-	_weap_mode = currentWeaponMode player;
+	_goggles = goggles _unit;
+	_headgear = headgear _unit;
+	_uniform = uniform _unit;
+	_uniform_items = uniformItems _unit;
+	_vest = vest _unit;
+	_vest_items = vestItems _unit;
+	_back_pack = backpack _unit;
+	_back_pack_items = backpackItems _unit;
+	_back_pack_weap = getWeaponCargo (unitBackpack _unit);
+	_weap_sel = currentWeapon _unit;
+	_weap_mode = currentWeaponMode _unit;
 	_fire_mode_array = getArray (configFile >> "cfgWeapons" >> _weap_sel >> "modes");
 	_fire_mode = _fire_mode_array find _weap_mode;
 
-	_magazinesAmmoFull = magazinesAmmoFull player;
+	_magazinesAmmoFull = magazinesAmmoFull _unit;
 	_mag_uniform = [];_mag_vest = [];_mag_back = [];_mag_loaded_prim = [];_mag_loaded_sec = [];_mag_loaded_at = [];
 	{
 		if !(_x select 2) then
@@ -128,26 +129,39 @@ BTC_set_gear =
 	if ((_gear select 0) != "") then {_unit addUniform (_gear select 0);};
 	if ((_gear select 1) != "") then {_unit addVest (_gear select 1);};
 	_unit addBackpack "B_AssaultPack_blk"; 
-	if (count (_gear select 11) > 0) then {{if (_x == "Binocular") then {_unit addWeapon _x;};if (_x != "" && _x != "Binocular") then {_unit addItem _x;_unit assignItem _x;sleep 0.01;};} foreach (_gear select 11);};
-	removeBackPack _unit;
-	if ((_gear select 4) != "") then {_unit addBackPack (_gear select 4);clearAllItemsFromBackpack _unit;};
-	
+	if (count (_gear select 11) > 0) then {{if (_x != "" && _x != "Binocular" && _x != "Rangefinder" && _x != "Laserdesignator") then {_unit addItem _x;_unit assignItem _x;} else {_unit addWeapon _x;};} foreach (_gear select 11);};  
+
 	_ammo = _gear select 16;
 	if (count (_ammo select 0) > 0) then {_unit addMagazine (_ammo select 0)};
 	if (count (_ammo select 1) > 0) then {_unit addMagazine (_ammo select 1)};
 	if (count (_ammo select 2) > 0) then {_unit addMagazine (_ammo select 2)};
-	{if (isClass (configFile >> "cfgWeapons" >> _x)) then {_unit addweapon _x;};} foreach (_gear select 7);
+	
+	{if (isClass (configFile >> "cfgWeapons" >> _x)) then {_unit addweapon _x;};} foreach (_gear select 7);	
+	
+	removeBackPack _unit;
+	if ((_gear select 4) != "") then {_unit addBackPack (_gear select 4);clearAllItemsFromBackpack _unit;};	
+	
 	//mags
+	_u_cont = (uniformContainer _unit);
+	_v_cont = (vestContainer _unit);	
+	
 	{_unit addMagazine _x;} foreach (_ammo select 3);
-	{if (!(isClass (configFile >> "cfgMagazines" >> _x))) then {_unit addItem _x;} else {if (getNumber(configFile >> "cfgMagazines" >> _x >> "count") < 2) then {_unit addMagazine _x;};};sleep 0.1;} foreach (_gear select 12);
-	_watch = 0;
-	while {loadUniform _unit < 1} do {_unit addItem "itemWatch";_watch = _watch + 1;};
+	{if (!(isClass (configFile >> "cfgMagazines" >> _x))) then {_unit addItem _x;} else {if (getNumber(configFile >> "cfgMagazines" >> _x >> "count") < 2) then {_unit addMagazine _x;};};} foreach (_gear select 12);
+
+	if (!isnull _u_cont) then {_u_cont addItemCargo ["itemWatch",25];};
+	
 	{_unit addMagazine _x;} foreach (_ammo select 4);
-	{if (!(isClass (configFile >> "cfgMagazines" >> _x))) then {_unit addItem _x;} else {if (getNumber(configFile >> "cfgMagazines" >> _x >> "count") < 2) then {_unit addMagazine _x;};};sleep 0.1;} foreach (_gear select 13);
-	while {loadVest _unit < 1} do {_unit addItem "itemWatch";_watch = _watch + 1;};
+	{if (!(isClass (configFile >> "cfgMagazines" >> _x))) then {_unit addItem _x;} else {if (getNumber(configFile >> "cfgMagazines" >> _x >> "count") < 2) then {_unit addMagazine _x;};};} foreach (_gear select 13);
+	
+	if (!isnull _v_cont) then {_v_cont addItemCargo ["itemWatch",80];};
+	
 	{_unit addMagazine _x;} foreach (_ammo select 5);
-	{if (!(isClass (configFile >> "cfgMagazines" >> _x))) then {_unit addItem _x;} else {if (getNumber(configFile >> "cfgMagazines" >> _x >> "count") < 2) then {_unit addMagazine _x;};};sleep 0.1;} foreach (_gear select 5);
-	for "_i" from 1 to _watch do {_unit removeItem "ItemWatch";};
+	
+	{if (!(isClass (configFile >> "cfgMagazines" >> _x))) then {_unit addItem _x;} else {if (getNumber(configFile >> "cfgMagazines" >> _x >> "count") < 2) then {_unit addMagazine _x;};};} foreach (_gear select 5);
+	
+	if (!isnull _u_cont) then {for "_i" from 1 to 25 do {_unit removeItemFromUniform "itemWatch";};};
+	if (!isnull _v_cont) then {for "_i" from 1 to 80 do {_unit removeItemFromVest "itemWatch";};};		
+	
 	if ((_gear select 2) != "") then {_unit addGoggles (_gear select 2);};
 	if ((_gear select 3) != "") then {_unit addHeadgear (_gear select 3);};
 	if (count ((_gear select 6) select 0) > 0) then 
@@ -216,7 +230,7 @@ BTC_fnc_handledamage_2 =
 		if (BTC_respawn_gear == 1) then {BTC_gear = [_unit] call BTC_get_gear;};
 		if (BTC_r_damage > 1.5 || (BTC_r_head > 1.2)) then {if (BTC_r_wait_for_revive == 1) then {[_unit] spawn BTC_fnc_wait_for_revive;} else {_unit setDamage 1;};};
 		if (!BTC_r_bleeding_loop && BTC_r_damage > 0.3) then {[_unit] spawn BTC_fnc_bleeding;};
-		if (BTC_r_bleeding_loop && BTC_r_hit != time) then {_unit setVariable ["BTC_r_status",[(_unit getVariable "BTC_r_status" select 0),(((_unit getVariable "BTC_r_status") select 1) + (_damage)),(_unit getVariable "BTC_r_status" select 2),(_unit getVariable "BTC_r_status" select 3),(_unit getVariable "BTC_r_status" select 4)],false]};
+		if (BTC_r_bleeding_loop && BTC_r_hit != time) then {_unit setVariable ["BTC_r_status",[(_unit getVariable "BTC_r_status" select 0),(((_unit getVariable "BTC_r_status") select 1) + (_damage * 5)),(_unit getVariable "BTC_r_status" select 2),(_unit getVariable "BTC_r_status" select 3),(_unit getVariable "BTC_r_status" select 4)],false]};
 	};
 	if ((BTC_r_damage > 0.5 && ((_unit getVariable "BTC_r_status" select 2) != 1)) && (BTC_r_damage > 0.7 && ((_unit getVariable "BTC_r_status" select 4) != 1))) then {_unit setVariable ["BTC_r_status",[((_unit getVariable "BTC_r_status") select 0),(_unit getVariable "BTC_r_status" select 1),1,(_unit getVariable "BTC_r_status" select 3),1],true];}
 	else
@@ -248,10 +262,10 @@ BTC_fnc_bleeding =
 		{
 			private ["_moving_ratio"];
 			_moving_ratio = 1;
-			if (speed player > 1 && speed player < 3) then {_moving_ratio = 1.01;};
-			if (speed player >= 3 && speed player < 14) then {_moving_ratio = 1.02;};
-			if (speed player >= 14) then {_moving_ratio = 1.03;};
-			_unit setVariable ["BTC_r_status",[(_unit getVariable "BTC_r_status" select 0),((_unit getVariable "BTC_r_status") select 1) + (BTC_r_damage * _moving_ratio),(_unit getVariable "BTC_r_status" select 2),(_unit getVariable "BTC_r_status" select 3),(_unit getVariable "BTC_r_status" select 4)],true];
+			if (speed player > 1 && speed player < 3) then {_moving_ratio = 1.1;};
+			if (speed player >= 3 && speed player < 14) then {_moving_ratio = 1.2;};
+			if (speed player >= 14) then {_moving_ratio = 1.3;};
+			_unit setVariable ["BTC_r_status",[(_unit getVariable "BTC_r_status" select 0),((_unit getVariable "BTC_r_status") select 1) + (((BTC_r_damage) + (BTC_r_damage_legs) + (BTC_r_damage_hands)) * _moving_ratio),(_unit getVariable "BTC_r_status" select 2),(_unit getVariable "BTC_r_status" select 3),(_unit getVariable "BTC_r_status" select 4)],true];
 			_timeout_bleed = _timeout_bleed + 2;
 			//SPEED
 			// > 1 < 3 striscia
@@ -525,7 +539,7 @@ BTC_r_apply_bandage =
 				_unit setVariable ["BTC_r_status",[0,(_state select 1),(_state select 2),(_state select 3),(_state select 4)],true];
 				hint "Bandage applied!";
 			/*
-				TRANSFUTION
+				TRANSFUsION
 				if (_unit == player) then
 				{
 					private ["_state","_bleed"];
@@ -576,7 +590,7 @@ BTC_r_apply_tra =
 		else
 		{
 			private ["_pos","_timeout","_unc"];
-			hint "Transfution, do not move!";
+			hint "Transfusion, do not move!";
 			_pos = getpos _unit;
 			_timeout = time + 10;
 			_unc = false;
@@ -592,8 +606,8 @@ BTC_r_apply_tra =
 				_bleed = (_state select 1) - BTC_r_trans_ratio;
 				if (_bleed < 0) then {_bleed = 0;};
 				_unit setVariable ["BTC_r_status",[(_state select 0),_bleed,(_state select 2),(_state select 3),(_state select 4)],true];
-				hint "Transfution completed!";
-			} else {hint "Transfution was not completed!";};		
+				hint "Transfusion completed!";
+			} else {hint "Transfusion was not completed!";};		
 		};
 		switch (true) do
 		{
@@ -837,7 +851,7 @@ BTC_fnc_wait_for_revive =
 		_lifes = "";
 		if (BTC_active_lifes == 1) then {_lifes = format ["Lifes remaining: %1",BTC_lifes];};
 		if (BTC_black_screen == 1) then {titleText [format ["%1\n%2\n%3", round (BTC_r_timeout - time),_healer,_lifes], "BLACK FADED"]} else {hintSilent format ["%1\n%2\n%3", round (BTC_r_timeout - time),_healer,_lifes];};
-		if (format ["%1", player getVariable "BTC_need_revive"] == "0") then {closeDialog 0;};
+		if (format ["%1", player getVariable "BTC_need_revive"] == "0" || BTC_respawn_cond) then {closeDialog 0;};
 		sleep 0.5;
 	};
 	//diag_log text format ["WHY!!!",""];diag_log text format ["%1 %2 %3",format ["%1", player getVariable "BTC_need_revive"] == "1" , time < BTC_r_timeout , !BTC_respawn_cond];
@@ -1164,7 +1178,7 @@ BTC_player_killed =
 			_injured = player;
 			if (BTC_injured_marker == 1) then {BTC_marker_pveh = [0,BTC_side,_pos,_body_marker];publicVariable "BTC_marker_pveh";};
 			disableUserInput true;
-			for [{_n = BTC_revive_time_min}, {_n != 0 && damage player > 0.2}, {_n = _n - 0.5}] do
+			for [{_n = BTC_revive_time_min}, {_n > 0 && player getVariable "BTC_need_revive" == 1}, {_n = _n - 0.5}] do
 			{
 				if (BTC_active_lifes == 1) then {titleText [format ["Lifes remaining: %1",BTC_lifes], "BLACK FADED"];} else {titleText ["", "BLACK FADED"];};
 				sleep 0.5;
@@ -1176,10 +1190,9 @@ BTC_player_killed =
 			private ["_id","_lifes"];
 			BTC_respawn_cond = false;
 			if (BTC_disable_respawn == 1) then {player enableSimulation false;};
-			_id = player addAction [("<t color=""#ED2744"">") + ("Respawn") + "</t>","=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_player_respawn], 9, true, true, "", "true"];
 			if (BTC_camera_unc == 0) then
 			{
-				if (BTC_black_screen == 0 && BTC_disable_respawn == 0) then {if (BTC_action_respawn == 0) then {disableSerialization;_dlg = createDialog "BTC_respawn_button_dialog";};};
+				if (BTC_black_screen == 0 && BTC_disable_respawn == 0) then {disableSerialization;_dlg = createDialog "BTC_respawn_button_dialog";};
 				if (BTC_black_screen == 1 && BTC_disable_respawn == 0 && !Dialog) then {_dlg = createDialog "BTC_respawn_button_dialog";};
 				BTC_display_EH = (findDisplay 46) displayAddEventHandler ["KeyDown", "_anim = [] spawn {sleep 1;player switchMove ""AinjPpneMstpSnonWrflDnon"";};"];
 			}
@@ -1192,14 +1205,27 @@ BTC_player_killed =
 				BTC_r_u_camera camCommit 0;
 				disableSerialization;
 				_r_dlg = createDialog "BTC_spectating_dialog";
-				_ui = uiNamespace getVariable "BTC_r_spectating";
-				(_ui displayCtrl 120) ctrlShow false;
 				BTC_r_camera_EH_keydown = (findDisplay 46) displayAddEventHandler ["KeyDown", "_keydown = _this spawn BTC_r_s_keydown"];
 				{_lb = lbAdd [121,_x];if (_x == BTC_camera_unc_type select 0) then {lbSetCurSel [121,_lb];}} foreach BTC_camera_unc_type;
+				_ui = uiNamespace getVariable "BTC_r_spectating";
+				(_ui displayCtrl 120) ctrlShow false;
+				if (BTC_disable_respawn == 1) then {(_ui displayCtrl 122) ctrlShow false;};
 			};
 			while {format ["%1", player getVariable "BTC_need_revive"] == "1" && time < _timeout && !BTC_respawn_cond} do
 			{
-				if (BTC_disable_respawn == 0) then {if (BTC_black_screen == 1 || (BTC_black_screen == 0 && BTC_action_respawn == 0)) then {if (!Dialog && !BTC_respawn_cond) then {_dlg = createDialog "BTC_respawn_button_dialog";};};};
+				if (BTC_disable_respawn == 0 && {BTC_camera_unc == 0} && {!Dialog} && {!BTC_respawn_cond}) then 
+				{
+					_dlg = createDialog "BTC_respawn_button_dialog";
+				};
+				if (BTC_camera_unc == 1 && {!Dialog} && {!BTC_respawn_cond}) then 
+				{
+					disableSerialization;
+					_r_dlg = createDialog "BTC_spectating_dialog";
+					_ui = uiNamespace getVariable "BTC_r_spectating";
+					(_ui displayCtrl 120) ctrlShow false;
+					if (BTC_disable_respawn == 1) then {(_ui displayCtrl 122) ctrlShow false;};
+					{_lb = lbAdd [121,_x];if (_x == BTC_camera_unc_type select 0) then {lbSetCurSel [121,_lb];}} foreach BTC_camera_unc_type;					
+				};
 				_healer = call BTC_check_healer;
 				_lifes = "";
 				if (BTC_active_lifes == 1) then {_lifes = format ["Lifes remaining: %1",BTC_lifes];};
@@ -1207,7 +1233,7 @@ BTC_player_killed =
 				if (BTC_camera_unc == 1) then 
 				{
 					titleText [format ["%1\n%2\n%3", round (_timeout - time),_healer,_lifes], "PLAIN DOWN"];
-					if (!dialog) then {disableSerialization;_r_dlg = createDialog "BTC_spectating_dialog";sleep 0.01;_ui = uiNamespace getVariable "BTC_r_spectating";(_ui displayCtrl 120) ctrlShow false;{_lb = lbAdd [121,_x];if (_x == BTC_camera_unc_type select 0) then {lbSetCurSel [121,_lb];}} foreach BTC_camera_unc_type;};
+					//if (!dialog) then {disableSerialization;_r_dlg = createDialog "BTC_spectating_dialog";sleep 0.01;_ui = uiNamespace getVariable "BTC_r_spectating";(_ui displayCtrl 120) ctrlShow false;if (BTC_disable_respawn == 1) then {(_ui displayCtrl 122) ctrlShow false;};{_lb = lbAdd [121,_x];if (_x == BTC_camera_unc_type select 0) then {lbSetCurSel [121,_lb];}} foreach BTC_camera_unc_type;};
 					BTC_r_u_camera attachTo [player,BTC_r_s_cam_view];
 					BTC_r_u_camera camCommit 0;
 					if (BTC_r_camera_nvg) then {camusenvg true;} else {camusenvg false;};				
@@ -1237,11 +1263,10 @@ BTC_player_killed =
 				player playMove "amovppnemstpsraswrfldnon";
 				player playMove "";
 			};
-			player removeAction _id;
+			if (BTC_disable_respawn == 0 && BTC_action_respawn == 1) then {player removeAction BTC_action_respawn_id;};
 			player setcaptive false;
 			if (BTC_disable_respawn == 1) then {player enableSimulation true;};
-			//player setvehicleInit "this allowDamage true;";ProcessInitCommands;
-			player switchMove "";
+			//player switchMove "";
 			player allowDamage true;
 			hintSilent "";
 		};
@@ -1407,8 +1432,8 @@ BTC_move_to_mobile =
 	{
 		case (BTC_side == west) : {_side = "BTC_mobile_west";};
 		case (BTC_side == east) : {_side = "BTC_mobile_east";};
-		case (BTC_side == guer) : {_side = "BTC_mobile_guer";};
-		case (BTC_side == civ) : {_side = "BTC_mobile_civ";};
+		case (str(BTC_side) == "guer") : {_side = "BTC_mobile_guer";};
+		case (str(BTC_side) == "civ") : {_side = "BTC_mobile_civ";};
 	};
 	_mobile = objNull;
 	{
@@ -1435,8 +1460,8 @@ BTC_mobile_marker =
 	{
 		case (BTC_side == west) : {_side = "BTC_mobile_west";};
 		case (BTC_side == east) : {_side = "BTC_mobile_east";};
-		case (BTC_side == guer) : {_side = "BTC_mobile_guer";};
-		case (BTC_side == civ) : {_side = "BTC_mobile_civ";};
+		case (str(BTC_side) == "guer") : {_side = "BTC_mobile_guer";};
+		case (str(BTC_side) == "civ") : {_side = "BTC_mobile_civ";};
 	};
 	while {true} do
 	{
@@ -1475,8 +1500,8 @@ BTC_mobile_check =
 	{
 		case (BTC_side == west) : {_side = "BTC_mobile_west";};
 		case (BTC_side == east) : {_side = "BTC_mobile_east";};
-		case (BTC_side == guer) : {_side = "BTC_mobile_guer";};
-		case (BTC_side == civ) : {_side = "BTC_mobile_civ";};
+		case (str(BTC_side) == "guer") : {_side = "BTC_mobile_guer";};
+		case (str(BTC_side) == "civ") : {_side = "BTC_mobile_civ";};
 	};
 	_cond = false;
 	{
@@ -1500,6 +1525,7 @@ BTC_vehicle_mobile_respawn =
 	sleep BTC_mobile_respawn_time;
 	deleteVehicle _veh;
 	_veh = createVehicle [_type, (_pos findEmptyPosition [2,200,_type]),[],0,"NONE"];
+	if(getNumber(configFile >> "CfgVehicles" >> typeof _veh >> "isUav")==1) then {createVehicleCrew _veh;}; 
 	_veh setDir _dir;
 	_veh setVelocity [0, 0, -1];
 	_veh setVariable [_set,_var,true];
@@ -1561,7 +1587,7 @@ BTC_revive_loop =
 		{
 			//hintsilent format ["%1 %2",currentWeaponMode player,currentMagazineDetail player];
 			//diag_log text format ["SAVED %1",dialog];
-			BTC_gear = [] call BTC_get_gear;
+			BTC_gear = [player] call BTC_get_gear;
 		};
 	};
 };
@@ -1576,8 +1602,8 @@ BTC_r_get_list =
 	{
 		case (BTC_side == west) : {_side = "BTC_mobile_west";_array = BTC_vehs_mobile_west_str;};
 		case (BTC_side == east) : {_side = "BTC_mobile_east";_array = BTC_vehs_mobile_east_str;};
-		case (BTC_side == guer) : {_side = "BTC_mobile_guer";_array = BTC_vehs_mobile_guer_str;};
-		case (BTC_side == civ) : {_side = "BTC_mobile_civ";_array = BTC_vehs_mobile_civ_str;};
+		case (str(BTC_side) == "guer") : {_side = "BTC_mobile_guer";_array = BTC_vehs_mobile_guer_str;};
+		case (str(BTC_side) == "civ") : {_side = "BTC_mobile_civ";_array = BTC_vehs_mobile_civ_str;};
 	};
 	{
 		_var = _x;
@@ -1617,8 +1643,8 @@ BTC_r_load =
 	{
 		case (BTC_side == west) : {_side = "BTC_mobile_west";_array = BTC_vehs_mobile_west_str;};
 		case (BTC_side == east) : {_side = "BTC_mobile_east";_array = BTC_vehs_mobile_east_str;};
-		case (BTC_side == guer) : {_side = "BTC_mobile_guer";_array = BTC_vehs_mobile_guer_str;};
-		case (BTC_side == civ) : {_side = "BTC_mobile_civ";_array = BTC_vehs_mobile_civ_str;};
+		case (str(BTC_side) == "guer") : {_side = "BTC_mobile_guer";_array = BTC_vehs_mobile_guer_str;};
+		case (str(BTC_side) == "civ") : {_side = "BTC_mobile_civ";_array = BTC_vehs_mobile_civ_str;};
 	};
 	if (!isNull BTC_r_mobile_selected) then {if ((_list_name find (BTC_r_mobile_selected getVariable _side)) == -1 && (_list_name find (name BTC_r_mobile_selected)) == -1) then {BTC_r_mobile_selected = _list_units select 0;};};
 	if (count _list_name != count BTC_r_list) then 
@@ -1725,8 +1751,8 @@ BTC_r_change_target =
 	{
 		case (BTC_side == west) : {_side = "BTC_mobile_west";_array = BTC_vehs_mobile_west_str;};
 		case (BTC_side == east) : {_side = "BTC_mobile_east";_array = BTC_vehs_mobile_east_str;};
-		case (BTC_side == guer) : {_side = "BTC_mobile_guer";_array = BTC_vehs_mobile_guer_str;};
-		case (BTC_side == civ) : {_side = "BTC_mobile_civ";_array = BTC_vehs_mobile_civ_str;};
+		case (str(BTC_side) == "guer") : {_side = "BTC_mobile_guer";_array = BTC_vehs_mobile_guer_str;};
+		case (str(BTC_side) == "civ") : {_side = "BTC_mobile_civ";_array = BTC_vehs_mobile_civ_str;};
 	};
 	{
 		if ((typeName (_x getvariable _side)) == "STRING") then
@@ -1843,6 +1869,9 @@ BTC_r_spectator =
 	while {true} do
 	{
 		if (!dialog) then {_r_dlg = createDialog "BTC_spectating_dialog";sleep 0.5;};
+		WaitUntil {dialog};
+		_ui = uiNamespace getVariable "BTC_r_dialog";
+		(_ui displayCtrl 122) ctrlShow false;		
 		call BTC_r_s_load;
 		player setpos [0,0,6000];
 		player setVelocity [0,0,0];

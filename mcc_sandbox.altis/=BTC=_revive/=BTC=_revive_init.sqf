@@ -10,19 +10,19 @@ http://www.blacktemplars.altervista.org/
 BTC_r_new_system    = f_var_BTCwoundingSystem; //WIP - set 1 to activate it
 BTC_r_wait_for_revive = 1;//If BTC_r_new_system set to 1 you can choose if you want or not a revive time available after death (Similar to wounding system in ACE)
 BTC_r_action        = 0;//[NOT IMPLEMENTED] - 0 if you don't want the healing animation (ACE style), 1 if you want the animations (You can't stop the animation)
-BTC_r_med_fa        = 2;//0 for only first aid kit, 1 if you don't have a medikit you need a first aid kit, 2 only medikit
+BTC_r_med_fa        = 1;//0 for only first aid kit, 1 if you don't have a medikit you need a first aid kit, 2 only medikit
 BTC_r_cpr_time      = 60;
 BTC_r_trans_ratio   = 100;
 BTC_revive_time_min = 5;
 BTC_revive_time_max = 600;
-BTC_who_can_revive  = ["I_Soldier_SL_F","I_G_Soldier_SL_F","I_medic_F","I_G_medic_F","B_recon_medic_F","O_recon_medic_F"];
+BTC_who_can_revive  = ["Man"];//["I_Soldier_SL_F","I_G_Soldier_SL_F","I_medic_F","I_G_medic_F","B_recon_medic_F","O_recon_medic_F"];
 BTC_loop_check      = 0;
 BTC_disable_respawn = 0;
-BTC_respawn_gear    = 0;
+BTC_respawn_gear    = 1;
 BTC_active_lifes    = 1;
 BTC_lifes           = f_var_BTCLifes;
-BTC_spectating      = 2;//0 = disable; 1 = units group; 2 = side units; 3 = all units
-BTC_spectating_view = [0,0];//To force a view set the first number of the array to 1. The second one is the view mode: 0 = first person; 1 = behind the back; 2 = High; 3 = free
+BTC_spectating      = 1;//0 = disable; 1 = units group; 2 = side units; 3 = all units
+BTC_spectating_view = [1,0];//To force a view set the first number of the array to 1. The second one is the view mode: 0 = first person; 1 = behind the back; 2 = High; 3 = free
 BTC_s_mode_view     = ["First person","Shoulder","High","Free"];
 BTC_black_screen    = 1;//Black screen + button while unconscious or action wheel and clear view
 BTC_action_respawn  = 0;//if black screen is set to 0 you can choose if you want to use the action wheel or the button. Keep in mind that if you don't use the button, the injured player can use all the action, frag too....
@@ -151,7 +151,7 @@ BTC_respawn_cond = false;
 			case (BTC_side == civilian) : {{private ["_veh"];_veh = _x;_spawn = [_x] spawn BTC_mobile_marker;{_x addAction [("<t color=""#ED2744"">") + ("Move to mobile " + _veh) + "</t>","=BTC=_revive\=BTC=_addAction.sqf",[[_veh],BTC_move_to_mobile], 8, true, true, "", format ["[""%1""] call BTC_mobile_check",_veh]];} foreach BTC_objects_actions_civ;} foreach BTC_vehs_mobile_civ_str;};
 		};
 	};
-	BTC_gear = [] call BTC_get_gear;
+	BTC_gear = [player] call BTC_get_gear;
 	if (BTC_loop_check == 1) then {[] spawn BTC_revive_loop;};
 	if (({player isKindOf _x} count BTC_3d_can_see) > 0) then {if (BTC_pvp == 1) then {_3d = [] spawn BTC_3d_markers_pvp;} else {_3d = [] spawn BTC_3d_markers;};};
 	//[] spawn {while {true} do {sleep 0.5;hintSilent format ["%1",BTC_gear];};};

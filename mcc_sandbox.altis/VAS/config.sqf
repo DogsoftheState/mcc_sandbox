@@ -7,7 +7,7 @@ if (isnil "vas_disableLoadSave") then {vas_disableLoadSave = false};
 //Amount of save/load slots
 if (isnil "vas_customslots") then {vas_customslots = 9}; //9 is actually 10 slots, starts from 0 to whatever you set, so always remember when setting a number to minus by 1, i.e 12 will be 11.
 //Disable 'VAS hasn't finished loading' Check !!! ONLY RECOMMENDED FOR THOSE THAT USE ACRE AND OTHER LARGE ADDONS !!!
-if (isnil "vas_disableSafetyCheck") then {vas_disableSafetyCheck = false};
+if (isnil "vas_disableSafetyCheck") then {vas_disableSafetyCheck = true};
 /*
 	NOTES ON EDITING!
 	YOU MUST PUT VALID CLASS NAMES IN THE VARIABLES IN AN ARRAY FORMAT, NOT DOING SO WILL RESULT IN BREAKING THE SYSTEM!
