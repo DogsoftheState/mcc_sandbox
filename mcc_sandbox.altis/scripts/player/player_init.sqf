@@ -151,7 +151,13 @@ setviewdistance 2500;
 closedialog 0; 
 waituntil {!dialog};
 //Respawning
-								
-						
+
+
 if(rating player < 0) then {player addrating abs(rating player)} else {player addrating (rating player)*-1}; 	//Sets unit rating to zero
 cutText ["Deploying ....","BLACK IN",5];
+
+//------------------------------------
+//	Custom Player Initialization
+//------------------------------------
+(group player) setVariable["tf_sw_frequency", 31, true];
+(group player) setVariable["tf_lr_frequency", 51, true];
