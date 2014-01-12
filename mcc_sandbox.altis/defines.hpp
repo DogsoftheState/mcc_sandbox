@@ -41,6 +41,8 @@
 #include "=BTC=_revive\=BTC=_respawn.h"
 #include "bon_artillery\dialog\Artillery.hpp"
 #include "VAS\menu.hpp"
+#include "f\common\f_spect\spectating.hpp"
+
 #include "TAA_name\GUI\TAA_INCLUDE.hpp"
 #include "TAA_name\GUI\TAA_ui_name.hpp"
 #include "TAA_name\GUI\TAA_ui_custom.hpp"
@@ -359,7 +361,7 @@ class CfgFunctions
 			
 			class MWObjectiveDestroy
 			{
-				description = "Create a destory objective";
+				description = "Create a Destroy objective";
 			};
 			
 			class MWObjectiveIntel
