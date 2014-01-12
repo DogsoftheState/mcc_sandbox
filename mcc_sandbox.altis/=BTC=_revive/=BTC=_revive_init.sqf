@@ -1,6 +1,6 @@
 /*
 Created by =BTC= Giallustio
-version 0.93 Offical release
+version 0.96 Offical release
 Visit us at: 
 http://www.blacktemplars.altervista.org/
 06/03/2012
@@ -23,11 +23,11 @@ BTC_active_lifes    = 1;
 BTC_lifes           = f_var_BTCLifes;
 BTC_spectating      = 1;//0 = disable; 1 = units group; 2 = side units; 3 = all units
 BTC_spectating_view = [1,0];//To force a view set the first number of the array to 1. The second one is the view mode: 0 = first person; 1 = behind the back; 2 = High; 3 = free
-BTC_s_mode_view     = ["First person","Shoulder","High","Free"];
+BTC_s_mode_view     = ["First person","Behind the back","High","Free"];
 BTC_black_screen    = 1;//Black screen + button while unconscious or action wheel and clear view
 BTC_action_respawn  = 0;//if black screen is set to 0 you can choose if you want to use the action wheel or the button. Keep in mind that if you don't use the button, the injured player can use all the action, frag too....
 BTC_camera_unc      = 1;
-BTC_camera_unc_type = ["Shoulder","High","Free"];
+BTC_camera_unc_type = ["Behind the back","High","Free"];
 BTC_respawn_time    = 0;
 BTC_active_mobile   = 0;//Active mobile respawn (You have to put in map the vehicle and give it a name. Then you have to add one object per side to move to the mobile (BTC_base_flag_west,BTC_base_flag_east) - (1 = yes, 0 = no))
 BTC_mobile_respawn  = 0;//Active the mobile respawn fnc (1 = yes, 0 = no)
@@ -104,8 +104,8 @@ BTC_respawn_cond = false;
 	BTC_r_s_cam_view = [-15,-15,15];
 	BTC_respawn_marker = format ["respawn_%1",playerSide];
 	if (BTC_respawn_marker == "respawn_guer") then {BTC_respawn_marker = "respawn_guerrila";};
+	if (BTC_respawn_marker == "respawn_civ") then {BTC_respawn_marker = "respawn_civilian";};
 	BTC_r_base_spawn = "Land_HelipadEmpty_F" createVehicleLocal getMarkerPos BTC_respawn_marker;
-	if (BTC_pvp == 1) then {if (BTC_respawn_marker == "respawn_civ") then {BTC_respawn_marker = "respawn_civilian";};};
 	if (BTC_r_new_system == 0) then 
 	{
 		player addEventHandler ["Killed", BTC_player_killed];if (BTC_respawn_gear == 1) then {player addEventHandler ["HandleDamage", BTC_fnc_handledamage_gear];};
@@ -150,6 +150,10 @@ BTC_respawn_cond = false;
 			case (str (BTC_side) == "guer") : {{private ["_veh"];_veh = _x;_spawn = [_x] spawn BTC_mobile_marker;{_x addAction [("<t color=""#ED2744"">") + ("Move to mobile " + _veh) + "</t>","=BTC=_revive\=BTC=_addAction.sqf",[[_veh],BTC_move_to_mobile], 8, true, true, "", format ["[""%1""] call BTC_mobile_check",_veh]];} foreach BTC_objects_actions_guer;} foreach BTC_vehs_mobile_guer_str;};
 			case (BTC_side == civilian) : {{private ["_veh"];_veh = _x;_spawn = [_x] spawn BTC_mobile_marker;{_x addAction [("<t color=""#ED2744"">") + ("Move to mobile " + _veh) + "</t>","=BTC=_revive\=BTC=_addAction.sqf",[[_veh],BTC_move_to_mobile], 8, true, true, "", format ["[""%1""] call BTC_mobile_check",_veh]];} foreach BTC_objects_actions_civ;} foreach BTC_vehs_mobile_civ_str;};
 		};
+	}
+	else
+	{
+		BTC_vehs_mobile_west_str = [];BTC_vehs_mobile_east_str = [];BTC_vehs_mobile_guer_str = [];BTC_vehs_mobile_civ_str = [];
 	};
 	BTC_gear = [player] call BTC_get_gear;
 	if (BTC_loop_check == 1) then {[] spawn BTC_revive_loop;};

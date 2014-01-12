@@ -48,17 +48,56 @@ class Mission
 			side="WEST";
 			class Vehicles
 			{
-				items=1;
+				items=4;
 				class Item0
 				{
-					position[]={47.798313,0.38663661,54.927246};
-					id=0;
+					position[]={14694.454,17.860001,16392.258};
+					id=61;
 					side="WEST";
-					vehicle="B_Soldier_SL_F";
+					vehicle="B_Soldier_repair_F";
+					player="PLAY CDG";
 					leader=1;
+					rank="CORPORAL";
 					skill=0.60000002;
-					text="F2_Precompile_West";
-					init="f_fnc_assignGear = compile preprocessFileLineNumbers ""f\common\folk_assignGear.sqf""; nul = [""r"",this] call f_fnc_assignGear; this setskill 0; this allowdamage false;";
+					text="UnitBL_ENG1_TL";
+					init="GrpBL_ENG1 = group this;";
+					description="NATO Charlie Engineer";
+				};
+				class Item1
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=62;
+					side="WEST";
+					vehicle="B_Soldier_exp_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_ENG1_EXP";
+					init="GrpBL_ENG1 = group this;";
+					description="NATO Charlie Explosives Specialist";
+				};
+				class Item2
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=63;
+					side="WEST";
+					vehicle="B_soldier_UAV_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_ENG1_UAV";
+					init="GrpBL_ENG1 = group this;";
+					description="NATO Charlie UAV Operator";
+				};
+				class Item3
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=64;
+					side="WEST";
+					vehicle="B_soldier_UAV_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_ENG1_UAV";
+					init="GrpBL_ENG1 = group this;";
+					description="NATO Charlie UAV Operator";
 				};
 			};
 		};
@@ -142,18 +181,56 @@ class Mission
 			side="EAST";
 			class Vehicles
 			{
-				items=1;
+				items=4;
 				class Item0
 				{
-					position[]={47.716038,0.31204507,52.464844};
-					azimut=180;
-					id=100;
+					position[]={14694.454,17.860001,16392.258};
+					id=161;
 					side="EAST";
-					vehicle="O_Soldier_F";
+					vehicle="O_Soldier_repair_F";
+					player="PLAY CDG";
 					leader=1;
+					rank="CORPORAL";
 					skill=0.60000002;
-					text="F2_Precompile_East";
-					init="f_fnc_assignGear = compile preprocessFileLineNumbers ""f\common\folk_assignGear.sqf""; nul = [""r"",this] call f_fnc_assignGear; this setskill 0; this allowdamage false;";
+					text="UnitOP_ENG1_TL";
+					init="GrpOP_ENG1 = group this;";
+					description="Iran Charlie Engineer";
+				};
+				class Item1
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=162;
+					side="EAST";
+					vehicle="O_Soldier_exp_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitOP_ENG1_EXP";
+					init="GrpOP_ENG1 = group this;";
+					description="Iran Charlie Explosives Specialist";
+				};
+				class Item2
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=163;
+					side="EAST";
+					vehicle="O_soldier_UAV_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitOP_ENG1_UAV";
+					init="GrpOP_ENG1 = group this;";
+					description="Iran Charlie UAV Operator";
+				};
+				class Item3
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=164;
+					side="EAST";
+					vehicle="O_soldier_UAV_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitOP_ENG1_UAV";
+					init="GrpOP_ENG1 = group this;";
+					description="Iran Charlie UAV Operator";
 				};
 			};
 		};

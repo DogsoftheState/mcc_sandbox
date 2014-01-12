@@ -138,42 +138,15 @@ class BTC_r_combo
 	font = "PuristaMedium";
 	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	class ScrollBar
-		{
-			arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
-			arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
-			autoScrollDelay = 5;
-			autoScrollEnabled = 0;
-			autoScrollRewind = 0;
-			autoScrollSpeed = -1;
-			border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
-			color[] = {1,1,1,0.6};
-			colorActive[] = {1,1,1,1};
-			colorDisabled[] = {1,1,1,0.3};
-			height = 0;
-			scrollSpeed = 0.06;
-			shadow = 0;
-			thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
-			width = 0;
-		};
-		
-	class ComboScrollBar
-		{
-			arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
-			arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
-			autoScrollDelay = 5;
-			autoScrollEnabled = 0;
-			autoScrollRewind = 0;
-			autoScrollSpeed = -1;
-			border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
-			color[] = {1,1,1,0.6};
-			colorActive[] = {1,1,1,1};
-			colorDisabled[] = {1,1,1,0.3};
-			height = 0;
-			scrollSpeed = 0.06;
-			shadow = 0;
-			thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
-			width = 0;
-		};
+	{
+		color[] = {1,1,1,0.6};
+		colorActive[] = {1,1,1,1};
+		colorDisabled[] = {1,1,1,0.3};
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+	};
 	soundSelect[] = { "", 0, 1 };
 	soundExpand[] = { "", 0, 1 };
 	soundCollapse[] = { "", 0, 1 };
