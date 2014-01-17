@@ -15,6 +15,7 @@ class Mission
 	addOnsAuto[]=
 	{
 		"A3_Characters_F_BLUFOR",
+		"a3_map_stratis",
 		"A3_Characters_F_OPFOR",
 		"a3_characters_f_beta",
 		"A3_Characters_F_Civil",
@@ -25,17 +26,17 @@ class Mission
 	randomSeed=11823142;
 	class Intel
 	{
-		briefingName="Altis COOP - DotS MCC Sandbox";
-		resistancewest=0
+		briefingName="COOP - DotS MCC Sandbox";
+		resistancewest=0;
 		startWeather=0.01;
 		startWind=0.5;
 		forecastWeather=0.5;
 		forecastWind=1;
 		forecastWaves=1;
-		year=2013;
-		month=12;
-		day=3;
-		hour=16;
+		year=2014;
+		month=1;
+		day=15;
+		hour=12;
 		minute=0;
 		startFogDecay=0.0049333;
 		forecastFogDecay=0.0049333;
@@ -813,6 +814,7 @@ class Intro
 	};
 	addOnsAuto[]=
 	{
+		"a3_map_stratis",
 		"a3_map_altis"
 	};
 	randomSeed=8428644;
@@ -844,6 +846,7 @@ class OutroWin
 	};
 	addOnsAuto[]=
 	{
+		"a3_map_stratis",
 		"a3_map_altis"
 	};
 	randomSeed=4674277;
@@ -875,6 +878,7 @@ class OutroLoose
 	};
 	addOnsAuto[]=
 	{
+		"a3_map_stratis",
 		"a3_map_altis"
 	};
 	randomSeed=6586695;
