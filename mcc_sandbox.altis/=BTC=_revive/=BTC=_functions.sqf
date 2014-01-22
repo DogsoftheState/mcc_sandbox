@@ -266,7 +266,7 @@ BTC_fnc_bleeding =
 			if (speed player >= 3 && speed player < 14) then {_moving_ratio = 1.2;};
 			if (speed player >= 14) then {_moving_ratio = 1.3;};
 			_unit setVariable ["BTC_r_status",[(_unit getVariable "BTC_r_status" select 0),((_unit getVariable "BTC_r_status") select 1) + (((BTC_r_damage) + (BTC_r_damage_legs) + (BTC_r_damage_hands)) * _moving_ratio),(_unit getVariable "BTC_r_status" select 2),(_unit getVariable "BTC_r_status" select 3),(_unit getVariable "BTC_r_status" select 4)],true];
-			_timeout_bleed = _timeout_bleed + 2;
+			_timeout_bleed = _timeout_bleed + 5;
 			//SPEED
 			// > 1 < 3 striscia
 			// < 14 crouch
@@ -427,7 +427,7 @@ BTC_check_action_unit_state =
 	_men = nearestObjects [vehicle player, ["Man"], 3];
 	if (count _men > 1) then
 	{
-		if (!isNil {(_men select 1) getVariable "BTC_r_status"} && !BTC_dragging && format ["%1", (_men select 1) getVariable "BTC_dragged"] == "0") then {_cond = true;};
+		if (!isNil {(_men select 1) getVariable "BTC_r_status"} && !BTC_dragging && format ["%1", (_men select 1) getVariable "BTC_dragged"] != "1") then {_cond = true;};
 	};
 	if (!BTC_r_action_menu) then {_cond = false;};
 	_cond
@@ -1368,7 +1368,7 @@ BTC_check_action_first_aid =
 	_men = nearestObjects [vehicle player, ["Man"], 2];
 	if (count _men > 1 && format ["%1", player getVariable "BTC_need_revive"] == "0") then
 	{
-		if (format ["%1", (_men select 1) getVariable "BTC_need_revive"] == "1" && !BTC_dragging && format ["%1", (_men select 1) getVariable "BTC_dragged"] == "0") then {_cond = true;};
+		if (format ["%1", (_men select 1) getVariable "BTC_need_revive"] == "1" && !BTC_dragging && format ["%1", (_men select 1) getVariable "BTC_dragged"] != "1") then {_cond = true;};
 		_injured = _men select 1;
 	};
 	if (_cond && BTC_pvp == 1) then 
@@ -1392,11 +1392,11 @@ BTC_check_action_drag =
 	{
 		if (BTC_pvp == 1) then
 		{
-			if (side (_men select 1) == BTC_side && format ["%1", (_men select 1) getVariable "BTC_need_revive"] == "1" && !BTC_dragging && format ["%1", (_men select 1) getVariable "BTC_dragged"] == "0") then {_cond = true;};
+			if (side (_men select 1) == BTC_side && format ["%1", (_men select 1) getVariable "BTC_need_revive"] == "1" && !BTC_dragging && format ["%1", (_men select 1) getVariable "BTC_dragged"] != "1") then {_cond = true;};
 		}
 		else
 		{
-			if (format ["%1", (_men select 1) getVariable "BTC_need_revive"] == "1" && !BTC_dragging && format ["%1", (_men select 1) getVariable "BTC_dragged"] == "0") then {_cond = true;};
+			if (format ["%1", (_men select 1) getVariable "BTC_need_revive"] == "1" && !BTC_dragging && format ["%1", (_men select 1) getVariable "BTC_dragged"] != "1") then {_cond = true;};
 		};
 	};
 	_cond
