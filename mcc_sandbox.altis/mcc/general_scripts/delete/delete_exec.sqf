@@ -1,14 +1,24 @@
-private ["_pos","_radius","_type","_nearObjects","_crew"];
+private ["_pos","_radius","_type","_nearObjects","_crew","_markers"];
 
 _pos = _this select 0;
 _radius = _this select 1;
-_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox"] select (_this select 2); 
+_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers"] select (_this select 2); 
 
 switch _type do
 	{
 		case "All":	
 			{ 
 				_nearObjects =  [_pos select 0, _pos select 1, 0] nearObjects _radius;
+				
+				//Markers
+				_markers = []; 
+				{
+					if ((getMarkerPos _x distance [_pos select 0, _pos select 1, 0]) < _radius) then {_markers set [count _markers, _x]}; 
+				} foreach allMapMarkers;
+				
+				{
+					[[2, "", "", "", "", "", _x, []],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;; 
+				} foreach _markers;
 			};
 		case "All Units":	
 			{ 
@@ -18,6 +28,22 @@ switch _type do
 				_nearObjects =_nearObjects + ([_pos select 0, _pos select 1, 0] nearObjects ["Air", _radius]);
 				_nearObjects =_nearObjects + ([_pos select 0, _pos select 1, 0] nearObjects ["ReammoBox", _radius]);
 			};
+			
+		case "Markers":	
+			{ 
+				//Markers
+				_markers = []; 
+				{
+					if ((getMarkerPos _x distance [_pos select 0, _pos select 1, 0]) < _radius) then {_markers set [count _markers, _x]}; 
+				} foreach allMapMarkers;
+				
+				{
+					[[2, "", "", "", "", "", _x, []],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;; 
+				} foreach _markers;
+				
+				_nearObjects = []; 
+			};
+			
 		default	
 			{
 				_nearObjects = [_pos select 0, _pos select 1, 0] nearObjects [_type, _radius];

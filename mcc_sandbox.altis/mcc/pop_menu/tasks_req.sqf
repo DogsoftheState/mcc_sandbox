@@ -4,7 +4,7 @@
 #define MCC_TASKS_LIST 3058
 
 disableSerialization;
-private ["_type", "_dlg", "_stringName", "_stringDescription", "_ok", "_comboBox"];
+private ["_type", "_dlg", "_stringName", "_stringDescription", "_ok", "_comboBox","_tasks"];
 _type = _this select 0;
 
 _dlg = findDisplay MCC_SANDBOX3_IDD;
@@ -209,6 +209,38 @@ _dlg = findDisplay MCC_SANDBOX3_IDD;
 										];
 								onMapSingleClick """";
 								";
+			};
+		};
+		
+		case 8:	//Delete Task
+		{
+			if (count MCC_tasks == 0) exitWith {hint "You must create a task first"};
+			_stringName = MCC_tasks select (lbCurSel MCC_TASKS_LIST) select 0; 
+			_stringDescription = MCC_tasks select (lbCurSel MCC_TASKS_LIST) select 1;
+			_pos =[];
+			if (MCC_capture_state) then
+			{
+				hint "Task Succeeded Captured"; 
+				MCC_capture_var = MCC_capture_var + FORMAT ['
+								[[9, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;
+								'
+								,_stringName
+								];
+			} 
+			else
+			{
+				_tasks = str MCC_tasks; 
+				[[9, _stringName, _stringDescription, [0,0,0]],'MCC_fnc_makeTaks',true,false] spawn BIS_fnc_MP;
+				
+				waituntil {_tasks != str MCC_tasks};
+				sleep 1;
+				//Refresh the tasks list
+				_comboBox = (findDisplay MCC_SANDBOX3_IDD) displayCtrl MCC_TASKS_LIST; 
+				lbClear _comboBox;
+				{
+					_comboBox lbAdd format ["%1",_x select 0];
+				} foreach MCC_tasks;
+				_comboBox lbSetCurSel 0;
 			};
 		};
 	 };

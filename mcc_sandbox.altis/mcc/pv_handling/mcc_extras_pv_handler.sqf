@@ -59,7 +59,7 @@ if (isServer) then
 //	nshell: number, ammount of artillery per salvo
 //	simulate: number, shell simulation 0-DPICM, 1- bomb, 2 - flare, 3 - laser guided
 //==============================================================================================================================================================================
-	MCC_fnc_artillery = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4)] execVM MCC_path + "mcc\general_scripts\artillery\artillery_fire.sqf";};
+	MCC_fnc_artillery = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5)] execVM MCC_path + "mcc\general_scripts\artillery\artillery_fire.sqf";};
 
 //===================================================================MCC_fnc_evacMove======================================================================================
 // Move a vehicle across selected WP
@@ -72,8 +72,7 @@ if (isServer) then
 //==============================================================================================================================================================================
 	MCC_fnc_evacMove = {
 		private "_dummy";
-		_dummy = if (((_this select 3) select 0)=="") then {(_this select 3) select 1} else {objectFromNetId ((_this select 3) select 0)};
-		[(_this select 0), (_this select 1),(_this select 2),_dummy] execVM MCC_path + "mcc\general_scripts\evac\evac_move.sqf";
+		[(_this select 0), (_this select 1),(_this select 2),(_this select 3)] execVM MCC_path + "mcc\general_scripts\evac\evac_move.sqf";
 		};
 	
 //===================================================================MCC_fnc_evacDelete======================================================================================

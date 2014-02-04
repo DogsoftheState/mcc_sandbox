@@ -6,7 +6,6 @@ while {true} do
 {
 	if (MCC_nameTags) then
 	{
-		
 		_blank = " ";
 		_target = cursorTarget;
 		
@@ -67,6 +66,5 @@ while {true} do
 			[_string,1.2,0.8,0.5,0,0,4] spawn BIS_fnc_dynamicText;
 		};
 	};	
-	
 	sleep 0.5; 
 };

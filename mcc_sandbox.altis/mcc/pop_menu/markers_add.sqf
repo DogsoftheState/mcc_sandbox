@@ -33,59 +33,24 @@ switch (_case) do
 {
    case 0:		//Create Marker
 	{
-		deletemarkerlocal _text;
-		createmarkerlocal [_text, _pos];
-		_text setMarkerColorLocal _color;
-		_text setMarkerTypeLocal  _type;
-		_text setmarkertextlocal _text;
-		MCC_sync=MCC_sync + FORMAT ['_text="%1";
-									_pos=%2;
-									_color="%3";
-									_type = "%4";
-									deletemarkerlocal _text;
-									createmarkerlocal [_text, _pos];
-									_text setMarkerColorLocal _color;
-									_text setMarkerTypeLocal  _type;
-									_text setmarkertextlocal _text;'								 
-									,_text
-									,_pos
-									,_color
-									,_type
-								   ];
-		publicVariable "MCC_sync"; 
-		
+		deleteMarker _text;
+		createMarker [_text, _pos];
+		_text setMarkerColor _color;
+		_text setMarkerType  _type;
+		_text setmarkertext _text;
 	};
 	
    case 1:	//Create Brush
    { 
-		deletemarkerlocal _text;
-		createmarkerlocal [_text, _pos];
+		deleteMarker _text;
+		createMarker [_text, _pos];
 		_text setMarkerColorLocal _color;
 		_text setMarkerSizeLocal _size;
 		_text setMarkerShapeLocal  _shape;
 		_text setMarkerBrushLocal  _brush;
-		MCC_sync=MCC_sync + FORMAT ['_text="%1";
-									_pos=%2;
-									_color ="%3";
-									_size = %4;
-									_shape ="%5";
-									_brush ="%6";
-									deletemarkerlocal _text;
-									createmarkerlocal [_text, _pos];
-									_text setMarkerColorLocal _color;
-									_text setMarkerSizeLocal _size;
-									_text setMarkerShapeLocal  _shape;
-									_text setMarkerBrushLocal  _brush;'								 
-									,_text
-									,_pos
-									,_color
-									,_size
-									,_shape
-									,_brush
-								   ];
-		publicVariable "MCC_sync"; 
 	};
    
     case 2: //Delete
-   {deletemarkerlocal _text;};
+   {deleteMarker _text;};
  };
+ 

@@ -26,6 +26,8 @@
 #define MCC_UM_LIST 3069
 #define MCC_UM_PIC 3070
 
+#define MCC_ZONE_BT 1034
+
 class MCC_Sandbox4 {
 	  idd = MCC_SANDBOX4_IDD;
 	  movingEnable = true;
@@ -214,7 +216,7 @@ class MCC_Sandbox4 {
 		h = 0.0170008 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
-	class MCC_zoneUpdate: MCC_RscButton {idc = -1;	text = "Update Zone"; 
+	class MCC_zoneUpdate: MCC_RscButton {idc = MCC_ZONE_BT;	text = "Update Zone"; 
 		x = 0.686972 * safezoneW + safezoneX;
 		y = 0.448998 * safezoneH + safezoneY;
 		w = 0.101985 * safezoneW;
@@ -581,7 +583,7 @@ class MCC_Sandbox4 {
 		y = 0.554979 * safezoneH + safezoneY;
 		w = 0.360938 * safezoneW;
 		h = 0.131949 * safezoneH;
-	};
+	};	
 	class MCC_deleteBrushTittle: MCC_RscText
 	{
 		idc = -1;
@@ -716,5 +718,5 @@ class MCC_Sandbox4 {
 		onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\cas\cas_request.sqf'");
 		tooltip = "Add the current airdrop to the player's console"; //--- ToDo: Localize;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-	};
+	};	
 };

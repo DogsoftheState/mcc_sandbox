@@ -17,13 +17,27 @@ if (mcc_missionmaker == (name player)) then {
 	_zonePos = (mcc_zone_pos select (lbCurSel MCCZONENUMBER)+1);
 	if (isnil "_zonePos") exitWith {hint "Create a zone first"};	//Failsafe incase we trying to spawn something without making a zone first
 	if ((lbCurSel SPAWNTYPE) == 1) then {	//Group
-		if (((MCC_groupTypes select (lbCurSel SPAWNBRANCH) select 0)) =="Paratroopers") exitWith 	//Paratroopers
+		if (((MCC_groupTypes select (lbCurSel SPAWNBRANCH) select 0)) =="Reinforcement") exitWith 	//Paratroopers
 			{
-				if (lbCurSel SPAWNCLASS==0) then {
-				mcc_spawnname="1"} else {mcc_spawnname="2"};
-				mcc_spawntype="PARATROOPER";
-				mcc_classtype = "PARATROOPER";
-				mcc_spawnfaction = mcc_sidename;
+				mcc_spawnname = (lbCurSel SPAWNCLASS);    //MCCR14 remove
+				mcc_spawntype="Reinforcement";
+				mcc_classtype = "Reinforcement";
+				//mcc_spawnfaction = mcc_sidename;
+				mcc_spawnfaction = mcc_faction;
+				
+				click = false;
+
+				hint parseText format["<br/>--------------------------<br/>	
+				<br/><t size='1.2' color='#33CC00'>Left click on the map to set start location (direction) of reinforcement</t><br/>
+				<br/>--------------------------<br/>"]; 
+				
+				onMapSingleClick "mcc_spawn_dir = _pos;
+				click = true;
+				onMapSingleClick """";" ;
+					
+				waitUntil {(click)};
+				hintsilent "";
+				click = false;
 			};  
 
 		if (((MCC_groupTypes select (lbCurSel SPAWNBRANCH) select 0)) =="Garrison") exitWith {							 //Garrison
@@ -80,7 +94,7 @@ if (mcc_missionmaker == (name player)) then {
 						,_faction
 						,mcc_sidename
 						];
-						[[_center,_radius,_action,_intanse,_faction,mcc_sidename],"MCC_fnc_garrison",false,false] call BIS_fnc_MP;
+						[[_center,_radius,_action,_intanse,_faction,mcc_sidename],"MCC_fnc_garrison",true,false] call BIS_fnc_MP;;
 					};
 			};
 			

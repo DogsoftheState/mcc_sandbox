@@ -67,33 +67,33 @@ switch (_type) do
    
     case 2:
 	{
-	for [{_i=0},{_i < count MCC_tasks},{_i=_i+1}] do {
-		if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks}; 
-		};
-	if (isnil "_counter") exitWith {}; 
-	[[2,compile format ["((MCC_tasks select %1) select 1) setTaskState 'SUCCEEDED'", _counter] ], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-	sleep 2; 
-	['TaskSucceeded',["",_stringName]] call bis_fnc_showNotification;
+		for [{_i=0},{_i < count MCC_tasks},{_i=_i+1}] do {
+			if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks}; 
+			};
+		if (isnil "_counter") exitWith {}; 
+		[[2,compile format ["((MCC_tasks select %1) select 1) setTaskState 'SUCCEEDED'", _counter] ], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+		sleep 2; 
+		['TaskSucceeded',["",_stringName]] call bis_fnc_showNotification;
 	};
 	
 	case 3:
 	{
-	for [{_i=0},{_i < count MCC_tasks},{_i=_i+1}] do {
-		if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks}; 
-		};
-	[[2,compile format ["((MCC_tasks select %1) select 1) setTaskState 'FAILED'", _counter] ], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-	sleep 2; 
-	['TaskFailed',["",_stringName]] call bis_fnc_showNotification;
+		for [{_i=0},{_i < count MCC_tasks},{_i=_i+1}] do {
+			if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks}; 
+			};
+		[[2,compile format ["((MCC_tasks select %1) select 1) setTaskState 'FAILED'", _counter] ], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+		sleep 2; 
+		['TaskFailed',["",_stringName]] call bis_fnc_showNotification;
 	};
 	
 	case 4:
 	{
-	for [{_i=0},{_i < count MCC_tasks},{_i=_i+1}] do {
-		if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks}; 
-		};
-	[[2,compile format ["((MCC_tasks select %1) select 1) setTaskState 'CANCELED'", _counter] ], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-	sleep 2; 
-	['TaskCanceled',["",_stringName]] call bis_fnc_showNotification;
+		for [{_i=0},{_i < count MCC_tasks},{_i=_i+1}] do {
+			if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks}; 
+			};
+		[[2,compile format ["((MCC_tasks select %1) select 1) setTaskState 'CANCELED'", _counter] ], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+		sleep 2; 
+		['TaskCanceled',["",_stringName]] call bis_fnc_showNotification;
 	};
 	
 	case 7:	//Set task destination - No ciniametic
@@ -151,6 +151,27 @@ switch (_type) do
 								,_stringDescription
 								,_pos
 							   ];
+  };
+  
+  case 9:
+  {
+	for [{_i=0},{_i < count MCC_tasks},{_i=_i+1}] do 
+	{
+		if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks}; 
+	};
+	
+	if (isnil "_counter") exitWith {};
+	
+	[[2,compile format ["player removeSimpleTask ((MCC_tasks select %1) select 1)", _counter] ], "MCC_fnc_globalExecute", true, false] call BIS_fnc_MP;
+	
+	sleep 1;
+	//If server then trim the Array
+	if (isServer) then
+	{
+		MCC_tasks set [_counter,-1];
+		MCC_tasks = MCC_tasks - [-1];
+		publicVariable "MCC_tasks";
+	};
   };
  };
  if (isServer) then {publicVariable "MCC_sync"}; 

@@ -164,6 +164,8 @@ class CP_RscButtonMenu
   colorBackground[] = {0,0,0,0.8};
   colorDisabled[] = {1,1,1,0.25};
   colorText[] = {1,1,1,1};
+  colorFocused[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])","(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])","(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])",1};
+  colorBackgroundFocused[] = {1,1,1,1};
   default = 0;
   font = "PuristaMedium";
   h = 0.039216;
@@ -250,7 +252,7 @@ class CP_RscListbox
 	style = 16;
 	type = 5;
 	w = 0.4;
-	class ScrollBar
+	class ListScrollBar
 		{
 			arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
 			arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
@@ -300,6 +302,24 @@ class CP_RscCombo
 			colorDisabled[] = {1,1,1,0.3};
 			shadow = 0;
 			thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		};
+	class ComboScrollBar
+		{
+			arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+			arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+			autoScrollDelay = 5;
+			autoScrollEnabled = 0;
+			autoScrollRewind = 0;
+			autoScrollSpeed = -1;
+			border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+			color[] = {1,1,1,0.6};
+			colorActive[] = {1,1,1,1};
+			colorDisabled[] = {1,1,1,0.3};
+			height = 0;
+			scrollSpeed = 0.06;
+			shadow = 0;
+			thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+			width = 0;
 		};
 	};
 	

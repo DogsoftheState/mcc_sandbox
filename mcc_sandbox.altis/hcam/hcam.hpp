@@ -11,7 +11,7 @@ class RscTitles {
 		fadein = 0;
 		fadeout = 0;
 		class controls { 
-			class RscHcamBack: RscPicture {
+			class RscHcamBack: MCC_RscPicture {
 				idc = 2;
 				type = 0;
 				style = 48;
@@ -28,7 +28,7 @@ class RscTitles {
 					fixedWidth = 0;
 					shadow = 0;
 			};
-			class RscHcamCam: RscPicture {
+			class RscHcamCam: MCC_RscPicture {
 				idc = 0;
 				type = 0;
 				style = 48;
@@ -61,7 +61,7 @@ class RscTitles {
 					text="";
 			};
 			
-			class RscHcamFront: RscPicture {
+			class RscHcamFront: MCC_RscPicture {
 				idc = 3;
 				type = 0;
 				style = 48;

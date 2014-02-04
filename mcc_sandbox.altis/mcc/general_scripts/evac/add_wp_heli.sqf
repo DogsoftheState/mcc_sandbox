@@ -43,15 +43,15 @@ if !mcc_isloading then
 	if (MCC_capture_state) then
 		{
 		MCC_capture_var = MCC_capture_var + FORMAT ['
-							[[[%1], %2, %3, [netid %4,%4]],"MCC_fnc_evacMove",true,false] spawn BIS_fnc_MP;'
+							[[[%1], %2, %3,MCC_evacVehicles select %4],"MCC_fnc_evacMove",true,false] spawn BIS_fnc_MP;'
 							,_point1
 							,_flyInHight
 							,_landing
-							,_evac
+							,(lbCurSel MCC_EVAC_SELECTED)
 							];
 		} else
 			{
-			[[[_point1], _flyInHight, _landing, [netid _evac,_evac]],"MCC_fnc_evacMove",true,false] spawn BIS_fnc_MP;
+			[[[_point1], _flyInHight, _landing, _evac],"MCC_fnc_evacMove",true,false] spawn BIS_fnc_MP;
 			};
 	}	
 		else { player globalchat "Access Denied"};

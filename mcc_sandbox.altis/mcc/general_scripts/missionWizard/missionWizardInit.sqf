@@ -17,12 +17,16 @@
 #define MCC_MWRoadBlocksIDC 6016
 #define MCC_MWWeatherComboIDC 6017
 #define MCC_MCC_MWAreaComboIDC 6018
+#define MCC_MWDebugComboIDC 6019
+#define MCC_MWPreciseMarkersComboIDC 6020
+#define MCC_MWArtilleryIDC 6021
 
 #define FACTIONCOMBO 1001
 
 private ["_missionCenter","_missionCenterTrigger","_playersNumber","_difficulty","_totalEnemyUnits","_isCQB","_objType","_objArray","_check","_objFirstTime",
          "_minObjectivesDistance","_objPos","_timeStart","_side","_faction","_sidePlayer","_factionPlayer","_obj1","_obj2","_obj3","_pos","_center","_wholeMap",
-		 "_armor","_vehicles","_stealth","_roadPositions","_script_handler","_isIED","_isAS","_spawnbehavior","_isRoadblocks","_objectives","_isCiv","_weatherChange"];
+		 "_armor","_vehicles","_stealth","_roadPositions","_script_handler","_isIED","_isAS","_spawnbehavior","_isRoadblocks","_objectives","_isCiv","_weatherChange",
+		 "_preciseMarkers","_reinforcement","_artillery"];
 
 if (isnil "MCC_MWisGenerating") then {MCC_MWisGenerating = false}; 
 if (MCC_MWisGenerating) exitWith {player sideChat "MCC is now generating a mission please try again later"}; 
@@ -40,7 +44,10 @@ _armor 				= if ((lbCurSel MCC_MWArmorIDC)==0) then {false} else {true};
 _vehicles 			= if ((lbCurSel MCC_MWVehiclesIDC)==0) then {false} else {true};
 _weatherChange		= if ((lbCurSel MCC_MWWeatherComboIDC)==0) then {true} else {false};
 _wholeMap			= if ((lbCurSel MCC_MCC_MWAreaComboIDC)==0) then {true} else {false};
-
+MW_debug			= if ((lbCurSel MCC_MWDebugComboIDC)==0) then {false} else {true};
+_preciseMarkers		= if ((lbCurSel MCC_MWPreciseMarkersComboIDC)==0) then {true} else {false};
+_reinforcement		= (lbCurSel MCC_MWReinforcementIDC);
+_artillery			= (lbCurSel MCC_MWArtilleryIDC);
 //CQB
 switch (lbCurSel MCC_MWCQBIDC) do	
 	{
@@ -73,7 +80,7 @@ _sidePlayer 		= side player;
 _side				= mcc_sidename; 
 _pos 				= getpos player;
 
-_totalEnemyUnits 		= if ((_playersNumber * _difficulty)>10) then {(_playersNumber * _difficulty)} else {10};
+_totalEnemyUnits 		= if ((_playersNumber * _difficulty)>10) then {(_playersNumber * _difficulty)} else {20};
 _objArray			 	= ["Secure HVT","Kill HVT","Destroy Object","Aquire Intel","Clear Area","Disarm IED"]; 
 _minObjectivesDistance 	= if (_isCQB) then {100} else {200};
 _maxObjectivesDistance 	= (_minObjectivesDistance*1.5) + (10*_playersNumber);
@@ -251,8 +258,7 @@ publicvariable "MCC_MWmissionsCenter";
 diag_log format ["MCC Mission Wizard center = %1", _missionCenter];
 
 //Create the marker
-
-[[1, "ColorRed",  [_maxObjectivesDistance*3,_maxObjectivesDistance*3], "ELLIPSE", "FDiagonal", "Empty", FORMAT ["MCCMW_operationMarker_%1",["MCCMW_operationMarker",1] call bis_fnc_counter], _missionCenter],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;
+[[1, "ColorRed",[_maxObjectivesDistance*3,_maxObjectivesDistance*3], "ELLIPSE", "Border", "Empty", FORMAT ["MCCMW_operationMarker_%1",["MCCMW_operationMarker",1] call bis_fnc_counter], _missionCenter],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;
 
 
 
@@ -297,39 +303,39 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 				if ((random 1)>0.5) then {_factionPlayer = faction player; _sidePlayer = side player} else {_factionPlayer = "CIV_F"; _sidePlayer = civilian};
 				
 				//Spawn a hostage on the server
-				[[_objPos, _isCQB, true, _side, _faction, _sidePlayer, _factionPlayer], "MCC_fnc_MWObjectiveHVT", false, false] call BIS_fnc_MP;
+				[[_objPos, _isCQB, true, _side, _faction, _sidePlayer, _factionPlayer,_preciseMarkers], "MCC_fnc_MWObjectiveHVT", false, false] call BIS_fnc_MP;
 			};
 			
 		  case "Kill HVT":		
 			{
-				[[_objPos, _isCQB, false, _side, _faction, _sidePlayer, faction player], "MCC_fnc_MWObjectiveHVT", false, false] call BIS_fnc_MP;
+				[[_objPos, _isCQB, false, _side, _faction, _sidePlayer, faction player,_preciseMarkers], "MCC_fnc_MWObjectiveHVT", false, false] call BIS_fnc_MP;
 			};
 			
 		  case "Destroy Object":		
 			{
-				[[_objPos, _isCQB, _side, _faction], "MCC_fnc_MWObjectiveDestroy", false, false] call BIS_fnc_MP;
+				[[_objPos, _isCQB, _side, _faction,_preciseMarkers], "MCC_fnc_MWObjectiveDestroy", false, false] call BIS_fnc_MP;
 			};
 			
 		  case "Aquire Intel":		
 			{
-				[[_objPos, _isCQB, _side, _faction], "MCC_fnc_MWObjectiveIntel", false, false] call BIS_fnc_MP;
+				[[_objPos, _isCQB, _side, _faction,_preciseMarkers], "MCC_fnc_MWObjectiveIntel", false, false] call BIS_fnc_MP;
 			};
 			
 		 case "Clear Area":		
 			{
-				[[_objPos, _isCQB,_side, _faction,_sidePlayer], "MCC_fnc_MWObjectiveClear", false, false] call BIS_fnc_MP;
+				[[_objPos, _isCQB,_side, _faction,_sidePlayer,_preciseMarkers], "MCC_fnc_MWObjectiveClear", false, false] call BIS_fnc_MP;
 			};
 			
 		 case "Disarm IED":		
 			{
-				[[_objPos, _isCQB,_side, _faction,_sidePlayer], "MCC_fnc_MWObjectiveDisable", false, false] call BIS_fnc_MP;
+				[[_objPos, _isCQB,_side, _faction,_sidePlayer,_preciseMarkers], "MCC_fnc_MWObjectiveDisable", false, false] call BIS_fnc_MP;
 			};
 		};
 		
 		//Stealth mission
 		if (_stealth) then
 		{
-			private ["_activate","_cond"];
+			private ["_activate","_cond","_alarm"];
 			switch (_sidePlayer) do	
 				{
 					case west: {_activate =  "WEST"; _cond = "WEST D"};
@@ -337,7 +343,8 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 					case resistance: {_activate =  "GUER"; _cond = "GUER D"};
 					case civilian: {_activate =  "CIV"; _cond = "CIV D"};
 				};
-			[["", _objPos, 100, 100, _activate, _cond,"AlarmSfx",false],"MCC_fnc_MusicTrigger",true,false] spawn BIS_fnc_MP;
+			_alarm = "Land_Loudspeakers_F" createVehicle ([_objPos,1,100,10,0,10,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos);
+			[["", getpos _alarm, 100, 100, _activate, _cond,"AlarmSfx",false],"MCC_fnc_MusicTrigger",true,false] spawn BIS_fnc_MP;
 		};
 		
 		sleep 1;
@@ -478,7 +485,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 
 
 //-----------------------------------------------------------------------------Main zone-----------------------------------------------------------------------------------------------
-private ["_zoneNumber","_unitPlaced","_safepos"];
+private ["_zoneNumber","_unitPlaced","_safepos","_factor"];
 
 //Let'screate the main zone and placing units
 _zoneNumber =["MCCMW_zone",1] call bis_fnc_counter; 
@@ -489,42 +496,50 @@ waituntil {_script_handler};
 
 //Spawn some Infantry groups
 _spawnbehavior	= ["MOVE","MOVE","MOVE","NOFOLLOW"] call BIS_fnc_selectRandom; 
-_unitPlaced = [(_totalEnemyUnits*0.3),_zoneNumber,_spawnbehavior] call MCC_fnc_MWSpawnInfantry; 
+_factor = if (_isCQB) then {0.3} else {0.6}; 
+_unitPlaced = [(_totalEnemyUnits * _factor),_zoneNumber,_spawnbehavior] call MCC_fnc_MWSpawnInfantry; 
 if (MW_debug) then {diag_log format ["Total enemy's infantry Spawned in main zone: %1", _unitPlaced]};
 
 //Vehicles
 if (_vehicles) then
 {
-	_unitPlaced = [(_totalEnemyUnits*0.3),_zoneNumber,MCC_MWGroupArrayCar,MCC_MWunitsArrayCar,10,20,"LAND"] call MCC_fnc_MWSpawnVehicles;
+	_unitPlaced = [(_totalEnemyUnits*0.6),_zoneNumber,MCC_MWGroupArrayCar,MCC_MWunitsArrayCar,5,15,"LAND"] call MCC_fnc_MWSpawnVehicles;
 	if (MW_debug) then {diag_log format ["Total enemy's Vehicles Spawned in main zone: %1", _unitPlaced]};
 };
 
 //Armor
 if (_armor) then
 {
-	_unitPlaced = [(_totalEnemyUnits*0.3),_zoneNumber,MCC_MWGroupArrayArmored,MCC_MWunitsArrayArmored,20,40,"LAND"] call MCC_fnc_MWSpawnVehicles;
+	_unitPlaced = [(_totalEnemyUnits*0.4),_zoneNumber,MCC_MWGroupArrayArmored,MCC_MWunitsArrayArmored,10,30,"LAND"] call MCC_fnc_MWSpawnVehicles;
 	if (MW_debug) then {diag_log format ["Total enemy's Armor Spawned in main zone: %1", _unitPlaced]};
 };
 
 //Support
 if (_vehicles && (random 1 > 0.5)) then
 {
-	_unitPlaced = [(_totalEnemyUnits*0.3),_zoneNumber,MCC_MWGroupArraySupport,MCC_MWunitsArraySupport,15,30,"LAND"] call MCC_fnc_MWSpawnVehicles;
+	_unitPlaced = [(_totalEnemyUnits*0.3),_zoneNumber,MCC_MWGroupArraySupport,MCC_MWunitsArraySupport,10,30,"LAND"] call MCC_fnc_MWSpawnVehicles;
 	if (MW_debug) then {diag_log format ["Total enemy's Support Vehicles Spawned in main zone: %1", _unitPlaced]};
 };
 
-//Static
-if (random 1 > 0.5) then
+//Artillery
+if (_artillery != 0) then
 {
-	_unitPlaced = [(_totalEnemyUnits*0.15),_zoneNumber,MCC_MWGroupArrayStatic,MCC_MWunitsArrayStatic,5,10,"LAND"] call MCC_fnc_MWSpawnVehicles;
-	if (MW_debug) then {diag_log format ["Total enemy's Support Vehicles Spawned in main zone: %1", _unitPlaced]};
+	[[(_totalEnemyUnits*0.2),_missionCenter,_maxObjectivesDistance,MCC_MWunitsArrayStatic,5,10,_side,_artillery],"MCC_fnc_MWSpawnStatic",false,false] spawn BIS_fnc_MP;
+	if (MW_debug) then {diag_log "Enemy's Artillery Spawned in main zone"};
+};
+
+//Static
+if (random 1 > 0.3) then
+{
+	[[(_totalEnemyUnits*0.2),_missionCenter,_maxObjectivesDistance,MCC_MWunitsArrayStatic,4,8,_side,999],"MCC_fnc_MWSpawnStatic",false,false] spawn BIS_fnc_MP;
+	if (MW_debug) then {diag_log "Enemy's Static Weapons Spawned in main zone"};
 };
 
 //Ship
 _safepos =[_missionCenter ,1,(_maxObjectivesDistance*3.5),2,2,10,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos; //Check if they are water
 if (str _safepos != "[-500,-500,0]") then
 {
-	_unitPlaced = [(_totalEnemyUnits*0.15),_zoneNumber,MCC_MWGroupArrayShip,MCC_MWunitsArrayShip,15,30,"WATER"] call MCC_fnc_MWSpawnVehicles;
+	_unitPlaced = [(_totalEnemyUnits*0.2),_zoneNumber,MCC_MWGroupArrayShip,MCC_MWunitsArrayShip,5,15,"WATER"] call MCC_fnc_MWSpawnVehicles;
 	if (MW_debug) then {diag_log format ["Total enemy's Ships Vehicles Spawned in main zone: %1", _unitPlaced]};
 };
 
@@ -567,7 +582,7 @@ if (_isIED) then
 	{
 		_unitsArray 	= ["CIV_F","carx"] call MCC_fnc_makeUnitsArray;
 		{
-			if (random 1 > 0.5) then 
+			if (random 1 > 0.3) then 
 			{
 				
 				//Name the ied.
@@ -631,7 +646,19 @@ if (_isIED) then
 	};
 };	
 
-
+//Reinforcment
+if (_reinforcement in [1,2,3]) then 
+{
+	private ["_cond","_end"];
+	_cond = [0.3];
+	_end = [0,0,0,0,0,0,0,1,1,1,2] call BIS_fnc_selectRandom; 
+	for "_x" from 1 to _end step 1 do 
+	{
+		_cond set [_x, (_cond select (_x-1)) + 0.3];
+	};
+	
+	[[_reinforcement,_side,getpos _missionCenterTrigger, triggerArea _missionCenterTrigger, _cond,_zoneNumber,_faction,MW_debug,_totalEnemyUnits],"MCC_fnc_MWreinforcement",false,false] call BIS_fnc_MP;
+}; 
 
 MCC_MWMissions set [count MCC_MWMissions, _objectives]; 
 publicVariable "MCC_MWMissions";
@@ -704,52 +731,82 @@ _factionName = getText (configfile >> "CfgFactionClasses" >> _faction >> "displa
 if ((_center select 1) != "") then
 {
         _tempText = ["Attack On","The Battle For","Assault On","The Fight For"] call BIS_fnc_selectRandom; 
-        _html = format ["<t size='1.1' color='#a8e748' underline='true' align='center'>Operation: </t><t size='1.1' color='#a8e748' underline='false' align='center'>%1 %2. %3 %4</t>",toupper _missionName1,toupper _missionName2,_tempText,(_center select 1)];
+        _html = format ["<t size='1.1' color='#a8e748' underline='true' align='center'>Operation: </t><t size='1.1' color='#a8e748' underline='true' align='center'>%1 %2. %3 %4</t>",toupper _missionName1,toupper _missionName2,_tempText,(_center select 1)];
 }
 else
 {
-        _html = format ["<t size='1.1' color='#a8e748' underline='true' align='center'>Operation: </t><t size='1.1' color='#a8e748' underline='false' align='center'>%1 %2.</t>",toupper _missionName1,toupper _missionName2];
+        _html = format ["<t size='1.1' color='#a8e748' underline='true' align='center'>Operation: </t><t size='1.1' color='#a8e748' underline='true' align='center'>%1 %2.</t>",toupper _missionName1,toupper _missionName2];
 };
 //General
 _tempText = ["presence in the area has been increasing","have established a foothold in the area","forces are active in the area"] call BIS_fnc_selectRandom; 
 _html = _html + format ["<br/><br/><t size='0.8' color='#E2EEE0'>%1 %2.</t>",_factionName,_tempText];
+
 //_isCQB
 if (_isCQB) then
 {
-        _tempText = ["They have taken up defensive positions inside buildings","They are using civilian buildings to fortify themselves"] call BIS_fnc_selectRandom; 
-        _html = _html + format ["<t size='0.8' color='#E2EEE0'> %1.</t>",_tempText];
+    _tempText = ["They have taken up defensive positions inside buildings","They are using civilian buildings to fortify themselves"] call BIS_fnc_selectRandom; 
+    _html = _html + format ["<t size='0.8' color='#E2EEE0'> %1.</t>",_tempText];
 };
 _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>HQ informs us that infantry are present. </t>",_factionName];
 //_vehicles
 if (_vehicles) then
 {
-        _html = _html + format ["<t size='0.8' color='#E2EEE0'>You may also encounter %1 technicals or soft vehicles. </t>",_factionName];
+    _html = _html + format ["<t size='0.8' color='#E2EEE0'>You may also encounter %1 technicals or soft vehicles. </t>",_factionName];
 };
 //_armor
 if (_armor) then
 {
-        _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Be aware that there may be %1 armored vehicles or even MBT's operating in the OP.</t>",_factionName];
+    _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Be aware that there may be %1 armored vehicles or even MBT's operating in the OP.</t>",_factionName];
 };
+
+//Artillery
+if (_artillery != 0) then
+{
+	_html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>%1 may also have artillery operating in the area.</t>",_factionName];
+};
+
 //_isRoadblocks
 if (_isRoadblocks) then
 {
-        _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>%1 forces have established hasty checkpoints on some of the roads leading in and out of the area.</t>",_factionName];
+    _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>%1 forces have established hasty checkpoints on some of the roads leading in and out of the area.</t>",_factionName];
 };
 //_isIED
 if (_isIED || _isSB) then
 {
-        _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Keep an eye out for anything that might look suspicious, as we believe that %1 may employ IEDs, or even suicide attacks. </t>",_factionName];
+    _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Keep an eye out for anything that might look suspicious, as we believe that %1 may employ IEDs, or even suicide attacks. </t>",_factionName];
 };
 //_isAS
 if (_isAS) then
 {
-        _html = _html + format ["<t size='0.8' color='#E2EEE0'>The local civilians support %1, so be on the look out for any strange behavior. But keep civilian casualties to a minimum as the top Brass don't want to draw unnecessary attention.</t>",_factionName];
+    _html = _html + format ["<t size='0.8' color='#E2EEE0'>The local civilians support %1, so be on the look out for any strange behavior. But keep civilian casualties to a minimum as the top Brass don't want to draw unnecessary attention.</t>",_factionName];
 };
-//_stealth
-if (_stealth) then
+
+//Reinforcment
+if (_reinforcement in [1,2,3] || _stealth) then 
 {
-        _html = _html +"<br/><t size='0.8' color='#E2EEE0'>This is an undercover operation behind enemy lines. Expect enemy reinforcements should they become aware of your presence.</t>";
+	private "_text";
+	_text = switch (_reinforcement) do
+			{
+				case 1: 	
+				{ 
+					" aerial "
+				};
+				
+				case 2: 	
+				{ 
+					" motorized "
+				};
+				
+				case 3: 	
+				{ 
+					" aerial and motorized "
+				};
+			};
+			
+
+	_html = _html +"<br/><t size='0.8' color='#E2EEE0'>The enemy have" + _text + "QRF forces nearby. Expect enemy reinforcements should they become aware of your presence.</t>";
 };
+
 _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Go over your objectives, gear up and get ready.<br/>Mission is a go!</t>",_factionName];
 
 _music = ["LeadTrack01a_F","LeadTrack02_F","LeadTrack03_F","LeadTrack04a_F","LeadTrack05_F","LeadTrack06_F","AmbientTrack03_F","BackgroundTrack03_F","BackgroundTrack01_F",
@@ -763,3 +820,5 @@ _music = ["LeadTrack01a_F","LeadTrack02_F","LeadTrack03_F","LeadTrack04a_F","Lea
 MCC_MWisGenerating = false; 
 deleteVehicle hsim_worldArea;
 hsim_worldArea = nil; 
+deleteVehicle MWMissionArea;
+MWMissionArea = nil; 

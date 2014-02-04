@@ -244,10 +244,10 @@ class ArtilleryDialog {
 			colorBorder[] = { 1, 1, 1, 1 };
 			BorderSize = 0.01;
 			autocomplete = false;  
-			x = 0.65; y = 0.225;
-			w = 0.065; h = 0.035;
+			x = 0.66; y = 0.225;
+			w = 0.085; h = 0.035;
 
-			sizeEx = 0.035;
+			sizeEx = 0.03;
 			text = "";
 		};
 		class HW_ArtiYcoordunit : HW_ArtiXCoordunit {
@@ -315,7 +315,6 @@ class ArtilleryDialog {
 			style = MCCST_LEFT;
 			colorText[] = { 1, 1, 1, 1 };
 			colorSelect[] = { 1.0, 0.35, 0.3, 1 };
-			colorBackground[] = { 0, 0, 0, 0.6 };
 			colorSelectBackground[] = { 0, 0, 0, 1 };
 			sizeEx = 0.028;
 			x = 0.425; y = 0.57;

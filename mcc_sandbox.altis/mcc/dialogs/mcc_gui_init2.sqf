@@ -17,6 +17,7 @@
 #define MCC_ARTYTYPE 2004
 #define MCC_ARTYSPREAD 2005
 #define MCC_ARTYNUMBER 2006
+#define MCC_artilleryDelayIDC 2037
 
 #define MCC_TRAPS_TYPE 2007
 #define MCC_TRAPS_OBJECT 2008
@@ -120,6 +121,15 @@ _comboBox = _mccdialog displayCtrl MCC_ARTYNUMBER;		//fill combobox CFG Artiller
 		_comboBox lbAdd _displayname;
 	} foreach MCC_artilleryNumberArray;
 	_comboBox lbSetCurSel 0;
+	
+_comboBox = _mccdialog displayCtrl MCC_artilleryDelayIDC;		//fill combobox IED Ambush group
+lbClear _comboBox;
+{
+	_displayname = _x;
+	_index = _comboBox lbAdd _displayname;
+} foreach ["0","20 sec","40 sec","1 min","80  sec","100  sec","2 min","140 sec","160 sec","3 min"];
+_comboBox lbSetCurSel 0;
+
 //--------------------------------------------------------TRAPS Settings---------------------------------------------------------
 
 _comboBox = _mccdialog displayCtrl MCC_TRAPS_PROXIMITY;		//fill combobox IED Prox
@@ -159,7 +169,7 @@ lbClear _comboBox;
 {
 	_displayname = _x;
 	_index = _comboBox lbAdd _displayname;
-} foreach ["Deadly", "Disabling", "Fake"];
+} foreach ["Deadly", "Disabling", "Fake", "No Explosion"];
 _comboBox lbSetCurSel 0;
 
 _comboBox = _mccdialog displayCtrl MCC_TRAPS_DISARM;		//fill combobox IED Disarm time
@@ -194,6 +204,8 @@ lbClear _comboBox;
 } foreach GEN_INFANTRY;
 _index = _comboBox lbAdd "Spotter - Civilian";
 _comboBox lbSetCurSel 0;
+
+
 
 //--------------------------------------------------------EVAC Settings---------------------------------------------------------
 

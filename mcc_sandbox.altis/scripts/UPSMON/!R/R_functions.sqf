@@ -1,7 +1,7 @@
 /*	
 	autor: !R	
 	
-	5.0.8 R3
+	5.1.0
 */
 	
 
@@ -18,8 +18,8 @@ R_relPos3D =
 		_z=_p select 2;
 		_d=_this select 1; 
 		_a=_this select 2; 
-		_xout=_x + sin(_a)*_d; 
-		_yout=_y + cos(_a)*_d;
+		_xout=_x + sin(_a) * _d; 
+		_yout=_y + cos(_a) * _d;
 		[_xout,_yout,_z]
 	};
 
@@ -285,12 +285,12 @@ R_ThrowSmoke =
 	// logic is needed to display rGlobalChat
 	private ["_center","_group"];
 	_center = createCenter sideLogic; _group = createGroup _center;
-	R_Logic_civkill = _group createUnit ["LOGIC", [1,1,1], [], 0, "NONE"];
+	R_Logic_civkill = _group createUnit ["LOGIC", [2,2,1], [], 0, "NONE"];
 	_group = nil;
 	_center = nil;
 	
 	
-	// use in gothit proces
+	// used in gothit proces
 	// nul = [_unit, _shooter] spawn R_SN_EHKILLEDCIV; 
 	R_SN_EHKILLEDCIV = 
 	{
@@ -325,7 +325,7 @@ R_ThrowSmoke =
 			//if (KRON_UPS_Debug > 0) then {player globalchat format["KILLER: %1", side _killer ]};
 			if (KRON_UPS_Debug > 0) then {player globalchat format["KILLED_CIV_COUNTER: %1",KILLED_CIV_COUNTER]};
 			if (R_WHO_IS_CIV_KILLER_INFO > 0) then {      
-				[R_Logic_civkill, nil , rglobalChat, format [" A CIVILIAN WAS KILLED BY %1",_killer]] call RE;
+				[R_Logic_civkill, nil , rglobalChat, format ["A CIVILIAN WAS KILLED BY %1",_killer]] call RE;
 			};	
 		};							
 	};

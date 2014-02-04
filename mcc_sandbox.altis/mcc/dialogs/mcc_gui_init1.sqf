@@ -48,10 +48,6 @@ if (CP_activated) then {ctrlenable [MCCENABLECP,false]};
 
 _mccdialog = findDisplay MCC_SANDBOX_IDD;
 
-if (!MCC_enable_west) then { ctrlEnable [MCCSTARTWEST,false];}; //disable start locations
-if (!MCC_enable_east) then { ctrlEnable [MCCSTARTEAST,false];};
-if (!MCC_enable_gue) then { ctrlEnable [MCCSTARTGUAR,false];};
-if (!MCC_enable_civ) then { ctrlEnable [MCCSTARTCIV,false];};
 if (!MCC_enable_respawn) then { ctrlEnable [MCCDISABLERESPAWN,false];};
 if (!MCC_capture_state) then { ctrlEnable [MCCSTOPCAPTURE,false];};
 

@@ -246,19 +246,10 @@ publicVariableServer "MCC_MWGroupArraySubmarine";
 publicVariableServer "MCC_MWGroupArrayStatic";
 
 //Add this two for general stuff
-MCC_groupTypes set [count MCC_groupTypes, ["Paratroopers","Paratroopers"]]; 
+MCC_groupTypes set [count MCC_groupTypes, ["Reinforcement","Reinforcement"]]; 
 MCC_groupTypes set [count MCC_groupTypes, ["Garrison","Garrison"]]; 
 
 GEN_INFANTRY   		= [mcc_sidename,mcc_faction,(MCC_groupTypes select 0) select 0,"LAND"]   call mcc_make_array_grps;
-
-/*// Load all possible groups from the config into the menu array format in arrays above
-GEN_MECHANIZED 		= [mcc_sidename,mcc_faction, (MCC_groupTypes select SPAWNBRANCH) select 0,"LAND"] call mcc_make_array_grps;
-GEN_MOTORIZED  		= [mcc_sidename,mcc_faction,"Motorized","LAND"]  call mcc_make_array_grps;
-GEN_AIR        		= [mcc_sidename,mcc_faction,"Air","AIR"]         call mcc_make_array_grps;
-GEN_ARMOR      		= [mcc_sidename,mcc_faction,"Armored","LAND"]    call mcc_make_array_grps;
-GEN_SPECOPS   		= [mcc_sidename,mcc_faction,"SpecOps","WATER"]   call mcc_make_array_grps;
-GEN_SUPPORT  		= [mcc_sidename,mcc_faction,"Support","LAND"]   call mcc_make_array_grps;
-*/
 
 // Create the units
 // Load the different units into the arrays above

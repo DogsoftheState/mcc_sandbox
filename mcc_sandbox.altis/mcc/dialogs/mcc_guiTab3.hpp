@@ -136,6 +136,7 @@ class MCC_Sandbox3 {
 		MCC_TasksSucceed,
 		MCC_TasksFailed,
 		MCC_TasksCancled,
+		MCC_TasksDelete,
 		MCC_JukeboxTittle,
 		MCC_JukeboxMusic,
 		MCC_JukeboxSound,
@@ -673,11 +674,11 @@ class MCC_TasksWP: MCC_RscButton
 	text = "WP"; //--- ToDo: Localize;
 	x = 0.356771 * safezoneW + safezoneX;
 	y = 0.390043 * safezoneH + safezoneY;
-	w = 0.0401042 * safezoneW;
+	w = 0.034375 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	onButtonClick = __EVAL ("[7] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 	tooltip = "Add Waypoint to the selected task"; //--- ToDo: Localize;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
 
 class MCC_TasksWPCin: MCC_RscButton
@@ -686,50 +687,64 @@ class MCC_TasksWPCin: MCC_RscButton
 	onButtonClick = __EVAL ("[1] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 
 	text = "WP (cin)"; //--- ToDo: Localize;
-	x = 0.402604 * safezoneW + safezoneX;
+	x = 0.396875 * safezoneW + safezoneX;
 	y = 0.390043 * safezoneH + safezoneY;
-	w = 0.0401042 * safezoneW;
+	w = 0.034375 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	tooltip = "Add Waypoint to the selected task with an establish shot"; //--- ToDo: Localize;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
 class MCC_TasksSucceed: MCC_RscButton
 {
 	idc = -1;
 	text = "Succeed"; //--- ToDo: Localize;
-	x = 0.540104 * safezoneW + safezoneX;
+	x = 0.551563 * safezoneW + safezoneX;
 	y = 0.390043 * safezoneH + safezoneY;
-	w = 0.0401042 * safezoneW;
+	w = 0.034375 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	colorText[] = {0,1,0,0.5};
 	onButtonClick = __EVAL ("[2] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 	tooltip = "Mark the selected task as succeeded"; //--- ToDo: Localize;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.9)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
 class MCC_TasksFailed: MCC_RscButton
 {
 	idc = -1;
 	text = "Failed"; //--- ToDo: Localize;
-	x = 0.494271 * safezoneW + safezoneX;
+	x = 0.511458 * safezoneW + safezoneX;
 	y = 0.390043 * safezoneH + safezoneY;
-	w = 0.0401042 * safezoneW;
+	w = 0.034375 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	colorText[] = {1,0,0,0.7};
 	onButtonClick = __EVAL ("[3] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 	tooltip = "Mark the selected task as Failed"; //--- ToDo: Localize;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.9)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
 class MCC_TasksCancled: MCC_RscButton
 {
 	idc = -1;
 	text = "Cancel"; //--- ToDo: Localize;
-	x = 0.448438 * safezoneW + safezoneX;
+	x = 0.436979 * safezoneW + safezoneX;
 	y = 0.390043 * safezoneH + safezoneY;
-	w = 0.0401042 * safezoneW;
+	w = 0.034375 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	onButtonClick = __EVAL ("[4] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 	tooltip = "Mark the selected task as cancelled"; //--- ToDo: Localize;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.9)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+};
+
+class  MCC_TasksDelete: MCC_RscButton
+{
+	idc = -1;
+	onButtonClick = __EVAL ("[8] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
+
+	text = "Delete"; //--- ToDo: Localize;
+	x = 0.477083 * safezoneW + safezoneX;
+	y = 0.390043 * safezoneH + safezoneY;
+	w = 0.0286458 * safezoneW;
+	h = 0.0329871 * safezoneH;
+	tooltip = "Delete the selected task"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
 //=========================== Jukebox =====================================================
 class MCC_JukeboxTittle: MCC_RscText

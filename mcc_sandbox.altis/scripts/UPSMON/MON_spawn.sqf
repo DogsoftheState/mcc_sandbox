@@ -18,8 +18,7 @@
 		and the position.
 		nul = [1,[0,0,0],3,[mark, upsmon optional params]] EXECVM "SCRIPTS\UPSMON\MON_SPAWN.SQF";		
  =====================================================================================================*/
-//if (!isserver) exitWith {}; 
-if !( isServer || MCC_isLocalHC ) exitWith {};
+if (!isserver) exitWith {}; 
 
 //Waits until UPSMON is init
 waitUntil {!isNil("KRON_UPS_INIT")};
@@ -75,7 +74,7 @@ if (KRON_UPS_Debug>0) then {player globalchat format["Spawning %3 copies of temp
 			_grp=createGroup _side;
 			
 			_lead = _grp createUnit [_unittype, _position, [], 0, "form"];
-			[[[netid _lead,_lead], _initstr], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+			//_lead setVehicleInit _initlstr;
 			[_lead] join _grp;
 			_grp selectLeader _lead;
 			sleep 1;
@@ -88,8 +87,8 @@ if (KRON_UPS_Debug>0) then {player globalchat format["Spawning %3 copies of temp
 					_newpos = _position findEmptyPosition [10, 200];
 					sleep .4;
 					if (count _newpos <= 0) then {_newpos = _position};
-					_newunit = _grp createUnit [_x, _newpos, [],0,"form"];	
-					[[[netid _lead,_lead], _initstr], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+					_newunit = _grp createUnit [_x, _newpos, [],0,"form"];
+					//_newunit setVehicleInit _initstr;
 					[_newunit] join _grp;
 				};
 			} foreach _membertypes;
@@ -107,6 +106,8 @@ if (KRON_UPS_Debug>0) then {player globalchat format["Spawning %3 copies of temp
 			
 			//Exec UPSMON script			
 			_params SPAWN UPSMON;
+			
+			//processInitCommands;			
 		};
 	};
 }foreach KRON_UPS_TEMPLATES;

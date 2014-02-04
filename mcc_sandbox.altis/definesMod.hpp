@@ -38,7 +38,7 @@
 //--------------------------Others----------------------------------------------------
 #include "\mcc_sandbox_mod\bon_artillery\dialog\Artillery.hpp"
 #include "\mcc_sandbox_mod\VAS\menu.hpp"
-#include "\mcc_sandbox_mod\f\common\f_spect\spectating.hpp"
+#include "\mcc_sandbox_mod\spectator\spectating.hpp"
 #include "\mcc_sandbox_mod\hcam\hcam.hpp"
 //---------------------------Functions------------------------------------------------
 
@@ -188,6 +188,30 @@ class CfgFunctions
 				description = "Populate soldiers inside empty houses";
 			};
 			
+			class saveToSQM
+			{
+				description = "Save MCC's 3D editor placments in SQM file format and copy it to clipboard";
+			};
+			
+			class saveToComp
+			{
+				description = "Save MCC's 3D editor placments in composition format";
+			};
+			
+			class replaceString
+			{
+				description = "Filter a string and removes certain characters ( _filter)";
+			};
+			
+			class dirToString
+			{
+				description = "Get direction integer and return it as a strin North, east exc";
+			};
+			
+			class startLocations
+			{
+				description = "Teleport the player when start location has been found";
+			};
 		};
 		
 		class ui
@@ -420,6 +444,16 @@ class CfgFunctions
 			{
 				description = "Create The tooltips on breifings.";
 			};
+			
+			class MWreinforcement
+			{
+				description = "Create a reinforcment type.";
+			};
+			
+			class MWSpawnStatic
+			{
+				description = "Spawn static weapons in the zone.";
+			};
 		};
 		
 		class ai
@@ -429,6 +463,16 @@ class CfgFunctions
 			class garrisonBehavior
 			{
 				description = "Contorol units under garrison behavior.";
+			};
+			
+			class paratroops
+			{
+				description = "Contorol the paratroop reinforcement spawn.";
+			};
+			
+			class reinforcement
+			{
+				description = "Contorol the motorized reinforcement spawn.";
 			};
 		};
 		
@@ -998,3 +1042,16 @@ class CfgMusic {
 		titles[] = {};
 	};
 }; 
+
+class CfgNotifications
+{
+	class MCCNotifications
+	{
+		description = "%1";
+		iconPicture = "%2";
+		iconText = "%3";
+		priority = 4;
+		sound = "communicationMenuItemAdded";
+		title = "NEW SUPPORT AVAILABLE";
+	};
+}

@@ -7,12 +7,13 @@
 // _nshell = integer. Number of shells per burst
 // _sound = boolean, True - for impact wistle sound
 //===========================================================================================================================================================================	
-private ["_sound", "_pos", "_shelltype", "_shellspread", "_nshell", "_shell", "_i","_bomb","_bombpos"];
+private ["_sound", "_pos", "_shelltype", "_shellspread", "_nshell", "_shell", "_i","_bomb","_bombpos","_delay"];
 _pos					 = _this select 0; 
 _shelltype 			     = _this select 1; 
 _shellspread			 = _this select 2; 
 _nshell 				 = _this select 3; 
 _sound 					 = _this select 4; 
+_delay 					 = _this select 5;
 
 for [{_i=0},{_i<_nshell},{_i=_i+1}] do
 	{
@@ -25,5 +26,5 @@ for [{_i=0},{_i<_nshell},{_i=_i+1}] do
 		_bomb = "HelicopterExploSmall" createVehicle _bombpos;
 		_shell = _shelltype createVehicle [_bombpos select 0,_bombpos select 1,(_bombpos select 2)+50];
 		_shell setVelocity [(random 10) - (random 10), (random 10) - (random 10), -10];
-		sleep 10;
+		sleep _delay;
 	};

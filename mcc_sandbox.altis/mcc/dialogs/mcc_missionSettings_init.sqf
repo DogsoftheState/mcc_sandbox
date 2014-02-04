@@ -10,6 +10,7 @@
 #define MCC_MSCONSOLESHOWFRIENDS 8408
 #define MCC_MSCONSOLECOMMANDAI 8409
 #define MCC_IDCNAMETAGS 8410
+#define mcc_artilleryTitleIDC 8411
 
 private ["_mccdialog","_comboBox","_displayname"];
 disableSerialization;
@@ -94,3 +95,11 @@ _comboBox = _mccdialog displayCtrl MCC_IDCNAMETAGS; //Show name tags
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
 _comboBox lbSetCurSel 0;
+
+_comboBox = _mccdialog displayCtrl mcc_artilleryTitleIDC; //Artillery Computer
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["Disabled","Enabled"];
+_comboBox lbSetCurSel 1;

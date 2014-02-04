@@ -7,12 +7,13 @@
 // _nshell = integer. Number of shells per burst
 // _sound = boolean, True - for impact wistle sound
 //===========================================================================================================================================================================			
-private ["_sound", "_pos", "_shelltype", "_shellspread", "_nshell", "_shell", "_i","_burst","_bombpos","_j","_disp","_hgt","_tr"];
+private ["_sound", "_pos", "_shelltype", "_shellspread", "_nshell", "_shell", "_i","_burst","_bombpos","_j","_disp","_hgt","_tr","_delay"];
 _pos					 = _this select 0; 
 _shelltype 			     = _this select 1; 
 _shellspread			 = _this select 2; 
 _nshell 				 = _this select 3; 
 _sound 					 = _this select 4; 
+_delay 					 = _this select 5; 
 _hgt = 200;
 
 for [{_i=0},{_i<_nshell},{_i=_i+1}] do
@@ -41,4 +42,5 @@ for [{_i=0},{_i<_nshell},{_i=_i+1}] do
 			*/
 			sleep (0.05 + random 0.05);
 			};
+		sleep _delay; 
 	};

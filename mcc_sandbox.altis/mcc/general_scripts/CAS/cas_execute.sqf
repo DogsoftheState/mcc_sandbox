@@ -13,13 +13,27 @@ _away					= _this select 5;
 //=====================================================
 
 //start the drop
-if (_planeType=="I_Heli_Transport_02_F") then 		//If it's an airdrop
+if (tolower _planeType in ["west","east","guer","civ","logic"]) then 		//If it's an airdrop
 {
 	//Lets Spawn a plane
-	_plane1 			= [_planeType, _spawn, _pos, 100, false] call MCC_fnc_createPlane;		//Spawn plane 1 
+	_plane1 			= ["I_Heli_Transport_02_F", _spawn, _pos, 100, true] call MCC_fnc_createPlane;		//Spawn plane 1 
 	_pilotGroup1		= group _plane1;
 	_pilot1				= driver _plane1;
-
+	
+	if (tolower _planeType == "east") then 
+	{
+		_plane1 setObjectTextureGlobal [0,'#(rgb,8,8,3)color(0.635,0.576,0.447,0.5)'];
+		_plane1 setObjectTextureGlobal [1,'#(rgb,8,8,3)color(0.635,0.576,0.447,0.5)'];
+		_plane1 setObjectTextureGlobal [2,'#(rgb,8,8,3)color(0.635,0.576,0.447,0.5)'];
+	};
+	
+	if (tolower _planeType == "west") then
+	{
+		_plane1 setObjectTextureGlobal [0,'#(rgb,8,8,3)color(0.960,0.990,0.990,0.1)'];
+		_plane1 setObjectTextureGlobal [1,'#(rgb,8,8,3)color(0.960,0.990,0.990,0.1)'];
+		_plane1 setObjectTextureGlobal [2,'#(rgb,8,8,3)color(0.960,0.990,0.990,0.1)'];
+	};	
+	
 	_wp = (group _plane1) addWaypoint [[_pos select 0, _pos select 1, 0], 0];	//Add WP
 	_wp setWaypointStatements ["true", ""];
 	_wp setWaypointType "MOVE";
@@ -29,16 +43,18 @@ if (_planeType=="I_Heli_Transport_02_F") then 		//If it's an airdrop
 	_plane1 flyInHeight 200;
 		
 	waitUntil {((_plane1 distance [_pos select 0, _pos select 1, 200]) < 400) || (!alive _plane1)};
+	_plane1 animate ["CargoRamp_Open", 1];
+	sleep 1;
 	//Make the drop
 	if (!alive _plane1) exitWith {}; 
 	//Delete the plane when finished
 	[_pilotGroup1, _pilot1, _plane1, _away] spawn MCC_fnc_deletePlane;
 	for [{_x=0},{_x < count _spawnkind},{_x=_x+1}] do 
-		{
+	{
 		_planepos = getpos _plane1;
 		[_planepos, _spawnkind select _x, _pilot1] spawn MCC_fnc_CreateAmmoDrop;
 		sleep 3 + random 3;
-		};
+	};
 	
 }	
 else 
@@ -46,8 +62,8 @@ else
 	if ( ( _spawnkind == "Gun-run short" || _spawnkind == "Gun-run long") ) then
 	{
 	
-diag_log format ["gun-run: [%1]", _this];
-	
+		diag_log format ["gun-run: [%1]", _this];
+		
 		if ( _planeType isKindOf "Plane" ) then 
 		{
 			_distStart = 1900;
@@ -276,11 +292,11 @@ diag_log format ["gun-run: [%1]", _this];
 	else		
 	{
 		//Lets Spawn a plane
-		_plane1 			= [_planeType, _spawn, _pos, 100, false] call MCC_fnc_createPlane;		//Spawn plane 1 
+		_plane1 			= [_planeType, _spawn, _pos, 150, false] call MCC_fnc_createPlane;		//Spawn plane 1 
 		_pilotGroup1		= group _plane1;
 		_pilot1				= driver _plane1;
 
-		_plane2 			= [_planeType, _spawn, _pos, 100, false] call MCC_fnc_createPlane;		//Spawn plane 2 
+		_plane2 			= [_planeType, _spawn, _pos, 150, false] call MCC_fnc_createPlane;		//Spawn plane 2 
 		_pilotGroup2		= group _plane2;
 		_pilot2				= driver _plane2;
 

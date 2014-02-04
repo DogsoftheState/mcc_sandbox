@@ -32,7 +32,13 @@ if !mcc_isloading then
 	MCC_convoyHVTIndex = lbCurSel MCC_CONVOY_HVT;
 	MCC_convoyHVTCarIndex = lbCurSel MCC_CONVOY_HVTCAR;
 	
-	hint  "Left click on the map to put start position for the convy";
+	
+	hint parseText format["Add waypoints for convoy:<br/>--------------------------<br/>	
+				<t color='#00CCFF'>Left click on the map to set start position for the convoy</t><br/>
+				<t color='#33CC00'>Waypoints done: 0</t><br/>
+				<t color='#FF0000'>Waypoints to go: 5</t><br/>--------------------------<br/>"]; 
+	
+	//hint  "Left click on the map to put start position for the convy";
 	click = false; 
 	onMapSingleClick "point1 = _pos;
 	click = true;
@@ -49,7 +55,12 @@ if !mcc_isloading then
 	_point1 =getmarkerpos "marker1";
 	sleep 0.5;
 	
-	hint  "Left click on the map to put first convoy point";
+	hint parseText format["Add waypoints for convoy:<br/>--------------------------<br/>	
+				<t color='#00CCFF'>Left click on the map to set the 1st waypoint for the convoy</t><br/>
+				<t color='#33CC00'>Waypoints done: 1</t><br/>
+				<t color='#FF0000'>Waypoints to go: 4</t><br/>--------------------------<br/>"]; 
+				
+	//hint  "Left click on the map to put first convoy point";
 
 	onMapSingleClick "point2 = _pos;
 	click = true;
@@ -66,7 +77,12 @@ if !mcc_isloading then
 	_point2 =getmarkerpos "marker2";
 	sleep 0.5;
 	
-	hint  "Left click on the map to put second convoy point";
+	hint parseText format["Add waypoints for convoy:<br/>--------------------------<br/>	
+				<t color='#00CCFF'>Left click on the map to set the 2nd waypoint for the convoy</t><br/>
+				<t color='#33CC00'>Waypoints done: 2</t><br/>
+				<t color='#FF0000'>Waypoints to go: 3</t><br/>--------------------------<br/>"]; 
+				
+	//hint  "Left click on the map to put second convoy point";
 
 	onMapSingleClick "point3 = _pos;
 	click = true;
@@ -83,7 +99,12 @@ if !mcc_isloading then
 	_point3 =getmarkerpos "marker3";
 	sleep 0.5;
 	
-	hint  "Left click on the map to put third convoy point";
+	hint parseText format["Add waypoints for convoy:<br/>--------------------------<br/>	
+				<t color='#00CCFF'>Left click on the map to set the 3rd waypoint for the convoy</t><br/>
+				<t color='#33CC00'>Waypoints done: 3</t><br/>
+				<t color='#FF0000'>Waypoints to go: 2</t><br/>--------------------------<br/>"]; 
+				
+	//hint  "Left click on the map to put third convoy point";
 
 	onMapSingleClick "point4 = _pos;
 	click = true;
@@ -100,7 +121,12 @@ if !mcc_isloading then
 	_point4 =getmarkerpos "marker4";
 	sleep 0.5;
 	
-	hint  "Left click on the map to put the last convoy point";
+	hint parseText format["Add waypoints for convoy:<br/>--------------------------<br/>	
+				<t color='#00CCFF'>Left click on the map to set the last waypoint for the convoy</t><br/>
+				<t color='#33CC00'>Waypoints done: 4</t><br/>
+				<t color='#FF0000'>Waypoints to go: 1</t><br/>--------------------------<br/>"]; 
+				
+	//hint  "Left click on the map to put the last convoy point";
 
 	onMapSingleClick "point5 = _pos;
 	click = true;
@@ -116,6 +142,11 @@ if !mcc_isloading then
 	_convoy_wp5 setMarkerColorLocal "ColorRed";
 	_point5 =getmarkerpos "marker5";
 	sleep 0.5;
+	
+	hint parseText format["Add waypoints for convoy:<br/>--------------------------<br/>	
+				<t color='#00CCFF'>All waypoint for the convoy have been set</t><br/>
+				<t color='#33CC00'>Waypoints done: 5</t><br/>
+				<t color='#FF0000'>Waypoints to go: 0</t><br/>--------------------------<br/>"]; 
 	
 	if (MCC_capture_state) then
 		{

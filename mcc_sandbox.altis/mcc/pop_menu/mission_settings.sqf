@@ -33,7 +33,7 @@ if (mcc_missionmaker == (name player)) then {
 	};
 	
 	if (_type==4) then	{													//Spectator script
-		[player,player,"noWait"] execVM MCC_path + "f\common\f_spect\specta.sqf";
+		[player] execVM MCC_path + "spectator\specta.sqf";
 	};
 };
 		

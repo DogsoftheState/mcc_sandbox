@@ -318,6 +318,8 @@ class VAS_RscButtonMenu : VAS_RscShortcutButton {
 	color2[] = {1, 1, 1, 1};
 	colorText[] = {1, 1, 1, 1};
 	colorDisabled[] = {1, 1, 1, 0.25};
+	colorFocused[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])","(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])","(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])",1};
+	colorBackgroundFocused[] = {1,1,1,1};
 	period = 1.2;
 	periodFocus = 1.2;
 	periodOver = 1.2;
@@ -474,7 +476,7 @@ class VAS_RscListBox {
 	autoScrollDelay = 5;
 	autoScrollRewind = 0;
 	
-	class ScrollBar {
+	class ListScrollBar {
 		color[] = {1, 1, 1, 0.6};
 		colorActive[] = {1, 1, 1, 1};
 		colorDisabled[] = {1, 1, 1, 0.3};

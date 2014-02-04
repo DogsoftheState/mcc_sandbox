@@ -14,9 +14,9 @@ _soldiers = switch (_side) do {
 
 {
 	if ( leader _x == _x ) then {
-		_x addaction ["Order your men to follow me", MCC_path + "scripts\UPSMON\actions\followme.sqf", [], 1, false];
+		_x addaction ["Order your men to follow me", "scripts\UPSMON\actions\followme.sqf", [], 1, false];
 	} else {
-		_x addaction ["Follow me", MCC_path + "scripts\UPSMON\actions\followme.sqf", [], 1, false];
+		_x addaction ["Follow me", "scripts\UPSMON\actions\followme.sqf", [], 1, false];
 	};
 }foreach _soldiers;
 	

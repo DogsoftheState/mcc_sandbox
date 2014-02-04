@@ -21,6 +21,8 @@ if (mcc_missionmaker == (name player)) then {
 								publicVariable ""MCC_START_WEST"";
 								[[_pos, 0, 'west','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 								onMapSingleClick """";
+								
+								[[], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_WEST  = %1;
 															publicVariable 'MCC_START_WEST';
@@ -30,8 +32,6 @@ if (mcc_missionmaker == (name player)) then {
 															];
 								hint ""Start WEST location updated.""
 							";
-						 ctrlEnable [MCCSTARTWEST,false];
-						 MCC_enable_west=false; 
 					};
 					
 					case 1:	//East
@@ -42,6 +42,8 @@ if (mcc_missionmaker == (name player)) then {
 								publicVariable ""MCC_START_EAST"";
 								[[_pos, 0, 'east','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 								onMapSingleClick """";
+								
+								[[], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_EAST  = %1;
 															publicVariable 'MCC_START_EAST';
@@ -51,8 +53,6 @@ if (mcc_missionmaker == (name player)) then {
 															];
 								hint ""Start East location updated.""
 							";
-						 ctrlEnable [MCCSTARTEAST,false];
-						 MCC_enable_east=false; 
 					};
 					
 					case 2:	//Guer
@@ -63,6 +63,8 @@ if (mcc_missionmaker == (name player)) then {
 								publicVariable ""MCC_START_GUER"";
 								[[_pos, 0, 'RESISTANCE','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 								onMapSingleClick """";
+								
+								[[], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_GUER  = %1;
 															publicVariable 'MCC_START_GUER';
@@ -72,8 +74,6 @@ if (mcc_missionmaker == (name player)) then {
 															];
 								hint ""Start Guer location updated.""
 							";
-						 ctrlEnable [MCCSTARTGUAR,false];
-						 MCC_enable_gue=false; 
 					};
 					
 					case 3:	//Civ
@@ -83,6 +83,8 @@ if (mcc_missionmaker == (name player)) then {
 								MCC_START_CIV  = _pos;
 								publicVariable ""MCC_START_CIV"";
 								onMapSingleClick """";
+								
+								[[], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_CIV  = %1;
 															publicVariable 'MCC_START_GUER';
@@ -91,8 +93,6 @@ if (mcc_missionmaker == (name player)) then {
 															];
 								hint ""Start Guer location updated.""
 							";
-						 ctrlEnable [MCCSTARTCIV,false];
-						 MCC_enable_gue=false; 
 					};
 					
 					case 4:	//Disable respawn
@@ -105,38 +105,6 @@ if (mcc_missionmaker == (name player)) then {
 					
 					case 5:	//Start on LHD
 					{ 
-						if (MCCLHDSpawned) then {
-							_pos = deck modelToWorld [0,0,0];
-							MCC_START_GUER  = _pos;
-							MCC_START_EAST  = _pos;
-							MCC_START_WEST  = _pos;
-							MCC_START_LHD	= _pos; 
-							publicVariable "MCC_START_GUER";
-							publicVariable "MCC_START_WEST";
-							publicVariable "MCC_START_EAST";
-							publicVariable "MCC_START_LHD";
-							mcc_safe=mcc_safe + FORMAT ["
-														MCC_START_GUER  = %1;
-														MCC_START_EAST  = %2;
-														MCC_START_WEST  = %3;
-														publicVariable 'MCC_START_GUER';
-														publicVariable 'MCC_START_WEST';
-														publicVariable 'MCC_START_EAST';
-														"							  
-														,MCC_START_GUER
-														,MCC_START_EAST
-														,MCC_START_WEST
-														];
-							hint "Start location updated.";
-							ctrlEnable [START_GUE,false];
-							ctrlEnable [START_EAST,false];
-							ctrlEnable [START_WEST,false];
-							ctrlEnable [START_LHD,false];
-							MCC_enable_gue=false; 
-							MCC_enable_east=false;
-							MCC_enable_west=false; 	
-							MCC_enable_LHD=false;						
-						} else {hint "Spawn a LHD first"}; 
 					};
 					
 					case 6:	//Enable CP

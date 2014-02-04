@@ -11,9 +11,9 @@
 #define MCC_ZONE_LOC 1026
 #define MCCDELETEBRUSH 1030
 
-#define MCC_airdropTypeCombo 1031
-#define MCC_airdropClassCombo 1032
-#define MCC_airdropArrayCombo 1033
+#define MCC_AIRDROPTYPE 1031
+#define MCC_airdropClass 1032
+#define MCC_airdropArray 1033
 
 #define MCC_UM_LIST 3069
 
@@ -58,10 +58,10 @@ _comboBox = _mccdialog displayCtrl MCCDELETEBRUSH;		//Delete Brush
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["All","All Units",  "Man", "Car", "Tank", "Air", "ReammoBox"];
+	} foreach ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers"];
 	_comboBox lbSetCurSel 0;
 	
-_comboBox = _mccdialog displayCtrl MCC_airdropTypeCombo;		//Airdrop Type
+_comboBox = _mccdialog displayCtrl MCC_AIRDROPTYPE;		//Airdrop Type
 	lbClear _comboBox;
 	{
 		_displayname = _x;
@@ -69,7 +69,7 @@ _comboBox = _mccdialog displayCtrl MCC_airdropTypeCombo;		//Airdrop Type
 	} foreach ["Vehicles", "Tracked", "Motorcycles", "Ships", "Ammo"];
 	_comboBox lbSetCurSel 0;
 	
-_comboBox = _mccdialog displayCtrl MCC_airdropArrayCombo;		//Airdrop Current Airdrop
+_comboBox = _mccdialog displayCtrl MCC_airdropArray;		//Airdrop Current Airdrop
 	lbClear _comboBox;
 	{
 		if (!isnil "_x") then

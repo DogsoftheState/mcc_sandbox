@@ -336,14 +336,19 @@ if (_task ==2) then 											//Change Branch Units
 			};
 		} else	{
 			MCC_groupArray = [mcc_sidename,mcc_faction, ((MCC_groupTypes select (lbCurSel SPAWNBRANCH) select 0)),"LAND"] call mcc_make_array_grps;
-				if (((MCC_groupTypes select (lbCurSel SPAWNBRANCH) select 0)) =="Paratroopers") exitWith 				//Paratroops
+				if (((MCC_groupTypes select (lbCurSel SPAWNBRANCH) select 0)) =="Reinforcement") exitWith 				//Paratroops
 					{
 					_comboBox = _mccdialog displayCtrl SPAWNCLASS;		
 					lbClear _comboBox;
 						{
 							_displayname =  _x;
 							_comboBox lbAdd _displayname;
-						} foreach ["Small", "Large"];
+						} foreach [
+									"paradrop: small - Spec-Ops ", "paradrop: medium - QRF", "paradrop: large - Airborne", 
+									"drop-off: small - Spec-Ops ", "drop-off: medium - QRF", "drop-off: large - Airborne",
+									"fast-rope: small - Spec-Ops ", "fast-rope: medium - QRF", "fast-rope: large - Airborne",
+									"Motorized: Small","Motorized: Medium","Motorized: Large"
+								];
 					_comboBox lbSetCurSel 0;
 					}; 
 					

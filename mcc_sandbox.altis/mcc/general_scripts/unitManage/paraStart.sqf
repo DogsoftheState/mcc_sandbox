@@ -110,43 +110,7 @@ if (alive _unit && alive _plane) then {
 	
 	if (_isHalo) then 
 	{
-		if (ACEIsEnabled && isPlayer _unit) then
-		{
-			//If ACE enabled and HALO 
-			_unit addweapon "ACE_ParachutePack";
-			_unit execVM "x\ace\addons\sys_eject\jumpout_cord.sqf";
-		
-			// Auto display Suunto Altimeter - disable by setting MCC_HALOviewAltimeter = false in SF logic module
-			if ( MCC_HALOviewAltimeter ) then 
-			{	
-				[] spawn MCC_SHOW_ALTIMETER;
-
-				_viewDist = viewDistance; //store org view distance
-				
-				// Auto adjust view distance during jump - disable by setting MCC_HALOviewDistance = false in SF logic module
-				if ( ( _viewDist < 6000 ) && ( MCC_HALOviewDistance ) ) then 
-				{
-					//_tempView = ( _viewDist * 2 );
-					//if ( _tempView > 9000 ) then { _tempView = 9000; };
-							
-					_tempView = 6000;
-					setViewDistance _tempView;
-					
-					_midView = ( (_tempView + _tempView + _viewDist) / 3 );
-					waitUntil { (!alive player) || (( (getPosATL player) select 2) < 2500 ) };
-					setViewDistance _midView;
-					
-					//restore org viewdistance
-					waitUntil { (!alive player) || (( (getPosATL player) select 2) < 1200 ) };
-					setViewDistance _viewDist;
-				};
-			};
-		}
-		else 
-		{	
-			//If ACE Disabled	
-			[_unit,getpos _unit select 2] exec "ca\air2\halo\data\Scripts\HALO_init.sqs";
-		};
+		[_unit,getpos _unit select 2] exec "ca\air2\halo\data\Scripts\HALO_init.sqs";
 	}
 	else
 	{

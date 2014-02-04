@@ -47,7 +47,7 @@ switch (_type) do
 		hint "Trigger created: capture MCC actions that you want to link to that trigger, press Stop Capturing to finish";
 		waituntil {(!MCC_capture_state)};
 		mcc_safe = mcc_safe + FORMAT ['
-							MCC_capture_var = "%7";
+							MCC_capture_var = %7;
 							script_handler = [0, %1, %2, "%3", "%4", "%5", "%6", MCC_capture_var,%8,%9,"%10","%11"] execVM "%12mcc\general_scripts\triggers\triggers_execute.sqf";
 							waitUntil {scriptDone script_handler};'								 
 							,_pos
@@ -56,14 +56,14 @@ switch (_type) do
 							,_cond
 							,Mshape
 							,_text
-							,MCC_capture_var  
+							,toArray MCC_capture_var  
 							,_timeMin
 							,_timeMax
 							,_stateCond
 							,_stateDiac
 							,MCC_path
 							];
-		[0, _pos, _size, _activate, _cond, Mshape, _text, MCC_capture_var,_timeMin,_timeMax,_stateCond,_stateDiac] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
+		[0, _pos, _size, _activate, _cond, Mshape, _text, toArray MCC_capture_var,_timeMin,_timeMax,_stateCond,_stateDiac] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
 		closedialog 3000;
 		waituntil {!dialog};
 		_ok = createDialog "MCC_Sandbox3";

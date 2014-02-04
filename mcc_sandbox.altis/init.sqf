@@ -1,6 +1,5 @@
 private ["_string","_null","_nul","_dummyGroup","_dummy","_name","_keyDown","_savesArray"];
 
-ACEIsEnabled = isClass (configFile >> "CfgPatches" >> "ace_main");	//check if ACE is Enabled
 MCC_isMode = isClass (configFile >> "CfgPatches" >> "mcc_sandbox");	//check if MCC is mod version
 MCC_initDone = false;
 MCC_GUI1initDone = false;  
@@ -20,16 +19,15 @@ if (MCC_isMode) then {
 			};
 
 waituntil {!isnil "MCC_path"};
-if (!isMultiplayer && !MCC_isMode) then {						//Delete all units on SP mission
-		{
-			if ((! isplayer _x) && !(_x in (units group player))) then {deletevehicle _x}
-		} foreach allunits;  
-	}; 
-	
-// F3 - Kegetys Spectator Script
-// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
-[] execVM MCC_path + "f\common\f_spect\specta_init.sqf";
 
+//Delete all units on SP mission
+if (!isMultiplayer && !MCC_isMode) then 	
+{					
+	{
+		if ((! isplayer _x) && !(_x in (units group player))) then {deletevehicle _x}
+	} foreach allunits;  
+}; 
+	
 //******************************************************************************************
 //==========================================================================================
 //=		 					Edit variables as you see fit. 
@@ -44,8 +42,6 @@ if (!isMultiplayer && !MCC_isMode) then {						//Delete all units on SP mission
 if (isnil "MCC_allowedPlayers") then {MCC_allowedPlayers = ["all"]};
 
 //----------------------General settings---------------------------------------
-//Default side that detect undercover units 0 -East, 1 - West
-MCC_underCoverDetect				= 0; 
 //Default AI skill
 if (isnil "MCC_AI_Skill") then {MCC_AI_Skill = 0.5}; 
 if (isnil "MCC_AI_Aim") then {MCC_AI_Aim = 0.1}; 
@@ -104,7 +100,6 @@ MCC_ied_medium = [["Wheel Cart","Land_WheelCart_F"],["Metal Barrel","Land_MetalB
 				  ["Sacks Heap","Land_Sacks_heap_F"], ["Water Barrel","Land_WaterBarrel_F"],["Water Tank","Land_WaterTank_F"]];
 MCC_ied_wrecks = [["Car Wreck","Land_Wreck_Car3_F"],["BRDM Wreck","Land_Wreck_BRDM2_F"],["Offroad Wreck","Land_Wreck_Offroad_F"],["Truck Wreck","Land_Wreck_Truck_FWreck"]];
 MCC_ied_mine = [["Mine Field AP - Visable","apv"], ["Mine Field AP - Hidden","ap"],["Mine Field AP Bounding - Visable","apbv"],["Mine Field AP Bounding- Hidden","apb"], ["Mine Field AT - Visable","atv"], ["Mine Field AT - Hidden","at"]];
-MCC_ied_rc = [["SLAM","SLAMDirectionalMine"],["Trip Mine","APERSTripMine"]];
 MCC_ied_hidden = [["Dirt Small","IEDLandSmall_Remote_Ammo"],["Dirt Big","IEDLandBig_Remote_Ammo"],["Urban Small","IEDUrbanSmall_Remote_Ammo"],["Urban Big","IEDUrbanBig_Remote_Ammo"]];
 
 //------------------------Convoy settings----------------------------------------
@@ -125,11 +120,14 @@ if (isnil "MCC_ConsoleCanCommandAI") then {MCC_ConsoleCanCommandAI = true}; 				
 if (isnil "MCC_ConsolePlayersCanSeeWPonMap") then {MCC_ConsolePlayersCanSeeWPonMap = false};					//If set to true players with GPS or UAVTerminal or MCC conosle can see WP assigned to them on the map
 
 //string that must return true inorder to open the MCC Console - str "MCC_Console" + "in (assignedItems player)"; 
-if (MCC_isMode) then {
+if (MCC_isMode) then 
+{
 	MCC_consoleString = str "MCC_Console" + "in (assignedItems _this) && (vehicle _target == vehicle _this)"; 
-		} else {
-			MCC_consoleString = str "B_UavTerminal" + "in (assignedItems _this) && (vehicle _target == vehicle _this)"; 
-			};
+}
+else 
+{
+	MCC_consoleString = str "B_UavTerminal" + "in (assignedItems _this) && (vehicle _target == vehicle _this)"; 
+};
 //------------------------Artillery---------------------------------------------------
 MCC_artilleryTypeArray = [["DPICM","GrenadeHand",0],["HE 120mm","Sh_120mm_HE_Tracer_Red",1], ["HE 155mm","Sh_155mm_AMOS",1], ["Cluster AP","Mo_cluster_AP",1],["Mines 120mm","Mine_155mm_AMOS_range",3],
 						["HE Laser-guided","Bo_GBU12_LGB",3],["HE 82mm","Sh_82mm_AMOS",1], ["Incendiary 82mm","Fire_82mm_AMOS",1],
@@ -163,6 +161,7 @@ mccPresets = [
 		,['Stand Up', '_this setUnitPos "UP";']
 		,['Kneel', '_this setUnitPos "Middle";']
 		,['Prone', '_this setUnitPos "DOWN";']
+		,['Can be controled using MCC Console', '(group _this) setvariable ["MCC_canbecontrolled",true,true];']
 		,['======= Vehicles =======','']
 		,['Set Empty (Fuel)', '_this setfuel 0;']
 		,['Set Empty (Ammo)', '_this setvehicleammo 0;']
@@ -195,12 +194,15 @@ mccPresets = [
 _nul = [] execVM MCC_path +"bon_artillery\bon_arti_init.sqf";
 
 // HEADLESS CLIENT CHECK
-if (isNil "MCC_isHC" ) then { 
+if (isNil "MCC_isHC" ) then 
+{ 
 	MCC_isHC = false; 
 };
-if (isNil "MCC_isLocalHC" ) then { 
+if (isNil "MCC_isLocalHC" ) then 
+{ 
 	MCC_isLocalHC = false;
 };
+
 		
 if ( !(isServer) ) then 
 {
@@ -218,6 +220,7 @@ if ( !(isServer) ) then
 		ppEffectDestroy _hc;
 	};
 };
+
 
 // define if tracking is enabled or disabled
 MCC_trackMarker = false; 
@@ -252,11 +255,12 @@ MCC_Marker_dir = 0;
 MCC_MarkerZoneColor = "ColorYellow";
 MCC_MarkerZoneType = "join";
 mcc_patrol_wps = [];
-mcc_patrol_wps_array = [];
-mcc_zone_colors = [];
 
 MCC_ZoneLocation = [["Server", 0], ["Headless Client", 1]]; //NEW
 mcc_hc = 0; // 0 = UPSMON target is server, 1 = UPSMON target is HeadlessClient
+mcc_spawn_dir = [0,0,0];
+MCC_trackdetail_units = false; 
+
 // end NEW
 MCC_unit_array_ready=true; 
 MCC_faction_index = 0; 
@@ -267,7 +271,6 @@ MCC_zone_index = 0;
 MCC_zoneX_index = 0; 
 MCC_ZoneType_index = 0; //NEW
 MCC_ZoneType_nr_index = 0; //NEW
-//MCC_ZoneLocation_index = 0; // NEW
 MCC_zoneY_index = 0; 
 MCC_mcc_screen = 0;
 MCC_tasks =[];
@@ -300,18 +303,11 @@ MCC_spawn_behavior = [
 					  ["BIS Patrol","bisp","AI will patrol around"]
 					  ];
 MCC_spawn_awereness = [["Default", "default"],["Aware","Aware"],["Combat", "Combat"],["Stealth","stealth"],["Careless","Careless"]];
-MCC_spawn_track = [["Off", false],["On",true]];
 MCC_empty_index = 0;
 MCC_behavior_index = 0;
 MCC_awereness_index = 0;
-MCC_track_index = 0;
 
-MCC_enable_west=true;
-MCC_enable_east=true;
-MCC_enable_gue=true;
-MCC_enable_civ=true; 
 MCC_enable_respawn = true; 
-MCC_enable_LHD = true;
 
 MCC_months_array = [["January", 1],["February",2],["March", 3],["April",4],["May",5],["June", 6],["July",7],["August", 8],["September",9],["October",10],["November",11],["December",12]];
 MCC_days_array =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
@@ -404,7 +400,6 @@ MCC_evacVehicles = [];
 MCC_evacVehicles_index = 0;
 MCC_evacVehicles_last = 0;
 
-MCC_townCount = 0; 
 MCCFirstOpenUI= true;
 
 MCC_UMunitsNames = [];
@@ -424,7 +419,6 @@ MCC_clientFPS 	= 0;
 MCC_serverFPS 	= 0;
 MCC_hcFPS		= 0;
 
-mcc_loginmissionmaker	= false; 
 mcc_active_zone 		= 1; 
 
 MCC_groupFormation	= ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE","LINE","FILE","DIAMOND"];	//Group formations
@@ -432,7 +426,6 @@ MCC_planeNameCount	= 0;
 
 //Mission Settings Index
 HW_arti_number_shells_per_hourIndex		= 0;
-MCC_underCoverDetectIndex				= 0;
 MCC_resistanceHostileIndex				= 0;
 MCC_aiSkillIndex						= 5;
 MCC_aiAimIndex							= 0;
@@ -482,14 +475,15 @@ MCC_MWObjectivesNames	= []; 	//placeHolder for objectives
 MCC_MWMissions			= []; 	//Store all the mission objectives = (MCC_MWMissions select 0) select 1 - will select the 2nd objective from the 1st mission
 
 //====================================================================================MCC Engine Init============================================================================================================================
-// Disable Respawn & Organise start on death location 
-_null=[] execVM MCC_path + "mcc\general_scripts\mcc_player_disableRespawn.sqf";
 
-// Initialize and load the pop up menu
-_null=[] execVM MCC_path + "mcc\pop_menu\mcc_init_menu.sqf";
+if (!isDedicated && !MCC_isLocalHC) then 
+{
+	// Disable Respawn & Organise start on death location 
+	_null=[] execVM MCC_path + "mcc\general_scripts\mcc_player_disableRespawn.sqf";
 
-//Initialize UPSMON script
-_null=[] execVM MCC_path + "scripts\Init_UPSMON.sqf";
+	// Initialize and load the pop up menu
+	_null=[] execVM MCC_path + "mcc\pop_menu\mcc_init_menu.sqf";
+};
 
 mcc_spawntype   		= "";
 mcc_classtype   		= "";
@@ -564,39 +558,22 @@ U_EXPLOSIVE				= [];
 U_UNIFORM				= [];
 U_GLASSES				= [];
 
-_nul=[] execVM MCC_path + "mcc\pop_menu\mcc_make_array_obj.sqf";
-if (ACEIsEnabled) then {
-	_nul=[] execVM MCC_path + "mcc\pop_menu\mcc_make_array_weapons.sqf";
-} else {
-	_nul=[] execVM MCC_path + "mcc\pop_menu\mcc_make_array_weaponsNoneAce.sqf";
-};
+MCC_3Dobjects			= [];		//Place holder for 3D objects
+MCC_3DobjectsCounter	= -1;
 
 //Lets create our MCC subject in the diary
 _index = player createDiarySubject ["MCCZones","MCC Zones"];
 
 if ( isServer ) then 
 {
+	//Initialize UPSMON script
+	_null=[] execVM MCC_path + "scripts\Init_UPSMON.sqf";
+	
 	//Make sure about who is at war with who or it will be a very peacefull game 
 	_SideHQ_East   = createCenter east;
 	_SideHQ_Resist = createCenter resistance;
 	_SideHQ_west   = createCenter west;
 
-	// East hates all
-	east setFriend [west, 0];
-	east setFriend [resistance, 0];
-
-	// West hates all
-	west setFriend [east, 0];
-	west setFriend [resistance, 0];
-	
-	// resistance hates all
-	resistance setFriend [east, 0];
-	resistance setFriend [west, 0];
-
-	//Civilians loves all
-	civilian setfriend [east, 0.7];
-	civilian setfriend [west, 0.7];
-	
 	//create logics
 	//server
 	_dummyGroup = creategroup civilian; 
@@ -638,7 +615,12 @@ if ( isServer ) then
 	};
 
 	private "_id";
-	_id = ["BIS_id", "onPlayerConnected", "MCC_missionMakerDC"] call BIS_fnc_addStackedEventHandler;
+	_id = ["BIS_id", "onPlayerDisconnected", "MCC_missionMakerDC"] call BIS_fnc_addStackedEventHandler;
+	
+	//Create a center to stand on while respawn is off
+	private "_dummyObject";
+	_dummyObject = "Land_Pier_F" createvehicle [-9999, -9999, -1];
+	_dummyObject setpos [-9999, -9999, -1];
 };
 
 
@@ -657,8 +639,8 @@ diag_log format ["%1 - MCC Local Headless Client: %2", time, MCC_isLocalHC];
 //---------------------------------------------
 //		General
 //---------------------------------------------
-CP_maxPlayers					= 100; 
-CP_maxSquads					= 20; 
+CP_maxPlayers		= 100; 
+CP_maxSquads		= 20; 
 CP_westSpawnPoints 	= [];
 CP_eastSpawnPoints	= [];
 CP_guarSpawnPoints	= [];
@@ -735,9 +717,10 @@ CP_fnc_allowedDrivers	= compileFinal preprocessFileLineNumbers (CP_path + "scrip
 //---------------------------------------------
 //		Server Init
 //---------------------------------------------
-if (isServer || isdedicated) then {
-		_null=[] execVM CP_path + "scripts\server\server_init.sqf";
-	};
+if (isServer || isdedicated) then 
+{
+	_null=[] execVM CP_path + "scripts\server\server_init.sqf";
+};
 
 //---------------------------------------------
 //		public Variables
@@ -864,7 +847,7 @@ if (isServer || MCC_isLocalHC) then
 {
 	[] spawn 
 	{
-		while {true} do
+		while {true && !CP_activated} do
 		{
 			{if (({alive _x} count units _x) == 0) then {deleteGroup _x}} foreach allGroups;
 			sleep 60; 
@@ -872,7 +855,6 @@ if (isServer || MCC_isLocalHC) then
 	};
 };
 
- 
 //============== Namspace saves=================
 MCC_saveNames = profileNamespace getVariable "MCC_save";
 if (isnil "MCC_saveNames") then {
@@ -885,6 +867,19 @@ MCC_saveFiles = profileNamespace getVariable "MCC_saveFiles";
 if (isnil "MCC_saveFiles") then {	
 MCC_saveFiles = [["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""]];
 	profileNamespace setVariable ["MCC_saveFiles", MCC_saveFiles];
+		};
+
+MCC_3DCompSaveNames = profileNamespace getVariable "MCC_3DCompSaveNames";
+if (isnil "MCC_3DCompSaveNames") then {
+	MCC_3DCompSaveNames = ["Comp 1","Comp 2","Comp 3","Comp 4","Comp 5","Comp 6","Comp 7","Comp 8","Comp 9","Comp 10",
+				   "Comp 11","Comp 12","Comp 13","Comp 14","Comp 15","Comp 16","Comp 17","Comp 18","Comp 19","Comp 20"];
+	profileNamespace setVariable ["MCC_3DCompSaveNames", MCC_3DCompSaveNames];
+	};
+	
+MCC_3DCompSaveFiles = profileNamespace getVariable "MCC_3DCompSaveFiles";
+if (isnil "MCC_3DCompSaveFiles") then {	
+MCC_3DCompSaveFiles = ["","","","","","","","","","","","","","","","","","","",""];
+	profileNamespace setVariable ["MCC_3DCompSaveFiles", MCC_3DCompSaveFiles];
 		};
 		
 //============ engineer data ========================

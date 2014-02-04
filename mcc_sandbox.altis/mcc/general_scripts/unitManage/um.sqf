@@ -7,7 +7,7 @@
 disableSerialization;
 
 private ["_type", "_name", "_worldPos","_dummy", "_unitpos", "_ok", "_markerColor", "_leader", "_markerType", "_tempMarkers", "_tempLines", "_tempVehicles",
-		"_targetUnit","_oldUnit","_group","_params","_ctrl","_pressed","_shift","_ctrlKey","_mccdialog","_comboBox","_nul","_dummyUnit","_control","_cam","_side"];
+		"_targetUnit","_oldUnit","_group","_params","_ctrl","_pressed","_shift","_ctrlKey","_mccdialog","_comboBox","_nul","_dummyUnit","_control","_cam","_sideMarker","_side"];
 
 _mccdialog = findDisplay MCC_SANDBOX4_IDD;
 _comboBox = _mccdialog displayCtrl MCC_UM_LIST;
@@ -87,81 +87,91 @@ _type = _this select 0;
 			
 		case 3:	//Markers
 		{
-			if (!MCC_trackMarker) then {
+			if (!MCC_trackMarker) then 
+			{
 				MCC_trackMarker = true; 
-				while {MCC_trackMarker} do {
+				while {MCC_trackMarker} do 
+				{
 					_tempMarkers = [];
 					_tempLines = [];
 					_tempVehicles = [];
 						{
 							_leader = leader _x; 
+									
 									{
 										switch (format ["%1", side  _x]) do 
 											{
 											case "EAST": //East
 												{
 												_markerColor = "ColorRed";
+												_sideMarker = "o"
 												}; 
 												
 											case "WEST": //West
 												{
 												_markerColor = "ColorBlue";
+												_sideMarker = "b"
 												};
 												
 											case "GUER": //Resistance
 												{
 												_markerColor = "ColorGreen";
+												_sideMarker = "n";
 												};
-												
-											default
+											case "CIVILIAN": //Civilian
 												{
 												_markerColor = "ColorWhite";
-												}
+												_sideMarker = "n";
+												};	
 											};
-										if ((vehicle _x) != _x) then 
+											
+											if ((vehicle _x) != _x) then 
 											{
-											if (!((vehicle _x) in _tempVehicles)) then
+												if (!((vehicle _x) in _tempVehicles)) then
 												{
-												_tempVehicles set [count _tempVehicles, vehicle _x];
-												_markerType = "mil_dot"; 
-												if ((vehicle _x) iskindof "Car") then {_markerType = "b_mech_inf";};
-												if ((vehicle _x) iskindof "Tank") then {_markerType = "b_armor";};
-												if ((vehicle _x) iskindof "Air") then {_markerType = "b_air";};
-												if ((vehicle _x) iskindof "Boat") then {_markerType = "b_recon";};
-												createMarkerLocal [format["%1", _x], getpos (vehicle _x)];
-												format["%1", _x] setMarkerTypelocal _markerType;
+													_tempVehicles set [count _tempVehicles, vehicle _x];
+													_markerType = format ["%1_unknown", _sideMarker];
+													if ((vehicle _x) iskindof "Car") then {_markerType = format ["%1_mech_inf", _sideMarker]; };
+													if ((vehicle _x) iskindof "Tank") then {_markerType = format ["%1_armor", _sideMarker]; };
+													if ((vehicle _x) iskindof "Air") then {_markerType = format ["%1_air", _sideMarker]; };
+													if ((vehicle _x) iskindof "Boat") then {_markerType = format ["%1_recon", _sideMarker]; };
+													createMarkerLocal [format["%1", _x], getpos (vehicle _x)];
+													format["%1", _x] setMarkerTypelocal _markerType;
+													format["%1", _x] setMarkerColorlocal _markerColor;
+													_tempMarkers set [count _tempMarkers, format["%1", _x]];
+												};
+											} 
+											else
+											{
+												createMarkerLocal [format["%1", _x], getpos _x];
+												format["%1", _x] setMarkerTypelocal "mil_dot";
 												format["%1", _x] setMarkerColorlocal _markerColor;
 												_tempMarkers set [count _tempMarkers, format["%1", _x]];
-												};
-											} else
-											{
-											createMarkerLocal [format["%1", _x], getpos _x];
-											format["%1", _x] setMarkerTypelocal "mil_dot";
-											format["%1", _x] setMarkerColorlocal _markerColor;
-											_tempMarkers set [count _tempMarkers, format["%1", _x]];
-											if ( _x != _leader) then 
+												if ( _x != _leader) then 
 												{
-												[getpos _x , getpos _leader ,format ["%1", _x]] call MCC_fnc_drawLine;
-												_tempLines set [count _tempLines, format["line_%1", _x]];
+													[getpos _x , getpos _leader ,format ["%1", _x]] call MCC_fnc_drawLine;
+													_tempLines set [count _tempLines, format["line_%1", _x]];
 												};
 											};
-										} foreach units _x; 
-						} foreach allGroups;
+									} foreach (units _x); 
+										
+						} count allGroups;
+						
 						sleep 3; 
 						{
 						deletemarkerlocal _x;
-						} foreach _tempMarkers;
+						} count _tempMarkers;
 						{
 							deletemarkerlocal _x;
-						} foreach _tempLines;
-					};
+						} count _tempLines;
+				};
 					//Incase we came down here let's clean up
 					{
 					deletemarkerlocal _x;
-					} foreach _tempMarkers;
+					} count _tempMarkers;
 					{
 						deletemarkerlocal _x;
-					} foreach _tempLines;
+					} count _tempLines;
 			} else {
 				MCC_trackMarker = false; 
 				};
@@ -287,47 +297,60 @@ _type = _this select 0;
 			_shift = _params select 4;
 			_ctrlKey = _params select 5;
 			
-			if (MCC_UMUnit==0) then {
-				if (_ctrlKey) then {
+			if (MCC_UMUnit==0) then // Units selection
+			{
+				if (_ctrlKey) then 
+				{
 					if !((MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)) in MCC_selectedUnits) then
-						{
+					{
 						MCC_selectedUnits = MCC_selectedUnits + [MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)];
 						lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [0, 1, 1, 1]];
-						hint format ["%1", MCC_selectedUnits];
-						} else {
-							MCC_selectedUnits = MCC_selectedUnits - [MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)];
-							lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [1, 1, 1, 1]];
-							//hint format ["%1", MCC_selectedUnits];
-							};
-					} else {
-						MCC_selectedUnits = [MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)];
-						for [{_x=0},{_x<(lbSize MCC_UM_LIST)},{_x=_x+1}] do {
-							lbSetColor [MCC_UM_LIST, _x, [1, 1, 1, 1]];
-							}
-						lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [0, 1, 1, 1]];
+						//hint format ["%1", MCC_selectedUnits];						
+					} 
+					else 
+					{
+						MCC_selectedUnits = MCC_selectedUnits - [MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)];
+						lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [1, 1, 1, 1]];
 						//hint format ["%1", MCC_selectedUnits];
-						};
+					};
+				} 
+				else 
+				{
+					MCC_selectedUnits = [MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)];
+					for [{_x=0},{_x<(lbSize MCC_UM_LIST)},{_x=_x+1}] do {
+						lbSetColor [MCC_UM_LIST, _x, [1, 1, 1, 1]];
+						}
+					lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [0, 1, 1, 1]];
+					//hint format ["%1", MCC_selectedUnits];
 				};
+			};
 						
-			if (MCC_UMUnit==1) then {
-				if (_ctrlKey && ((lbCurSel MCC_UM_LIST) != -1)) then {
+			if (MCC_UMUnit==1) then // Groups selection
+			{
+				if (_ctrlKey && ((lbCurSel MCC_UM_LIST) != -1)) then 
+				{
 					if !((UMgroupNames select (lbCurSel MCC_UM_LIST)) in MCC_selectedUnits) then
-						{
+					{
 						MCC_selectedUnits = MCC_selectedUnits + [UMgroupNames select (lbCurSel MCC_UM_LIST)];
 						lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [0, 1, 1, 1]];
-						} else {
-							MCC_selectedUnits = MCC_selectedUnits - [UMgroupNames select (lbCurSel MCC_UM_LIST)];
-							lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [1, 1, 1, 1]];
-							};
-					} else {
-						MCC_selectedUnits = [UMgroupNames select (lbCurSel MCC_UM_LIST)];
-						for [{_x=0},{_x<(lbSize MCC_UM_LIST)},{_x=_x+1}] do {
-							lbSetColor [MCC_UM_LIST, _x, [1, 1, 1, 1]];
-							}
-						lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [0, 1, 1, 1]];
-						//hint format ["%1", MCC_selectedUnits];
-						};
+					} 
+					else 
+					{
+						MCC_selectedUnits = MCC_selectedUnits - [UMgroupNames select (lbCurSel MCC_UM_LIST)];
+						lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [1, 1, 1, 1]];
+					};
+				}
+				else 
+				{
+					MCC_selectedUnits = [UMgroupNames select (lbCurSel MCC_UM_LIST)];
+					for [{_x=0},{_x<(lbSize MCC_UM_LIST)},{_x=_x+1}] do 
+					{
+						lbSetColor [MCC_UM_LIST, _x, [1, 1, 1, 1]];
+					};  //MCC BUG -> missing ;
+					lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [0, 1, 1, 1]];
+					//hint format ["%1", MCC_selectedUnits];
 				};
+			};
 		};
 		
 		case 9:	//HALO
@@ -363,19 +386,22 @@ _type = _this select 0;
 								MCC_click = true; 
 								onMapSingleClick """";";
 			waituntil {MCC_click}; 					
-			if (MCC_UMUnit==0) then {
+			if (MCC_UMUnit==0) then 
+			{
 				{
 					[[MCC_pos,[netId _x,_x],false,800,_forEachIndex],"MCC_fnc_paradrop",_x,false] call BIS_fnc_MP;
 					sleep 0.5; 
 				} foreach MCC_selectedUnits;
-					} else {
-							{
-								{
-									[[MCC_pos,[netId _x,_x],false,800,_forEachIndex],"MCC_fnc_paradrop",_x,false] call BIS_fnc_MP;
-									sleep 0.5; 
-								} foreach units _x;
-							} foreach MCC_selectedUnits;
-						};
+			} 
+			else 
+			{
+				{
+					{
+						[[MCC_pos,[netId _x,_x],false,800,_forEachIndex],"MCC_fnc_paradrop",_x,false] call BIS_fnc_MP;
+						sleep 0.5; 
+					} foreach units _x;
+				} foreach MCC_selectedUnits;
+			};
 		};
 		
 		case 11:	//Broadcast
@@ -428,7 +454,6 @@ _type = _this select 0;
 	
 
 if (_type == 8 || _type == 4) exitWIth {}; // Fail safe for loading list only if unit deleted or houn other
-
 //-------------------------------Reset list managment--------------------------------------------------------------------------------------------------------------
 MCC_UMunitsNames = [];
 UMgroupNames = [];
@@ -463,29 +488,29 @@ switch (MCC_UMstatus) do
 {
 	case 1:		
 	{
-		_side =east;
+		_side = east;
 	};
 	
 	case 2:		
 	{
-		_side =west;
+		_side = west;
 	};
 	
 	case 3:		
 	{
-		_side =resistance;
+		_side = resistance;
 	};
 	
 	default
 	{
-		_side =civilian;
+		_side = civilian;
 	};
 };
 
 if (MCC_UMUnit==0) then 
 {
 	{
-		if (alive _x && side _x == _side && !(isPlayer _x)) then	//Unit
+		if ( (alive _x) && ( (side _x) == _side ) && !(isPlayer _x) ) then	//Unit
 		{
 			_displayname = getText (configfile >> "CfgVehicles" >> typeOf (vehicle _x)  >> "displayName"); 
 			if ((_x != vehicle _x) && ((driver (vehicle _x))==_x)) then {_displayname = format ["%1 (Driver)",_displayname]};

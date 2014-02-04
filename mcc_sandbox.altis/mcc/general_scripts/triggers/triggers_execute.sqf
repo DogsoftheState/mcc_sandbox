@@ -14,7 +14,7 @@ switch (_type) do
 		_cond 		= _this select 4;	
 		_shape		= _this select 5;	
 		_text 		= _this select 6;	
-		_capture 	= _this select 7;	
+		_capture 	= if (typeName (_this select 7) == "ARRAY") then {toString (_this select 7)} else {(_this select 7)};	
 		_timeMin 	= _this select 8;	
 		_timeMax 	= _this select 9;	
 		_stateCond	= _this select 10;	

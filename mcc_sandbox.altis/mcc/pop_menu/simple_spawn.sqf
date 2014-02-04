@@ -52,10 +52,22 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 				{
 					if (_notEmpty) then
 						{
-							if (_faction=="GUE") then  {_dummy 		=	[_pos, _dir, _class, resistance] call BIS_fnc_spawnVehicle;};										
-							if (_faction=="WEST") then { _dummy 	=	[_pos, _dir, _class, WEST] call BIS_fnc_spawnVehicle;};
-							if (_faction=="EAST") then { _dummy 	=	[_pos, _dir, _class, EAST] call BIS_fnc_spawnVehicle;};										
-							if (_faction=="CIV") then { _dummy	 	=	[_pos, _dir, _class, civilian] call BIS_fnc_spawnVehicle;};
+							private ["_side","_veh","_crew"];
+							_side = switch (_faction) do
+									{
+										case "GUE" :  {resistance};
+										case "WEST" : {WEST};
+										case "EAST" : {EAST};
+										case "CIV" :  {civilian};
+									};
+							
+							_veh = createvehicle [_class,_pos,[],0,"none"];
+							_veh setpos _pos;
+							_veh setdir _dir;
+							_grp = createGroup _side;
+							_crew = [_veh, _grp] call BIS_fnc_spawnCrew;
+							_dummy = [_veh,_crew,_grp]; 
+		
 							if (_name != "") then {
 								[[[netid (_dummy select 0),(_dummy select 0)], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
 								};
@@ -63,6 +75,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 							[[[netid (_dummy select 0),(_dummy select 0)], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 						} else
 						{
+							if (!isnil "Object3D") then {waitUntil {_pos distance Object3D > 15}};
 							_dummy = _class createvehicle _pos;
 							_dummy setpos _pos;
 							_dummy setdir _dir;
@@ -105,7 +118,11 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_unitspawned =[ _pos, _dir, _class] call MCC_fnc_objectMapper;	
 				};
 			};
-	if (!isnil "_dummy") then {MCC_lastSpawn = MCC_lastSpawn + [_dummy]}; 
+	if (!isnil "_dummy") then 
+	{
+		MCC_lastSpawn set [count MCC_lastSpawn,_dummy];
+		publicVariable "MCC_lastSpawn";
+	}; 
 };
 
 MCC_mccFunctionDone = true;

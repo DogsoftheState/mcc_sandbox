@@ -1,9 +1,10 @@
-private ["_sound", "_pos", "_shelltype", "_shellspread", "_nshell","_lasertargets","_nul","_x","_simulate"];
+private ["_sound", "_pos", "_shelltype", "_shellspread", "_nshell","_lasertargets","_nul","_x","_simulate","_delay"];
 _pos					 = _this select 0; 
 _shelltype 			     = _this select 1; 
 _shellspread			 = _this select 2; 
 _nshell 				 = _this select 3; 
 _simulate				 = _this select 4; 
+_delay					 = _this select 5; 
 
 _sound = true;
 
@@ -11,17 +12,17 @@ switch (_simulate) do
 			{
 				case 0:	//DPICM
 			    { 
-					[_pos, _shelltype, _shellspread, _nshell, _sound] spawn MCC_fnc_artyDPICM;
+					[_pos, _shelltype, _shellspread, _nshell, _sound,_delay] spawn MCC_fnc_artyDPICM;
 				};
 				
 				case 1:	//Bomb
 			    { 
-					[_pos, _shelltype, _shellspread, _nshell, _sound] spawn MCC_fnc_artyBomb;
+					[_pos, _shelltype, _shellspread, _nshell, _sound,_delay] spawn MCC_fnc_artyBomb;
 				};
 				
 				case 2:	//FLare 
 			    { 
-					[_pos, _shelltype, _shellspread, _nshell, _sound] spawn MCC_fnc_artyFlare;
+					[_pos, _shelltype, _shellspread, _nshell, _sound,_delay] spawn MCC_fnc_artyFlare;
 				};
 				
 				case 3:	// Laser-guided

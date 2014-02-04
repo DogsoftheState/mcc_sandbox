@@ -57,7 +57,7 @@ if (mcc_missionmaker == (name player)) then
 			if (MCC_capture_state) then	{
 				hint "Air support captured."; 
 				MCC_capture_var=MCC_capture_var + FORMAT ['
-					[[%1, %2 , %3, %4, %5],"MCC_fnc_airDrop",true,false] spawn BIS_fnc_MP;
+					[[%1, %2 , %3, %4, %5, %6],"MCC_fnc_airDrop",true,false] spawn BIS_fnc_MP;
 					'	
 					,_ammount
 					,MCC_spawnkind

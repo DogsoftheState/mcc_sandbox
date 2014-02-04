@@ -27,6 +27,7 @@ if (MCC_capture_state) then
 				  mcc_awareness = '%14';
 				  mcc_sidename = '%15';
 				  mcc_hc = %16;
+				  mcc_spawn_dir = %18;
 				  script_handler = [0] execVM '%17mcc\general_scripts\mcc_SpawnStuff.sqf';"								 
 				  , mcc_spawntype
 				  , mcc_classtype
@@ -45,6 +46,7 @@ if (MCC_capture_state) then
 				  , mcc_sidename
 				  , mcc_hc
 				  , MCC_path
+				  , mcc_spawn_dir
 				  ];
 		}
 		else
@@ -66,6 +68,7 @@ if (MCC_capture_state) then
 				  mcc_awareness = ["%14"] select 0;
 				  mcc_sidename = ["%15"] select 0;
 				  mcc_hc = %16;
+				  mcc_spawn_dir = %18;
 				  script_handler = [0] execVM "%17mcc\general_scripts\mcc_SpawnStuff.sqf";'								 
 				  , mcc_spawntype
 				  , mcc_classtype
@@ -84,6 +87,7 @@ if (MCC_capture_state) then
 				  , mcc_sidename
 				  , mcc_hc
 				  , MCC_path
+				  , mcc_spawn_dir
 				  ];
 		};
 	}
@@ -108,6 +112,7 @@ if (MCC_capture_state) then
 				  mcc_awareness = '%14';
 				  mcc_sidename = '%15';
 				  mcc_hc = %16;
+				  mcc_spawn_dir = %18;
 				  script_handler = [0] execVM '%17mcc\general_scripts\mcc_SpawnStuff.sqf';
 				   waitUntil {scriptDone script_handler};
 				  "								 
@@ -128,6 +133,7 @@ if (MCC_capture_state) then
 				  , mcc_sidename
 				  , mcc_hc
 				  , MCC_path
+				  , mcc_spawn_dir
 				  ];
 		};
 	
@@ -137,10 +143,7 @@ if (MCC_capture_state) then
 				if !(mcc_isnewzone) then 
 				{
 					// Allright we are doing something else then making / updating zones, report that by hint				
-					hint format["Request ID: %3
-					 
-					 Spawn %1 in zone %2.
-					 Contacting server......", mcc_spawnname , mcc_zone_markername,mcc_request];
+					player sideChat format["Request ID: %3. Spawn %1 in zone %2. Contacting server......", mcc_spawnname , mcc_zone_markername,mcc_request];
 					 
 					//Set the behavior back from script understanding to human readable again											
 					switch (mcc_spawnbehavior) do
@@ -238,20 +241,13 @@ if (MCC_capture_state) then
 				else
 				{
 					// We are creating/updating a zone, lets report that by hint
-					hint format["Request ID: %2
-					 
-					Update zone %1.
-					Contacting server......",  mcc_zone_markername,mcc_request];
+					player sideChat format["Request ID: %2. Update zone %1. Contacting server......",  mcc_zone_markername,mcc_request];
 				};
 			}
 			else
 			{
-				hint format["Request ID: %2
-				 
-				Requesting to logout %1.
-				Contacting server......",  player,mcc_request];
-				ace_sys_spectator_can_exit_spectator = false;
-			
+				player sideChat format["Request ID: %2. Requesting to logout %1. Contacting server......",  player,mcc_request];
+				ace_sys_spectator_can_exit_spectator = false;			
 			};
 			#endif
 			//obviously when we are loading there is no need to safe it again since that will influence the load process by double output
@@ -279,6 +275,10 @@ if (MCC_capture_state) then
 					, (name player)
 					, mcc_awareness
 					, mcc_hc
+					, mcc_spawn_dir
+					, 0 //(mcc_zonetype select 0 ) select 1
+					, 0 //(mcc_zonetypenr select 0 ) select 1
+					, mcc_marker_dir
 					];
 
 			// Send data over the network, or when on server, execute directly
@@ -297,13 +297,16 @@ if (MCC_capture_state) then
 			{
 				if ( ( mcc_hc == 0 ) || !(MCC_isHC) ) then
 				{
-					[_ar, "mcc_setup", true, false] spawn BIS_fnc_MP;
+					//[_ar, "mcc_setup", true, false] spawn BIS_fnc_MP;
+					[_ar, "mcc_setup", false, false] spawn BIS_fnc_MP;
 					diag_log format ["Called 'mcc_setup' Remote Event on Server - isServer [%1] - isHC: [%2] - MCC_HC: [%3]", isServer, MCC_isHC, mcc_hc];
-				}				
-				else
+				};
+				
+				if (( mcc_hc == 1 ) && (MCC_isHC)) then
 				{
-					[_ar, "mcc_setup_hc", true, false] spawn BIS_fnc_MP;
-					diag_log format ["Called 'mcc_setup_hc' Remote Event on Headless Client - isServer [%1] - isHC: [%2] - MCC_HC: [%3]", isServer, MCC_isHC, mcc_hc];
+					//[_ar, "mcc_setup_hc", true, false] spawn BIS_fnc_MP;
+					[_ar, "mcc_setup_hc", MCC_ownerHC, false] spawn BIS_fnc_MP;
+					diag_log format ["Called 'mcc_setup_hc' Remote Event on Headless Client - isServer [%1] - isHC: [%2] - MCC_HC: [%3] - MCC_HC_Owner: [%4]", isServer, MCC_isHC, mcc_hc, MCC_ownerHC];
 				};					
 			};
 

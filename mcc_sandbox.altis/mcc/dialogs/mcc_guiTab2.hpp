@@ -25,6 +25,8 @@
 #define MCC_ARTYTYPE 2004
 #define MCC_ARTYSPREAD 2005
 #define MCC_ARTYNUMBER 2006
+#define MCC_artilleryDelayIDC 2037
+
 
 #define MCC_TRAPS_TYPE 2007
 #define MCC_TRAPS_OBJECT 2008
@@ -103,6 +105,8 @@ class MCC_Sandbox2 {
 	  MCC_MissionLost,
 	  MCC_CommandLineTittle,
 	  MCC_CommandLineText,
+	  MCC_commandlineTextSmall,
+	  MCC_commandlineTextBig,
 	  MCC_commandlineLocal,
 	  MCC_commandlineGlobal,
 	  MCC_CASTitle,
@@ -119,6 +123,8 @@ class MCC_Sandbox2 {
 	  MCC_artilleryType,
 	  MCC_artillerySpread,
 	  MCC_artilleryNumber,
+	  MCC_artilleryDelayText,
+	  MCC_artilleryDelayCombo,
 	  MCC_artilleryCall,
 	  MCC_artilleryAdd,
 	  MCC_trapsTittle,
@@ -389,51 +395,83 @@ class MCC_CommandLineTittle: MCC_RscText
 {
 	idc = -1;
 	text = "Command line:"; //--- ToDo: Localize;
-	x = 0.185546 * safezoneW + safezoneX;
-	y = 0.261989 * safezoneH + safezoneY;
-	w = 0.0764887 * safezoneW;
-	h = 0.0340016 * safezoneH;
+	x = 0.185583 * safezoneW + safezoneX;
+	y = 0.262053 * safezoneH + safezoneY;
+	w = 0.0744792 * safezoneW;
+	h = 0.0219914 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.5)";
 };
 class MCC_CommandLineText: MCC_RscText
 {
 	idc = MCC_CLTEXT;
 	type = MCCCT_EDIT;
-	x = 0.185546 * safezoneW + safezoneX;
-	y = 0.312991 * safezoneH + safezoneY;
-	w = 0.161476 * safezoneW;
-	h = 0.0680031 * safezoneH;
+	x = 0.184896 * safezoneW + safezoneX;
+	y = 0.337044 * safezoneH + safezoneY;
+	w = 0.160417 * safezoneW;
+	h = 0.0439828 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_CommandLineTextFrmae: MCC_RscFrame
 {
 	idc = -1;
-	x = 0.185546 * safezoneW + safezoneX;
-	y = 0.312991 * safezoneH + safezoneY;
-	w = 0.161476 * safezoneW;
-	h = 0.0680031 * safezoneH;
+	x = 0.184896 * safezoneW + safezoneX;
+	y = 0.337044 * safezoneH + safezoneY;
+	w = 0.160417 * safezoneW;
+	h = 0.0439828 * safezoneH;
 };
+
+class MCC_commandlineTextSmall: MCC_RscButton
+{
+	idc = -1;
+	onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\commandLine.sqf'");
+
+	text = "text"; //--- ToDo: Localize;
+	x = 0.184896 * safezoneW + safezoneX;
+	y = 0.291081 * safezoneH + safezoneY;
+	w = 0.033995 * safezoneW;
+	h = 0.0340016 * safezoneH;
+	tooltip = "Broadcast the command line fraze to all clients - small fonts"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+
+
+class MCC_commandlineTextBig: MCC_RscButton
+{
+	idc = -1;
+	onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\commandLine.sqf'");
+
+	text = "TEXT"; //--- ToDo: Localize;
+	x = 0.225 * safezoneW + safezoneX;
+	y = 0.291081 * safezoneH + safezoneY;
+	w = 0.033995 * safezoneW;
+	h = 0.0340016 * safezoneH;
+	tooltip = "Broadcast the command line fraze to all clients - big fonts"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+
+
 class MCC_commandlineLocal: MCC_RscButton
 {
 	idc = -1;
 	onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\commandLine.sqf'");
 
 	text = "Local"; //--- ToDo: Localize;
-	x = 0.270534 * safezoneW + safezoneX;
-	y = 0.261989 * safezoneH + safezoneY;
+	x = 0.270833 * safezoneW + safezoneX;
+	y = 0.291081 * safezoneH + safezoneY;
 	w = 0.033995 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	tooltip = "Execute the command line fraze only on the mission maker computer"; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
+
 class MCC_commandlineGlobal: MCC_RscButton
 {
 	idc = -1;
 	onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\commandLine.sqf'");
 
 	text = "Global"; //--- ToDo: Localize;
-	x = 0.313028 * safezoneW + safezoneX;
-	y = 0.261989 * safezoneH + safezoneY;
+	x = 0.310937 * safezoneW + safezoneX;
+	y = 0.291081 * safezoneH + safezoneY;
 	w = 0.033995 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	tooltip = "Execute the command line fraze on all clients and sever"; //--- ToDo: Localize;
@@ -584,6 +622,29 @@ class MCC_artilleryNumber: MCC_RscCombo
 	h = 0.0170008 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
+
+class MCC_artilleryDelayText: MCC_RscText
+{
+	idc = -1;
+
+	text = "Delay:"; //--- ToDo: Localize;
+	x = 0.245625 * safezoneW + safezoneX;
+	y = 0.588845 * safezoneH + safezoneY;
+	w = 0.0509925 * safezoneW;
+	h = 0.0170008 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+};
+class MCC_artilleryDelayCombo: MCC_RscCombo
+{
+	idc = MCC_artilleryDelayIDC;
+
+	x = 0.305781 * safezoneW + safezoneX;
+	y = 0.589945 * safezoneH + safezoneY;
+	w = 0.0406994 * safezoneW;
+	h = 0.0162794 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+};
+
 class MCC_artilleryCall: MCC_RscButton
 {
 	idc = -1;

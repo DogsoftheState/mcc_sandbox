@@ -34,7 +34,9 @@
 #define MCC_MWRoadBlocksIDC 6016
 #define MCC_MWWeatherComboIDC 6017
 #define MCC_MCC_MWAreaComboIDC 6018
-
+#define MCC_MWDebugComboIDC 6019
+#define MCC_MWPreciseMarkersComboIDC 6020
+#define MCC_MWArtilleryIDC 6021
 
 class MCC_Sandbox5 {
 	  idd = MCC_SANDBOX5_IDD;
@@ -74,24 +76,30 @@ class MCC_Sandbox5 {
 		MCC_MWPlayersTittle,
 		MCC_MWRoadBlockTittle,
 		MCC_MWStealthTittle,
-		//MCC_MWReinforcementTittle,
 		MCC_MWPlayersCombo,
 		MCC_MWRivalFactionTittle,
 		MCC_MWRoadBlockCombo,
 		MCC_MWStealthCombo,
-		//MCC_MWReinforcementCombo,
+		MCC_MWPreciseMarkersText,
+		MCC_MWPreciseMarkersCombo,
 		MCC_MWObjective1Tittle,
 		MCC_MWObjective2Tittle,
 		MCC_MWObjective3Tittle,
 		MCC_MWVehiclesTittle,
-		MCC_MWArmorTittle,
+		MCC_MWDebugText,
+		MCC_MWDebugCombo,
 		MCC_MWDifficultyTittle,
 		MCC_MWDifficultyCombo,
 		MCC_MWObjective1Combo,
 		MCC_MWObjective2Combo,
 		MCC_MWObjective3Combo,
 		MCC_MWVehiclesCombo,
+		MCC_MWArmorTittle,
 		MCC_MWArmorCombo,
+		MCC_MWReinforcementTittle,
+		MCC_MWReinforcementCombo,
+		MCC_MWArtilleryTittle,
+		MCC_MWArtilleryCombo,
 		MCC_MWIEDTittle,
 		//MCC_MWATMinesTittle,
 		//MCC_MWAPMinesTittle,
@@ -285,18 +293,7 @@ class MCC_Sandbox5 {
 		colorText[] = {1,1,1,1};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
-	class MCC_MWReinforcementTittle: MCC_RscText
-	{
-		idc = -1;
-
-		text = "Reinforcement:"; //--- ToDo: Localize;
-		x = 0.184896 * safezoneW + safezoneX;
-		y = 0.379047 * safezoneH + safezoneY;
-		w = 0.06875 * safezoneW;
-		h = 0.0219914 * safezoneH;
-		colorText[] = {1,1,1,1};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-	};
+	
 	class MCC_MWPlayersCombo: MCC_RscCombo
 	{
 		idc = MCC_MWPlayersIDC;
@@ -337,15 +334,7 @@ class MCC_Sandbox5 {
 		h = 0.0219914 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
-	class MCC_MWReinforcementCombo: MCC_RscCombo
-	{
-		idc = MCC_MWReinforcementIDC;
-		x = 0.259375 * safezoneW + safezoneX;
-		y = 0.379047 * safezoneH + safezoneY;
-		w = 0.0859375 * safezoneW;
-		h = 0.0219914 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-	};
+	
 	class MCC_MWObjective1Tittle: MCC_RscText
 	{
 		idc = -1;
@@ -394,18 +383,7 @@ class MCC_Sandbox5 {
 		colorText[] = {1,1,1,1};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
-	class MCC_MWArmorTittle: MCC_RscText
-	{
-		idc = -1;
-
-		text = "Armor:"; //--- ToDo: Localize;
-		x = 0.368229 * safezoneW + safezoneX;
-		y = 0.34606 * safezoneH + safezoneY;
-		w = 0.06875 * safezoneW;
-		h = 0.0219914 * safezoneH;
-		colorText[] = {1,1,1,1};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-	};
+	
 	class MCC_MWDifficultyTittle: MCC_RscText
 	{
 		idc = -1;
@@ -463,6 +441,20 @@ class MCC_Sandbox5 {
 		h = 0.0219914 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
+	
+	class MCC_MWArmorTittle: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Armor:"; //--- ToDo: Localize;
+		x = 0.368229 * safezoneW + safezoneX;
+		y = 0.34606 * safezoneH + safezoneY;
+		w = 0.06875 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		colorText[] = {1,1,1,1};
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	};
+	
 	class MCC_MWArmorCombo: MCC_RscCombo
 	{
 		idc = MCC_MWArmorIDC;
@@ -472,6 +464,99 @@ class MCC_Sandbox5 {
 		h = 0.0219914 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
+	
+	class MCC_MWReinforcementTittle: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Reinforcement:"; //--- ToDo: Localize;
+		x = 0.368229 * safezoneW + safezoneX;
+		y = 0.379047 * safezoneH + safezoneY;
+		w = 0.06875 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		colorText[] = {1,1,1,1};
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	};
+	
+	class MCC_MWReinforcementCombo: MCC_RscCombo
+	{
+		idc = MCC_MWReinforcementIDC;
+		x = 0.442708 * safezoneW + safezoneX;
+		y = 0.379047 * safezoneH + safezoneY;
+		w = 0.0859375 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	};
+	
+	class MCC_MWArtilleryTittle: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Artillery:"; //--- ToDo: Localize;
+		x = 0.368229 * safezoneW + safezoneX;
+		y = 0.412034 * safezoneH + safezoneY;
+		w = 0.06875 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		colorText[] = {1,1,1,1};
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	};
+	
+	class MCC_MWArtilleryCombo: MCC_RscCombo
+	{
+		idc = MCC_MWArtilleryIDC;
+		x = 0.442708 * safezoneW + safezoneX;
+		y = 0.412034 * safezoneH + safezoneY;
+		w = 0.0859375 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	};
+	
+	class MCC_MWPreciseMarkersText: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Precise Locations:"; //--- ToDo: Localize;
+		x = 0.184896 * safezoneW + safezoneX;
+		y = 0.379047 * safezoneH + safezoneY;
+		w = 0.06875 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+	};
+	
+	class MCC_MWPreciseMarkersCombo: MCC_RscCombo
+	{
+		idc = MCC_MWPreciseMarkersComboIDC;
+
+		x = 0.259375 * safezoneW + safezoneX;
+		y = 0.379047 * safezoneH + safezoneY; //0.412034
+		w = 0.0859375 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	};
+	
+	class MCC_MWDebugText: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Show Markers:"; //--- ToDo: Localize;
+		x = 0.184896 * safezoneW + safezoneX;
+		y = 0.412034 * safezoneH + safezoneY;
+		w = 0.06875 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	};
+	
+	class MCC_MWDebugCombo: MCC_RscCombo
+	{
+		idc = MCC_MWDebugComboIDC;
+
+		x = 0.259375 * safezoneW + safezoneX;
+		y = 0.412034 * safezoneH + safezoneY;
+		w = 0.0859375 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	};
+	
 	class MCC_MWIEDTittle: MCC_RscText
 	{
 		idc = -1;

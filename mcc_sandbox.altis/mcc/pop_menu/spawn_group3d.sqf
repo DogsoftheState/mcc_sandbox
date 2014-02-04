@@ -7,7 +7,7 @@
 #define MCC_SETTING_EMPTY 8006
 #define MCC_ZONE_LOC 8007
 
-private ["_type","_groupArray","_3d", "_dlg","_tempText","_presetText"];
+private ["_type","_groupArray","_3d", "_dlg","_tempText","_presetText","_pos"];
 disableSerialization;
 _3d = _this select 0;
 
@@ -55,6 +55,8 @@ if (mcc_missionmaker == (name player)) then {
 										,MCC_unitName
 										,mcc_hc
 										];
+						_pos = MCC3DValue select 0; 
+						if (!isnil "Object3D" && (mcc_spawntype=="VEHICLE")) then {waitUntil {_pos distance Object3D > 15}};
 						[[MCC3DValue select 0, MCC3DValue select 1, mcc_spawnname, mcc_spawntype, mcc_spawnfaction, mcc_spawnwithcrew,MCC_unitInit,MCC_unitName,mcc_hc],"MCC_fnc_simpleSpawn",true,false] spawn BIS_fnc_MP;		
 						};
 				};

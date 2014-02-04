@@ -41,7 +41,7 @@
 #include "=BTC=_revive\=BTC=_respawn.h"
 #include "bon_artillery\dialog\Artillery.hpp"
 #include "VAS\menu.hpp"
-#include "f\common\f_spect\spectating.hpp"
+#include "spectator\spectating.hpp"
 
 #include "TAA_name\GUI\TAA_INCLUDE.hpp"
 #include "TAA_name\GUI\TAA_ui_name.hpp"
@@ -185,6 +185,31 @@ class CfgFunctions
 			class garrison
 			{
 				description = "Populate soldiers inside empty houses";
+			};
+			
+			class saveToSQM
+			{
+				description = "Save MCC's 3D editor placments in SQM file format and copy it to clipboard";
+			};
+			
+			class saveToComp
+			{
+				description = "Save MCC's 3D editor placments in composition format";
+			};
+			
+			class replaceString
+			{
+				description = "Filter a string and removes certain characters ( _filter)";
+			};
+			
+			class dirToString
+			{
+				description = "Get direction integer and return it as a strin North, east exc";
+			};
+			
+			class startLocations
+			{
+				description = "Teleport the player when start location has been found";
 			};
 		};
 		
@@ -418,6 +443,16 @@ class CfgFunctions
 			{
 				description = "Create The tooltips on breifings.";
 			};
+			
+			class MWreinforcement
+			{
+				description = "Create a reinforcment type.";
+			};
+			
+			class MWSpawnStatic
+			{
+				description = "Spawn static weapons in the zone.";
+			};
 		};
 		
 		class ai
@@ -427,6 +462,16 @@ class CfgFunctions
 			class garrisonBehavior
 			{
 				description = "Contorol units under garrison behavior.";
+			};
+			
+			class paratroops
+			{
+				description = "Contorol the paratroop reinforcement spawn.";
+			};
+			
+			class reinforcement
+			{
+				description = "Contorol the motorized reinforcement spawn.";
 			};
 		};
 	};
@@ -1023,5 +1068,18 @@ class CfgSounds	{
 	name = "missileLunch";
 	sound[] = {"sounds\missile.ogg", 1, 1};
 	titles[] = {};
+	};
+};
+
+class CfgNotifications
+{
+	class MCCNotifications
+	{
+		description = "%1";
+		iconPicture = "%2";
+		iconText = "%3";
+		priority = 4;
+		sound = "communicationMenuItemAdded";
+		title = "NEW SUPPORT AVAILABLE";
 	};
 };

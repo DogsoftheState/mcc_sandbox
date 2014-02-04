@@ -37,12 +37,6 @@ for "_i" from 1 to (count _CfgVehicles - 1) do {
   //VK - Let ammoboxes through
   if ((_simulation in _simTypesUnits) or (toLower(_vehicleclass) == "ammo") or (toLower(_vehicleclass) == "ace_ammunition") or (toLower(_vehicleclass) == "ace_ammunitiontransportus") or (toLower(_vehicleclass) == "ace_ammunitiontransportru")) then 
   {
-  
-  //Verwerking
-	//Start russian shit
-	
-	
-	
 	if (toUpper(_cfgFaction) == _faction) then 
 	{
         
@@ -118,12 +112,8 @@ for "_i" from 1 to (count _CfgVehicles - 1) do {
 									_u_GEN_ship_idx = _u_GEN_ship_idx + 1;
 								  };
 		}; 
-        //Start INSssian shit
 	};
-
-
 	
-	//VKing making ammo spawnable
 	if ((toLower(_vehicleclass) == "ammo")) then
 		{
 			_type="LAND";
@@ -131,8 +121,6 @@ for "_i" from 1 to (count _CfgVehicles - 1) do {
 			_u_ammo_idx = _u_ammo_idx+1;
 		};
 	};
-   // End VK edit
-
  };
 };
  MCC_unit_array_ready=true; 	//let dialog know we are ready

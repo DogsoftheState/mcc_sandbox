@@ -1,5 +1,14 @@
 [EN]
-==============================================================================================
+
+=== 5.1.0 ====================================================================================
+
+Added:
+
+Modified:	
+	  - Solved bug: parameter "random" does not work with vehicles. (r: by Lenestar)
+	  - Fix small bug with "ambush". Sometimes AI do not react to nearest target. 
+	  - Small changes to the default numbers in Init_UPSMON.sqf
+
 === 5.0.9 ====================================================================================
 
 Added:
@@ -9,6 +18,7 @@ Added:
 	  - Add UPSMON version info in DEBUG display.  
 
 Modified:	
+      - CBA is NOT required any more !
       - Turning off ACE Wounds is now optional. (see Init_UPSMON.sqf to set it ON or OFF)  
 	  - Solved bug: Self wounds or friendly fire is treated as damages made by the enemy forces. (NOTE: If the killer is not recognize, AI will use smoke)	
       - Solved bug: MON_HeliStuckcontrol runs too often as bad speed read.
@@ -29,6 +39,7 @@ Misc:
 === 5.0.8   ================================================================================
 
 Added:
+      CBA is now required !!!
       UPSMON switches off "ACE wounds system for AI".
       "nosmoke" - the group will not use the smoke at all.
       "onroad" - targetpos will be generated only on roads (unless unit in fight).

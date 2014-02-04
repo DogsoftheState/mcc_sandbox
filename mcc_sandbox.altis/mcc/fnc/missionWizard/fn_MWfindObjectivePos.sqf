@@ -56,10 +56,23 @@ while {!_positionFound && time < _time} do
 					};
 				};
 		} 
-			else
+		else
 		{
-			_flatPos = _newPos isFlatEmpty [2,0,0.3,1,1,true];
-			if ((count _flatPos) < 1) then {_positionFound = true};
+			_flatPos = selectBestPlaces [_newPos, 200, "meadow", 1, 5];
+			/*_flatPos =  _newPos isflatempty [
+												20,							//--- Minimal distance from another object
+												0,								//--- If 0, just check position. If >0, select new one
+												0.3,							//--- Max gradient
+												20,								//--- Gradient area
+												0,								//--- 0 for restricted water, 2 for required water,
+												false							//--- True if some water can be in 25m radius
+											];*/
+			//_flatPos = _newPos isFlatEmpty [2,0,0.3,1,1,true];
+			if ((count _flatPos) != 0) then 
+				{	
+					_positionFound = true;
+					_newPos =  [((_flatPos select 0) select 0) select 0, ((_flatPos select 0) select 0) select 1, 0];
+				};
 		};
 			
 		if (_positionFound) then
@@ -83,17 +96,3 @@ if (time >= _time) then
 	};
 	
 _newPos;
-
-/*
-private ["_name","_type"];
-{	
-	_type = type _x;
-	_name = text _x;
-	createmarkerlocal [_name ,getpos _x];
-	_name setmarkertypelocal "mil_box";
-	_name setMarkerTextLocal format ["%1: %2",_name, _type];
-	_name setmarkerColorlocal "ColorRed";
-	_name setMarkerSizeLocal [0.3, 0.3];
-
-} foreach nearestLocations [getPos player,["Airport","BorderCrossing","CityCenter","fakeTown","Flag","FlatArea","FlatAreaCity","FlatAreaCitySmall","Hill","Mount","Name","NameCity","NameCityCapital","NameLocal","NameMarine","NameVillage","RockArea","Strategic","StrongpointArea","VegetationBroadleaf","VegetationFir","VegetationPalm","VegetationVineyard","ViewPoint"], 1000000];
-*/

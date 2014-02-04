@@ -12,7 +12,7 @@
 #define MCC_MSCONSOLESHOWFRIENDS 8408
 #define MCC_MSCONSOLECOMMANDAI 8409
 #define MCC_IDCNAMETAGS 8410
-
+#define mcc_artilleryTitleIDC 8411
 
 //-----------------------------------------------------------------------------
 // Main dialog
@@ -56,6 +56,8 @@ class missionSettings {
 	ConsoleCanCommandAITittle,
 	mcc_nameTags,
 	mcc_nameTagsCombo,
+	mcc_artilleryTitle,
+	mcc_artilleryCombo,
 	confirmButton,
 	CancelButton	
   };
@@ -295,6 +297,26 @@ class missionSettings {
 
 		x = 0.557292 * safezoneW + safezoneX;
 		y = 0.620953 * safezoneH + safezoneY;
+		w = 0.06875 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+	
+	class mcc_artilleryTitle: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Artillery Computer:"; //--- ToDo: Localize;
+		x = 0.305208 * safezoneW + safezoneX;
+		y = 0.653940 * safezoneH + safezoneY;
+		w = 0.25 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+	class mcc_artilleryCombo: MCC_RscCombo
+	{
+		idc = mcc_artilleryTitleIDC;
+
+		x = 0.557292 * safezoneW + safezoneX;
+		y = 0.653940 * safezoneH + safezoneY;
 		w = 0.06875 * safezoneW;
 		h = 0.0219914 * safezoneH;
 	};

@@ -40,5 +40,6 @@ _unit = _group createUnit [_type select 0,(_dummyObject modeltoworld [0,-1,0]) ,
 sleep 0.5;
 _unit setBehaviour "SAFE";
 _unit setUnitPos "UP";
+[_unit, "STAND"] call BIS_fnc_ambientAnimCombat;
 _group setFormDir _dir;
 		

@@ -37,12 +37,13 @@ switch (_volume) do
 _targetUnits = _pos nearObjects _hitRadius;
 {
 _random = random 10;
-if(_x isKindOf "Man") then	{
-	if (((_x distance _pos) < _killRadius) && (_random > 1))then	{
-		if (ACEIsEnabled) then {[_x,0.65,true,10] call ace_w_setunitdam} else {_x setHit ["legs", 0.9];_x setdamage 0.7};		
-		} else	{
-				if (ACEIsEnabled) then {[_x,0.3,false,1] call ace_w_setunitdam} else {_x setdamage 0.4};
-			}
+if(_x isKindOf "Man") then	
+{
+	if (((_x distance _pos) < _killRadius) && (_random > 1))then	
+	{
+		_x setHit ["legs", 0.9];
+		_x setdamage 0.7;		
+	};
 };
 
 if(_x isKindOf "Car") then

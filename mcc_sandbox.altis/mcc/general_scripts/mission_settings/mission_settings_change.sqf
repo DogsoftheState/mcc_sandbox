@@ -11,6 +11,7 @@
 #define MCC_MSCONSOLESHOWFRIENDS 8408
 #define MCC_MSCONSOLECOMMANDAI 8409
 #define MCC_IDCNAMETAGS 8410
+#define mcc_artilleryTitleIDC 8411
 
 private ["_string", "_resistanceHostile", "_AiSkill","_value","_ACEReviveTime","_ACESpectator","_t2t","_code"];
 disableSerialization;
@@ -91,6 +92,15 @@ if !mcc_isloading then	{
 	
 	MCC_nameTags = if ((lbCurSel MCC_IDCNAMETAGS) == 0) then {false} else {true};	//NameTags
 	publicvariable "MCC_nameTags";
+	
+	if ((lbCurSel mcc_artilleryTitleIDC) == 0) then 
+	{
+		[[2,compile format ["enableEngineArtillery false"]], "MCC_fnc_globalExecute", true, true] spawn BIS_fnc_MP;
+	} 
+	else		 
+	{
+		[[2,compile format ["enableEngineArtillery true"]], "MCC_fnc_globalExecute", true, true] spawn BIS_fnc_MP;
+	};
 	
 	/*
 	MCC_AI_Command = _AiSkill; 
