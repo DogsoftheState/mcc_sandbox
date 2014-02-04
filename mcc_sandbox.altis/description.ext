@@ -99,7 +99,7 @@ class Params
                 title = "BTC Wounding (requires BTC Revive ON";
                 values[] = {0,1};
                 texts[] = {"Off","On"};
-                default = 1;
+                default = 0;
                 code = "f_var_BTCwoundingSystem = %1";
         }; 
 		
@@ -108,7 +108,7 @@ class Params
                 title = "BTC Lifes (requires BTC Revive ON";
                 values[] = {30,20,10,5,4,3,2,1};
                 texts[] = {"30","20","10","5","4","3","2","1"};
-                default = 10;
+                default = 20;
                 code = "f_var_BTCLifes = %1";
         };
 
