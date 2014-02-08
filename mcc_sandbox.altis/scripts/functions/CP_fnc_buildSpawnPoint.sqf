@@ -39,26 +39,6 @@ if (isServer) then {
 	_dummy addEventHandler ["handledamage", { 							//Only destroyable with satchel or demo charges
 											if ((_this select 4) == "SatchelCharge_Remote_Ammo" || (_this select 4) == "DemoCharge_Remote_Ammo") then [{_this select 2},{0}]; 
 										}];  
-	if (!_destructable) then
-	{
-		switch (_side) do
-		{
-			case "WEST":	//west
-			{ 
-				_sphere = "Flag_NATO_F" createvehicle (getpos _dummy);
-			};
-			
-			case "EAST":	//east
-			{ 
-				_sphere = "Flag_CSAT_F" createvehicle (getpos _dummy);
-			};
-			case "RESISTANCE":	//guer
-			{ 
-				_sphere = "Flag_AAF_F" createvehicle (getpos _dummy);
-			};
-		};
-		_sphere setpos (getpos _dummy);
-	};
 	switch (_side) do	{
 						case "WEST":		{CP_westSpawnPoints set [count CP_westSpawnPoints, _dummy]; publicvariable "CP_westSpawnPoints"};
 						case "EAST":		{CP_eastSpawnPoints set [count CP_eastSpawnPoints, _dummy]; publicvariable "CP_eastSpawnPoints"};

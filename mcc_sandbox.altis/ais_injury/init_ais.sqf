@@ -1,10 +1,17 @@
 // by psycho - dont edit!
 if (isDedicated && {isPlayer _unit}) exitWith {};				// no player unit controlled on a dedicated server
 if (!isDedicated && {!hasInterface}) exitWith {};				// no headless client
+
 _unit = _this select 0;
+if (isNil "_unit") then {
+	_unit = _this select 1;
+}
 if (isNil "_unit") exitWith {};
-if (!isNil {_unit getVariable "tcb_ais_aisInit"}) exitWith {};	// prevent that a unit run the init twice
+
+// prevent that a unit run the init twice
+if (!isNil {_unit getVariable "tcb_ais_aisInit"}) exitWith {};
 _unit setVariable ["tcb_ais_aisInit",true];
+
 #include "ais_setup.sqf"
 
 "tcb_ais_in_agony" addPublicVariableEventHandler {
@@ -23,7 +30,7 @@ _unit setVariable ["tcb_ais_aisInit",true];
 			"];
 			_unit setVariable ["fa_action", _fa_action];
 			_unit setVariable ["drag_action", _drag_action];
-			[_unit] execFSM (TCB_AIS_PATH+"fsm\ais_marker.fsm");
+			[_unit] execFSM ("ais_injury\fsm\ais_marker.fsm");
 		} else {
 			_unit playActionNow "agonyStop";
 			_unit removeAction (_unit getVariable "fa_action");
@@ -58,15 +65,16 @@ _unit addEventHandler ["respawn", {
 }];
 */
 
-if (tcb_ais_show_3d_icons == 1) then {
-	_icons = addMissionEventHandler ["Draw3D", {
+//if (tcb_ais_show_3d_icons == 1) then {
+	_3d = addMissionEventHandler ["Draw3D",
+	{
 		{
-			if ((_x distance player) < 30 && {_x getVariable "tcb_ais_agony"}) then {
-				drawIcon3D ["a3\ui_f\data\map\MapControl\hospital_ca.paa", [0.6,0.15,0,0.8], _x, 0.5, 0.5, 0, format["%1 (%2m)", name _x, ceil (player distance _x)], 0, 0.02];
+			if ((_x distance player) < 30 && (format ["%1", _x getVariable "tcb_ais_agony"] != "false")) then {
+				drawIcon3D["a3\ui_f\data\map\MapControl\hospital_ca.paa", [1,0,0,1], _x, 0.5, 0.5, 0, format["%1 (%2m)", name _x, ceil (player distance _x)], 0, 0.02];
 			};
-		} forEach playableUnits;
+		} forEach allUnits;
 	}];
-};
+//};
 
 if (tcb_ais_delTime > 0) then {
 	_unit AddEventHandler ["killed",{[_this select 0, tcb_ais_delTime] spawn tcb_fnc_delbody}];
@@ -77,7 +85,7 @@ waitUntil {!isNil {_unit getVariable "BIS_fnc_feedback_hitArrayHandler"} || {tim
 ["%1 --- adding wounding handleDamage eventhandler first time",diag_ticktime] call BIS_fnc_logFormat;
 _unit addEventHandler ["HandleDamage", {_this call tcb_fnc_handleDamage}];
 
-[_unit] execFSM (TCB_AIS_PATH+"fsm\ais.fsm");
+[_unit] execFSM ("ais_injury\fsm\ais.fsm");
 
 if (isPlayer _unit) then {
 	waitUntil {sleep 0.3; !isNull (findDisplay 46)};
@@ -87,7 +95,7 @@ if (isPlayer _unit) then {
 
 /*	// add in a later version...
 if (count tcb_ais_addVIP > 0) then {
-	{[_x] execVM (TCB_AIS_PATH+"init_ais.sqf")} forEach tcb_ais_addVIP;
+	{[_x] execVM ("ais_injury\init_ais.sqf")} forEach tcb_ais_addVIP;
 };
 */
 
@@ -151,3 +159,5 @@ if (tcb_ais_dead_dialog == 1) then {
 		_unit AddEventHandler ["killed",{_this spawn tcb_fnc_deadcam}];
 	};
 };
+
+hint "AIS Wounding Loaded";
