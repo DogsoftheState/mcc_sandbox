@@ -217,7 +217,7 @@ class FSM
        "" \n
        "	if (_unit == player) then {" \n
        "		showHud false;" \n
-       "		_unit execFSM (TCB_AIS_PATH+""fsm\bloodloss.fsm"");" \n
+       "		_unit execFSM (""ais_injury\fsm\bloodloss.fsm"");" \n
        "		_unit switchCamera ""INTERNAL"";" \n
        "	};" \n
        "	" \n
@@ -227,7 +227,7 @@ class FSM
        "		[_unit] spawn tcb_fnc_sendaihealer;" \n
        "	};" \n
        "	if (playerSide == _side) then {" \n
-       "		[_unit] execFSM (TCB_AIS_PATH+""fsm\ais_marker.fsm"");" \n
+       "		[_unit] execFSM (""ais_injury\fsm\ais_marker.fsm"");" \n
        "	};" \n
        "" \n
        "		if(/*isServer && */_unit != player) then {" \n
@@ -313,7 +313,7 @@ class FSM
           priority = 50.000000;
           to="un_anim";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"! (_unit getVariable ""tcb_ais_agony"")"/*%FSM</CONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"! {_unit getVariable ""tcb_ais_agony""}"/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/

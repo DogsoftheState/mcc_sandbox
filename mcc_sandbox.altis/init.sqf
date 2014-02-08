@@ -52,9 +52,8 @@ if (isnil "MCC_AI_Command") then {MCC_AI_Command = 0.5};
 // Show friendly name tags and vhicles' crew info - default - off
 if (isnil "MCC_nameTags") then {MCC_nameTags = false}; 
 
-//-----------------------Custom Initialization--------------------------------------------
-
-[] execVM "init_module_custom.sqf";
+//-------------------- Save Gear --------------------------------------------------
+if (isnil "MCC_saveGear") then {MCC_saveGear = false};
 
 //----------------------IED settings---------------------------------------------
 // IED types the first one is display name the second is the classname [displayName, ClassName]
@@ -109,8 +108,6 @@ MCCConvoyGueEscort = "GUE_Soldier_1"; MCCConvoyGueDriver = "GUE_Soldier_CO";
 MCCConvoyCivEscort = "C_man_1_1_F"; MCCConvoyCivDriver = "C_man_1_1_F";
 
 //----------------------------Presets---------------------------------------------------------
-TCB_InitializedCheckScript = "(isNil {_this getVariable 'tcb_ais_aisInit'})";
-MCC_UtilityActionColor = "'#F0F000'";
 mccPresets = [ 
 		 ['======= Artillery =======','']
 		,['AI Artillery - Cannon', '[_this,1,2000,100,12,5,"Sh_82mm_AMOS",20] execVM "'+MCC_path+'scripts\UPSMON\MON_artillery_add.sqf";']
@@ -138,6 +135,7 @@ mccPresets = [
 		,['ECM - can jamm IED','if (isServer) then {_this setvariable ["MCC_ECM",true,true]};']
 		,['======= Objects =======','']
 		,['Pickable Object','_this call MCC_fnc_pickItem;']
+		,['Virtual Ammobox System (VAS)', '_this addAction ["Virtual Ammobox", "'+MCC_path+'VAS\open.sqf"];']
 		,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1} else {0}}];']
 		,['Destroy Object', '_this setdamage 1;']
 		,['Flip Object', '[_this ,0, 90] call bis_fnc_setpitchbank;']
@@ -146,17 +144,13 @@ mccPresets = [
 		,['Flies','[getposatl _this] call BIS_fnc_flies;']
 		,['Smoke','if (isServer) then {_effect = "test_EmptyObjectForSmoke" createVehicle (getpos _this); _effect attachto [_this,[0,0,0]];};']
 		,['Fire','if (isServer) then {_effect = "test_EmptyObjectForFireBig" createVehicle (getpos _this); _effect attachto [_this,[0,0,0]];};']
-		,['======= TV Guidance =======','']
-		,['GBU12', '[_this,"Bo_GBU12_LGB_MI10"] execVM "TVS\scripts\init.sqf"']
-		,['======= Actions =======','']
-		,['Virtual Ammobox System (VAS)', '_this addAction [format["<t color='+MCC_UtilityActionColor+'>Virtual Ammobox</t>"], "'+MCC_path+'VAS\open.sqf",_this,100,true,true,""];']
-		,['Load AIS Wounding', '_this addAction [format["<t color='+MCC_UtilityActionColor+'>Load Wounding</t>"],"'+MCC_path+'ais_injury\init_ais.sqf",_this,100,false,true,"","'+TCB_InitializedCheckScript+'"];']		
-		,['Load AIS Wounding (Global)', '_this addAction [format["<t color='+MCC_UtilityActionColor+'>Load Wounding (Global)</t>"],"'+MCC_path+'ais_injury\init_ais_global.sqf",_this,100,false,true,""];']
 		,['======= Misc =======','']
 		,['Create Local Marker', '_this execVM "'+MCC_path+'mcc\general_scripts\create_local_marker.sqf";']
-		,['Void Map Marker', '_this execVM "void_map_marker.sqf";']
 	];
 
+//-----------------------Custom Initialization--------------------------------------------
+
+call compile preprocessFile "init_module_custom.sqf";
 
 //**********************************************************************************************************************
 //====================================================================================================================

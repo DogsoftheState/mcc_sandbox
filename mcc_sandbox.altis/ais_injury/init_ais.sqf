@@ -5,7 +5,7 @@ if (!isDedicated && {!hasInterface}) exitWith {};				// no headless client
 _unit = _this select 0;
 if (isNil "_unit") then {
 	_unit = _this select 1;
-}
+};
 if (isNil "_unit") exitWith {};
 
 // prevent that a unit run the init twice
@@ -20,7 +20,9 @@ _unit setVariable ["tcb_ais_aisInit",true];
 	_side = _unit getVariable "tcb_ais_side";
 	if (playerSide == _side) then {
 		if (_in_agony) then {
-			_unit playActionNow "agonyStart";
+            _unit setVariable ["tcb_ais_agony", true];
+            
+            _unit playActionNow "agonyStart";
 			[side _unit,"HQ"] sideChat format ["%1 is down and needs help at %2",name _unit, mapGridPosition _unit];
 			_fa_action = _unit addAction [format["<t color='#F00000'>First Aid to %1</t>",name _unit],{_this spawn tcb_fnc_firstAid},_unit,100,false,true,"",
 				"{not isNull (_target getVariable _x)} count ['healer','dragger'] == 0 && {alive _target} && {vehicle _target == _target}
@@ -32,7 +34,9 @@ _unit setVariable ["tcb_ais_aisInit",true];
 			_unit setVariable ["drag_action", _drag_action];
 			[_unit] execFSM ("ais_injury\fsm\ais_marker.fsm");
 		} else {
-			_unit playActionNow "agonyStop";
+            _unit setVariable ["tcb_ais_agony", false];
+            
+            _unit playActionNow "agonyStop";
 			_unit removeAction (_unit getVariable "fa_action");
 			_unit removeAction (_unit getVariable "drag_action");
 			_unit setVariable ["fa_action", nil];
@@ -52,29 +56,16 @@ _unit setVariable ["tcb_ais_unit_died", false];
 _unit setVariable ["tcb_ais_leader", false];
 _unit setVariable ["tcb_ais_fall_in_agony_time_delay", 999999];
 
-/*
-// work around since BI-devs are went to stupid 3.0...		<-- no longer needed
-_unit addEventHandler ["respawn", {
-	[_this select 0] spawn {
-		_unit = _this select 0;
-		_timeend = time + 2;
-		waitUntil {!BIS_respawnInProgress || {time > _timeend}};
-		_unit removeAllEventHandlers "handleDamage";
-		_handledamage = _unit addEventHandler ["HandleDamage",{_this call ((_this select 0) getVariable "ais_handleDamage")}];
-	};
-}];
-*/
-
-//if (tcb_ais_show_3d_icons == 1) then {
+if (tcb_ais_show_3d_icons == 1) then {
 	_3d = addMissionEventHandler ["Draw3D",
 	{
 		{
-			if ((_x distance player) < 30 && (format ["%1", _x getVariable "tcb_ais_agony"] != "false")) then {
+			if ((_x distance player) < 30 && {_x getVariable "tcb_ais_agony"}) then {
 				drawIcon3D["a3\ui_f\data\map\MapControl\hospital_ca.paa", [1,0,0,1], _x, 0.5, 0.5, 0, format["%1 (%2m)", name _x, ceil (player distance _x)], 0, 0.02];
 			};
 		} forEach allUnits;
 	}];
-//};
+};
 
 if (tcb_ais_delTime > 0) then {
 	_unit AddEventHandler ["killed",{[_this select 0, tcb_ais_delTime] spawn tcb_fnc_delbody}];
@@ -91,13 +82,6 @@ if (isPlayer _unit) then {
 	waitUntil {sleep 0.3; !isNull (findDisplay 46)};
 	(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call tcb_fnc_keyUnbind"];
 };
-
-
-/*	// add in a later version...
-if (count tcb_ais_addVIP > 0) then {
-	{[_x] execVM ("ais_injury\init_ais.sqf")} forEach tcb_ais_addVIP;
-};
-*/
 
 if (tcb_ais_dead_dialog == 1) then {
 	if (isNil "respawndelay") then {
@@ -161,3 +145,4 @@ if (tcb_ais_dead_dialog == 1) then {
 };
 
 hint "AIS Wounding Loaded";
+_unit sideChat "AIS Wounding Loaded";
