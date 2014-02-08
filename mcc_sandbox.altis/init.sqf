@@ -52,14 +52,18 @@ if (isnil "MCC_AI_Command") then {MCC_AI_Command = 0.5};
 // Show friendly name tags and vhicles' crew info - default - off
 if (isnil "MCC_nameTags") then {MCC_nameTags = false}; 
 
-//-----------------------BTC Revive - --------------------------------------------
-//disable this line if you don't want it in the mission version - will not work on the mod version by default
-if (!MCC_isMode) then
-	{
-		waituntil {!isnil "f_var_BTCRevive"};
-		if ((f_var_BTCRevive == 1)) then {call compile preprocessFile "=BTC=_revive\=BTC=_revive_init.sqf"};
-	};
+//-----------------------BTC Logistic --------------------------------------------
 call compile preprocessFile "=BTC=_Logistic\=BTC=_logistic_Init.sqf";
+
+//--------------------------TcB AIS Wounding System ------------------------------
+if (!isDedicated) then {
+	TCB_AIS_PATH = "ais_injury\";
+	{[_x] call compile preprocessFile (TCB_AIS_PATH+"init_ais.sqf")} forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});		// execute for every playable unit
+
+	//{[_x] call compile preprocessFile (TCB_AIS_PATH+"init_ais.sqf")} forEach (units group player);													// only own group - you cant help strange group members
+
+	//{[_x] call compile preprocessFile (TCB_AIS_PATH+"init_ais.sqf")} forEach [p1,p2,p3,p4,p5];														// only some defined units
+};
 
 //----------------------TAA Name Tag---------------------------------------------
 // Source: http://www.armaholic.com/forums.php?m=posts&q=25214

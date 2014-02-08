@@ -1,8 +1,4 @@
-#ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
-#else
- #include "macro.sqf"
-#endif
+#include "macro.sqf"
 /*
 	@version: 2.1
 	@file_name: fn_mainDisplay.sqf
@@ -30,6 +26,10 @@ uiNamespace setVariable ["VAS_UI_FILTER_VAR",nil];
 uiNamespace setVariable ["VAS_UI_QuickMag",false];
 
 [] call VAS_fnc_updateLoad;
+
+
+lbSetCurSel[VAS_virt_list,0];
+lbSetCurSel[VAS_unit_list,0];
 
 switch (_request) do
 {

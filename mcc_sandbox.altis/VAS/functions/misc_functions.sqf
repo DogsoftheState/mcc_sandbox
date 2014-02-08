@@ -7,11 +7,7 @@
 */
 VAS_fnc_openDetails =
 {
-	#ifdef MCCMODE
-	 #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
-	#else
-	 #include "macro.sqf"
-	#endif
+	#include "macro.sqf"
 	ctrlShow [VAS_detail_mags_list,true];
 	ctrlShow[VAS_detail_mags,true];
 	ctrlShow [VAS_detail_magsbg,true];
@@ -19,11 +15,7 @@ VAS_fnc_openDetails =
 
 VAS_fnc_closeDetails =
 {
-	#ifdef MCCMODE
-	 #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
-	#else
-	 #include "macro.sqf"
-	#endif
+	#include "macro.sqf"
 	ctrlShow [VAS_detail_mags_list,false];
 	ctrlShow[VAS_detail_mags,false];
 	ctrlShow [VAS_detail_magsbg,false];

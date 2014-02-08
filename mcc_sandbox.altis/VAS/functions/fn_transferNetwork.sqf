@@ -1,8 +1,4 @@
-#ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
-#else
- #include "macro.sqf"
-#endif
+#include "macro.sqf"
 /*
 	File: fn_transferNetwork.sqf
 	Author: Bryan "Tonic" Boardwine

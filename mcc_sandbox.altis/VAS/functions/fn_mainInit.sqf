@@ -12,8 +12,7 @@
 		private["_handle"];
 		VAS_init_timeOnStart = time;
 		VAS_init_complete = false;
-		waituntil {!isnil "MCC_path"}; 
-		_handle = [] execVM format ["%1VAS\config.sqf",MCC_path];
+		_handle = [] execVM "VAS\config.sqf";
 		waitUntil {scriptDone _handle;};
 		if(isNil "VAS_fnc_buildConfig") exitWith {diag_log "::VAS:: function VAS_fnc_buildConfig is nil"};
 		["CfgWeapons"] call VAS_fnc_buildConfig;
@@ -25,8 +24,7 @@
 		else
 	{
 		VAS_init_timeOnStart = time;
-		waituntil {!isnil "MCC_path"}; 
-		[] call compile PreprocessFileLineNumbers format ["%1VAS\config.sqf",MCC_path];
+		[] call compile PreprocessFileLineNumbers "VAS\config.sqf";
 		["CfgWeapons"] call VAS_fnc_buildConfig;
 		["CfgMagazines"] call VAS_fnc_buildConfig;
 		["CfgVehicles"] call VAS_fnc_buildConfig;

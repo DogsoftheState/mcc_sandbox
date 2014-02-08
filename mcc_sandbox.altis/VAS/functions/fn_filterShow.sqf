@@ -1,8 +1,4 @@
-#ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
-#else
- #include "macro.sqf"
-#endif
+#include "macro.sqf"
 /*
 	@version: 1.0
 	@file_name: filter_show.sqf
