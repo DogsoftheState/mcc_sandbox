@@ -151,7 +151,10 @@ setviewdistance 2500;
 closedialog 0; 
 waituntil {!dialog};
 //Respawning
-								
-						
 if(rating player < 0) then {player addrating abs(rating player)} else {player addrating (rating player)*-1}; 	//Sets unit rating to zero
 cutText ["Deploying ....","BLACK IN",5];
+
+//----------------------------
+//  Custom Player Init
+//----------------------------
+[player] call compile preprocessFile (TCB_AIS_PATH+"init_ais.sqf")
