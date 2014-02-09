@@ -24,14 +24,14 @@ _unit setVariable ["tcb_ais_aisInit",true];
             
             _unit playActionNow "agonyStart";
 			[side _unit,"HQ"] sideChat format ["%1 is down and needs help at %2",name _unit, mapGridPosition _unit];
-			_fa_action = _unit addAction [format["<t color='#F00000'>First Aid to %1</t>",name _unit],{_this spawn tcb_fnc_firstAid},_unit,100,false,true,"",
-				"{not isNull (_target getVariable _x)} count ['healer','dragger'] == 0 && {alive _target} && {vehicle _target == _target}
-			"];
-			_drag_action = _unit addAction [format["<t color='#FC9512'>Drag %1</t>",name _unit],{_this spawn tcb_fnc_drag},_unit,99,false,true,"",
-				"{not isNull (_target getVariable _x)} count ['healer','dragger'] == 0 && {alive _target} && {vehicle _target == _target}
-			"];
-			_unit setVariable ["fa_action", _fa_action];
-			_unit setVariable ["drag_action", _drag_action];
+			//_fa_action = _unit addAction [format["<t color='#F00000'>First Aid to %1</t>",name _unit],{_this spawn tcb_fnc_firstAid},_unit,100,false,true,"",
+			//	"{not isNull (_target getVariable _x)} count ['healer','dragger'] == 0 && {alive _target} && {vehicle _target == _target}
+			//"];
+			//_drag_action = _unit addAction [format["<t color='#FC9512'>Drag %1</t>",name _unit],{_this spawn tcb_fnc_drag},_unit,99,false,true,"",
+			//	"{not isNull (_target getVariable _x)} count ['healer','dragger'] == 0 && {alive _target} && {vehicle _target == _target}
+			//"];
+			//_unit setVariable ["fa_action", _fa_action];
+			//_unit setVariable ["drag_action", _drag_action];
 			[_unit] execFSM ("ais_injury\fsm\ais_marker.fsm");
 		} else {
             _unit setVariable ["tcb_ais_agony", false];
@@ -56,16 +56,16 @@ _unit setVariable ["tcb_ais_unit_died", false];
 _unit setVariable ["tcb_ais_leader", false];
 _unit setVariable ["tcb_ais_fall_in_agony_time_delay", 999999];
 
-if (tcb_ais_show_3d_icons == 1) then {
+//if (tcb_ais_show_3d_icons == 1) then {
 	_3d = addMissionEventHandler ["Draw3D",
 	{
 		{
-			if ((_x distance player) < 30 && {_x getVariable "tcb_ais_agony"}) then {
+			if ((_x distance player) < 30 && (_x getVariable "tcb_ais_agony")) then {
 				drawIcon3D["a3\ui_f\data\map\MapControl\hospital_ca.paa", [1,0,0,1], _x, 0.5, 0.5, 0, format["%1 (%2m)", name _x, ceil (player distance _x)], 0, 0.02];
 			};
 		} forEach allUnits;
 	}];
-};
+//};
 
 if (tcb_ais_delTime > 0) then {
 	_unit AddEventHandler ["killed",{[_this select 0, tcb_ais_delTime] spawn tcb_fnc_delbody}];

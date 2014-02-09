@@ -210,6 +210,7 @@ class FSM
        "	tcb_ais_in_agony = [_unit,true];" \n
        "	publicVariable ""tcb_ais_in_agony"";" \n
        "	_unit setVariable [""unit_is_unconscious"", true];" \n
+       "    _unit setVariable [""tcb_ais_agony"", true];" \n
        "		" \n
        "	_unit setHit [""hands"",0.9];" \n
        "	_unit setHit [""legs"",0.9];" \n
@@ -313,7 +314,7 @@ class FSM
           priority = 50.000000;
           to="un_anim";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"! {_unit getVariable ""tcb_ais_agony""}"/*%FSM</CONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"! (_unit getVariable ""tcb_ais_agony"")"/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
