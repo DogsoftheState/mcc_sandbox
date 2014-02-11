@@ -7,7 +7,7 @@ class CfgPatches {
 		requiredAddons[] = {};
 		author[] = {"shay_gman"};
 		versionDesc = "MCC Sandbox 3";
-		version = "1";
+		version = "18";
 	};
 };	
 
@@ -39,6 +39,26 @@ class CfgMissions {
 		{
 			directory = "mcc_sandbox_mod\sampleMissions\MCC_Template.Zargabad";		
 		};
+		
+        class MP_COOP_MCC_SANDBOX_Shapur 
+        {
+            directory = "mcc_sandbox_mod\sampleMissions\MCC_Template.Shapur";        
+        };
+        
+        class MP_COOP_MCC_SANDBOX_Utes 
+        {
+            directory = "mcc_sandbox_mod\sampleMissions\MCC_Template.Utes";     
+        };
+        
+        class MP_COOP_MCC_SANDBOX_Desert
+        {
+            directory = "mcc_sandbox_mod\sampleMissions\MCC_Template.Desert";     
+        };
+        
+        class MP_COOP_MCC_SANDBOX_ProvingGrounds
+        {
+            directory = "mcc_sandbox_mod\sampleMissions\MCC_Template.ProvingGrounds";     
+        };
 	};
 };
 

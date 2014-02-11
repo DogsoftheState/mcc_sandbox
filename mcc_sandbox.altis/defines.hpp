@@ -1,5 +1,5 @@
 #define MCCPATH ""
-#define MCCVersion "0.7"
+#define MCCVersion "18"
 
 #include "mcc\dialogs\mcc_dialogs.hpp"
 #include "mcc\dialogs\mcc_guiTab1.hpp"
