@@ -126,14 +126,7 @@ if (!(_unit getVariable "tcb_ais_agony") && {alive _unit}) then {
 		_unit setVariable ["tcb_ais_unit_died", true];
 	};
 	
-	//if(!isPlayer _unit)
-	//{
-		_return = _unit getVariable "tcb_ais_overall";
-	//} else {
-        //Experimental to prevent players from taking damage while wounded
-		//_return = 0;
-		//_return = (_unit getVariable "tcb_ais_overall") / 4;
-    //};
+	_return = _unit getVariable "tcb_ais_overall";
 };
 
 //Necessary for BIS stuff to work

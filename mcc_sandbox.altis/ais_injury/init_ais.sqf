@@ -26,17 +26,22 @@ TCB_Load =
 		_side = _unit getVariable "tcb_ais_side";
 		if (playerSide == _side) then {
 			if (_in_agony) then {
-	            _unit setVariable ["tcb_ais_agony", true];
-	            
-	            _unit playActionNow "agonyStart";
-	            
+				_unit setVariable ["tcb_ais_agony", true];
+				
+				_unit playActionNow "agonyStart";
+				
 				[side _unit,"HQ"] sideChat format ["%1 is down and needs help at %2",name _unit, mapGridPosition _unit];
-	            
+				
 				[_unit] execFSM ("ais_injury\fsm\ais_marker.fsm");
 			} else {
-	            _unit setVariable ["tcb_ais_agony", false];
-	            
-	            _unit playActionNow "agonyStop";
+				_unit setVariable ["tcb_ais_agony", false];
+				
+				_unit playActionNow "agonyStop";
+				
+				_unit removeAction (_unit getVariable "fa_action");
+				_unit removeAction (_unit getVariable "drag_action");
+				_unit setVariable ["fa_action", nil];
+				_unit setVariable ["drag_action", nil];
 			};
 		};
 	};
@@ -122,6 +127,7 @@ TCB_Basic_Load =
 TCB_Faction_Load =
 {
     if (!isDedicated) then {
+        //TODO - Change this from playableUnits to a list of all units in the callers faction
         {[_x] spawn TCB_Load} forEach playableUnits;
     };    
 };
