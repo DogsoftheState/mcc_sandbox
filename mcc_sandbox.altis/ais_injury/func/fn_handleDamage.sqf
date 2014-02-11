@@ -1,5 +1,5 @@
 // by BonInf*
-// changed by psycho
+// changed by psycho, chessmaster42
 private ['_agony','_unit','_bodypart','_damage','_return','_revive_factor'];
 _unit 		= _this select 0;
 _bodypart	= _this select 1;
@@ -7,7 +7,6 @@ _damage		= _this select 2;
 
 if (!(_unit getVariable "tcb_ais_agony") && {alive _unit}) then {
 	_return = _damage / (tcb_ais_rambofactor max 1);
-	//diag_log format ["part: %1 --- damage: %2 --- return: %3",_bodypart,_damage,_return];
 	_revive_factor = (tcb_ais_rambofactor max 1) * 1.5;
 	_agony = false;
 
@@ -119,15 +118,26 @@ if (!(_unit getVariable "tcb_ais_agony") && {alive _unit}) then {
 		_delay = time + 5;
 		_unit setVariable ["tcb_ais_fall_in_agony_time_delay", _delay];
 	};
+    
 	_return = 0;
-
 } else {
 	if (!alive _unit) exitWith {_unit setVariable ["tcb_ais_unit_died", true]; _damage};
 	if (time > (_unit getVariable "tcb_ais_fall_in_agony_time_delay")) then {
 		_unit setVariable ["tcb_ais_unit_died", true];
 	};
-	_return = _unit getVariable "tcb_ais_overall";
+	
+	//if(!isPlayer _unit)
+	//{
+		_return = _unit getVariable "tcb_ais_overall";
+	//} else {
+        //Experimental to prevent players from taking damage while wounded
+		//_return = 0;
+		//_return = (_unit getVariable "tcb_ais_overall") / 4;
+    //};
 };
 
-BIS_hitArray = _this; BIS_wasHit = true; // For BIS stuff to work
+//Necessary for BIS stuff to work
+BIS_hitArray = _this;
+BIS_wasHit = true;
+
 _return

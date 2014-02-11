@@ -157,4 +157,4 @@ cutText ["Deploying ....","BLACK IN",5];
 //----------------------------
 //  Custom Player Init
 //----------------------------
-call compile preprocessFile ("ais_injury\init_ais_global.sqf");
+call TCB_Global_Load;

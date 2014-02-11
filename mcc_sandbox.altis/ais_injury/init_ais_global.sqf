@@ -1,1 +1,0 @@
-[[2, {execVM ("ais_injury\load_ais.sqf")}], "CP_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
