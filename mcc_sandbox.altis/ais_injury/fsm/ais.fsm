@@ -85,8 +85,8 @@ link44[] = {32,31};
 link45[] = {33,4};
 link46[] = {34,35};
 link47[] = {35,24};
-globals[] = {0.000000,0,0,0,0,640,480,1,51,6316128,1,-676.809570,476.445038,556.593750,-676.522461,852,911,1};
-window[] = {2,-1,-1,-1,-1,787,50,1309,50,3,870};
+globals[] = {0.000000,0,0,0,0,640,480,1,53,6316128,1,-602.895020,461.264008,693.234558,-629.424805,741,921,1};
+window[] = {2,-1,-1,-1,-1,995,2079,3338,258,3,759};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -185,9 +185,7 @@ class FSM
     class agony
     {
       name = "agony";
-      init = /*%FSM<STATEINIT""">*/"diag_log format [""agony inn in fsm - %1 --- %2"", _unit,time];" \n
-       "" \n
-       "if (!isNil {_dragger getVariable ""drop_action""}) then {" \n
+      init = /*%FSM<STATEINIT""">*/"if (!isNil {_dragger getVariable ""drop_action""}) then {" \n
        "	_dragger removeAction (_dragger getVariable ""drop_action"");" \n
        "	_dragger setVariable [""drop_action"",nil];" \n
        "};" \n
@@ -204,13 +202,12 @@ class FSM
        "_unit setVariable [""dragger"", ObjNull, true];" \n
        "_unit setVariable [""healer"", ObjNull, true];" \n
        "" \n
-       "" \n
-       "" \n
        "if (!(_unit getVariable ""unit_is_unconscious"")) then {" \n
-       "	tcb_ais_in_agony = [_unit,true];" \n
-       "	publicVariable ""tcb_ais_in_agony"";" \n
        "	_unit setVariable [""unit_is_unconscious"", true];" \n
        "	_unit setVariable [""tcb_ais_agony"", true];" \n
+       "" \n
+       "	tcb_ais_in_agony = [_unit,true];" \n
+       "	publicVariable ""tcb_ais_in_agony"";" \n
        "		" \n
        "	_unit setHit [""hands"",0.9];" \n
        "	_unit setHit [""legs"",0.9];" \n
@@ -227,20 +224,21 @@ class FSM
        "	if ({isPlayer _x} count (units group _unit) <= 2) then {" \n
        "		[_unit] spawn tcb_fnc_sendaihealer;" \n
        "	};" \n
+       "" \n
        "	if (playerSide == _side) then {" \n
        "		[_unit] execFSM (""ais_injury\fsm\ais_marker.fsm"");" \n
        "	};" \n
        "" \n
-       "		if(/*isServer && */_unit != player) then {" \n
-       "			_fa_action = _unit addAction [format[""<t color='#F00000'>First Aid to %1</t>"",name _unit],{_this spawn tcb_fnc_firstAid},_unit,10,false,true,""""," \n
-       "					""{not isNull (_target getVariable _x)} count ['healer','dragger'] == 0 && alive _target && vehicle _target == _target" \n
-       "			""];" \n
-       "			_drag_action = _unit addAction [format[""<t color='#FC9512'>Drag %1</t>"",name _unit],{_this spawn tcb_fnc_drag},_unit,10,false,true,""""," \n
-       "					""{not isNull (_target getVariable _x)} count ['healer','dragger'] == 0 && alive _target && vehicle _target == _target" \n
-       "			""];" \n
-       "			_unit setVariable [""fa_action"",_fa_action,false];" \n
-       "			_unit setVariable [""drag_action"",_drag_action,false];" \n
-       "		};" \n
+       "	if(_unit != player) then {" \n
+       "		_fa_action = _unit addAction [format[""<t color='#F00000'>First Aid to %1</t>"",name _unit],{_this spawn tcb_fnc_firstAid},_unit,10,false,true,""""," \n
+       "				""{not isNull (_target getVariable _x)} count ['healer','dragger'] == 0 && alive _target && vehicle _target == _target" \n
+       "		""];" \n
+       "		_drag_action = _unit addAction [format[""<t color='#FC9512'>Drag %1</t>"",name _unit],{_this spawn tcb_fnc_drag},_unit,10,false,true,""""," \n
+       "				""{not isNull (_target getVariable _x)} count ['healer','dragger'] == 0 && alive _target && vehicle _target == _target" \n
+       "		""];" \n
+       "		_unit setVariable [""fa_action"",_fa_action,false];" \n
+       "		_unit setVariable [""drag_action"",_drag_action,false];" \n
+       "	};" \n
        "" \n
        "	if (!isPlayer _unit) then {" \n
        "		_unit stop true;" \n
@@ -259,9 +257,6 @@ class FSM
        "	if (isNil ""_average_damage"") then {_average_damage = 0.6};" \n
        "	if (_average_damage >= 0.9) then {_average_damage = 0.86};" \n
        "	_unit setDamage _average_damage;" \n
-       "	" \n
-       "" \n
-       "	//diag_log format [""damage: %1"", damage _unit];" \n
        "" \n
        "	if (_unit == leader group _unit) then {" \n
        "		_unit setVariable [""tcb_ais_leader"", true];" \n
@@ -284,7 +279,9 @@ class FSM
        "			_unit setVariable [""tcb_ais_leader"", false];" \n
        "		};" \n
        "	};" \n
+       "" \n
        "	_unit addEventHandler [""fired"",{(_this select 0) setCaptive false}];" \n
+       "" \n
        "	if (sunOrMoon == 0) then {" \n
        "		_unit action [""nvGogglesOff"",_unit];" \n
        "	};" \n
@@ -314,7 +311,7 @@ class FSM
           priority = 50.000000;
           to="un_anim";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"! (_unit getVariable ""tcb_ais_agony"")"/*%FSM</CONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!(_unit getVariable ""tcb_ais_agony"")"/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/

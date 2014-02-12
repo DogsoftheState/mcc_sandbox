@@ -20,6 +20,7 @@ TCB_Load =
 	if (!isNil {_unit getVariable "tcb_ais_aisInit"}) exitWith {};
 	_unit setVariable ["tcb_ais_aisInit",true];
 	
+    //Synchronize the agony state using the public variable broadcast
 	"tcb_ais_in_agony" addPublicVariableEventHandler {
 		_unit = (_this select 1) select 0;
 		_in_agony = (_this select 1) select 1;
@@ -28,20 +29,11 @@ TCB_Load =
 			if (_in_agony) then {
 				_unit setVariable ["tcb_ais_agony", true];
 				
-				_unit playActionNow "agonyStart";
-				
-				[side _unit,"HQ"] sideChat format ["%1 is down and needs help at %2",name _unit, mapGridPosition _unit];
+				[side _unit,"HQ"] sideChat format ["%1 is down and needs help at %2", name _unit, mapGridPosition _unit];
 				
 				[_unit] execFSM ("ais_injury\fsm\ais_marker.fsm");
 			} else {
 				_unit setVariable ["tcb_ais_agony", false];
-				
-				_unit playActionNow "agonyStop";
-				
-				_unit removeAction (_unit getVariable "fa_action");
-				_unit removeAction (_unit getVariable "drag_action");
-				_unit setVariable ["fa_action", nil];
-				_unit setVariable ["drag_action", nil];
 			};
 		};
 	};
@@ -61,11 +53,16 @@ TCB_Load =
 	if (tcb_ais_show_3d_icons == 1) then {
 		_3d = addMissionEventHandler ["Draw3D",
 		{
+			_playerFaction = side (group player);
 			{
-				if ((_x distance player) < 30 && (_x getVariable "tcb_ais_agony")) then {
-					drawIcon3D["a3\ui_f\data\map\MapControl\hospital_ca.paa", [1,0,0,1], _x, 0.5, 0.5, 0, format["%1 (%2m)", name _x, ceil (player distance _x)], 0, 0.02];
+				if((side _x) == _playerFaction) then {
+					{
+						if ((_x distance player) < 30 && (_x getVariable "tcb_ais_agony") && (alive _x)) then {
+							drawIcon3D["a3\ui_f\data\map\MapControl\hospital_ca.paa", [1,0,0,1], _x, 0.5, 0.5, 0, format["%1 (%2m)", name _x, ceil (player distance _x)], 0, 0.02];
+						};
+					} forEach units _x;
 				};
-			} forEach allUnits;
+			} forEach allGroups;
 		}];
 	};
 	
@@ -73,14 +70,19 @@ TCB_Load =
 		_unit addEventHandler ["killed",{[_this select 0, tcb_ais_delTime] spawn tcb_fnc_delbody}];
 	};
 	
-	_timeend = time + 2;
-	waitUntil {!isNil {_unit getVariable "BIS_fnc_feedback_hitArrayHandler"} || {time > _timeend}};	// work around to ensure this EH is the last one that was added
-	["%1 --- adding wounding handleDamage eventhandler first time",diag_ticktime] call BIS_fnc_logFormat;
-	_unit addEventHandler ["HandleDamage", {_this call tcb_fnc_handleDamage}];
+	//Setup the damage handler
+	if(!isServer) then {
+		_timeend = time + 2;
+		waitUntil {!isNil {_unit getVariable "BIS_fnc_feedback_hitArrayHandler"} || {time > _timeend}};	// work around to ensure this EH is the last one that was added
+		_unit removeAllEventHandlers "HandleDamage";
+		["TCB_Load: %1 --- adding HandleDamage eventhandler", _unit] call BIS_fnc_logFormat;
+		_unit addEventHandler ["HandleDamage", {_this call tcb_fnc_handleDamage}];
+	};
 	
 	//Start the Finite State Machine
 	[_unit] execFSM ("ais_injury\fsm\ais.fsm");
 	
+    //Not sure yet what this bit does but here we go
 	if (isPlayer _unit) then {
 		waitUntil {sleep 0.3; !isNull (findDisplay 46)};
 		(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call tcb_fnc_keyUnbind"];
@@ -102,52 +104,50 @@ TCB_Load =
 		};
 	};
 	
+    //If this unit is the player show a hint to let them know AIS Wounding is loaded
 	if (isPlayer _unit) then {
 		hint "AIS Wounding Loaded";
 	};
 	
+    //Debug message to side chat so that everyone knows when units have AIS Wounding loaded
 	_unit sideChat "AIS Wounding Loaded";
 };
 
 //Loads AIS Wounding on the unit that called the action
 TCB_Action_Load =
 {
-    [_caller] spawn TCB_Load;
+	[_caller] spawn TCB_Load;
 };
 
 //Loads AIS Wounding on all playable units currently in the mission
 TCB_Basic_Load =
 {
-    if (!isDedicated) then {
-        {[_x] spawn TCB_Load} forEach playableUnits;
-    };    
+	{[_x] spawn TCB_Load} forEach playableUnits;  
 };
 
 //Loads AIS Wounding on all units currently in the player's faction
 TCB_Faction_Load =
 {
-    if (!isDedicated) then {
-        //TODO - Change this from playableUnits to a list of all units in the callers faction
-        {[_x] spawn TCB_Load} forEach playableUnits;
-    };    
+	_playerFaction = side (group player);
+	{
+		if((side _x) == _playerFaction) then {
+			{[_x] spawn TCB_Load} forEach units _x;
+		};
+	} forEach allGroups;
 };
 
 //Loads AIS Wounding on all playable/switchable units currently in the mission
 //This also forces the loading globally on the server and all clients
 TCB_Global_Load =
 {
-    if (!isDedicated) then {
-       [[2, {[] spawn TCB_Basic_Load}], "CP_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-    };
+	[[2, {[] spawn TCB_Basic_Load}], "CP_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 };
 
 //Loads AIS Wounding on all units currently in the player's faction
 //This also forces the loading globally on the server and all clients
 TCB_Global_Load_Faction =
 {
-    if (!isDedicated) then {
-       [[2, {[] spawn TCB_Faction_Load}], "CP_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-    };
+	[[2, {[] spawn TCB_Faction_Load}], "CP_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 };
 
 call TCB_Global_Load;
