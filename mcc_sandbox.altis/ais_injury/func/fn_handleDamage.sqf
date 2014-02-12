@@ -1,9 +1,21 @@
 // by BonInf*
 // changed by psycho, chessmaster42
-private ['_agony','_unit','_bodypart','_damage','_return','_revive_factor'];
+private ['_agony','_unit','_bodypart','_damage','_source','_ammo','_return','_revive_factor'];
 _unit 		= _this select 0;
 _bodypart	= _this select 1;
 _damage		= _this select 2;
+_source		= _this select 3;
+_ammo		= _this select 4;
+
+//Stop any damage that doesn't have a source defined
+//This is a known bug with HandleDamage EVH
+if(isNull _source) exitwith {0};
+
+//Make unconscious/agony players take no damage while in the captive state
+//This state is intentionally lost via the FSM if the unit fires a weapon
+if((_unit getVariable "tcb_ais_agony") && (captive _unit) && (isPlayer _unit)) exitwith {
+	0
+};
 
 if (!(_unit getVariable "tcb_ais_agony") && {alive _unit}) then {
 	_return = _damage / (tcb_ais_rambofactor max 1);
@@ -130,7 +142,6 @@ if (!(_unit getVariable "tcb_ais_agony") && {alive _unit}) then {
 };
 
 //Necessary for BIS stuff to work
-BIS_hitArray = _this;
-BIS_wasHit = true;
+BIS_hitArray = _this; BIS_wasHit = true;
 
 _return
