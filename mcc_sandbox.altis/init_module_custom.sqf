@@ -4,6 +4,9 @@ call compile preprocessFile "=BTC=_Logistic\=BTC=_logistic_Init.sqf";
 //--------------------------AIS Wounding System ---------------------------------
 call compile preprocessFile "ais_injury\init_ais.sqf";
 
+//--------------------------Vehicle Locking System ------------------------------
+call compile preprocessFile "vehicle_lock\vehicle_lock.sqf";
+
 //----------------------TAA Name Tag---------------------------------------------
 // Source: http://www.armaholic.com/forums.php?m=posts&q=25214
 
@@ -80,9 +83,9 @@ mccPresets = [
 	,['FA18 GBU31', '[_this,"js_a_fa18_GBU31_JDAM"] execVM "TVS\scripts\init.sqf";']
 	,['======= Actions =======','']
 	,['Virtual Ammobox System (VAS)', '_this addAction [format["<t color=""#F0F000"">Virtual Ammobox</t>"], "VAS\open.sqf", _this, 100, true];']
-	,['Load AIS Wounding (All-Players)', '_this addAction [format["<t color=""#F0F000"">Load Wounding (Players)</t>"], {spawn TCB_Global_Load}];']
-	,['Load AIS Wounding (All-Faction)', '_this addAction [format["<t color=""#F0F000"">Load Wounding (Faction)</t>"], {spawn TCB_Global_Load_Faction}];']
-	,['Lock Vehicle', '_this addAction [format["<t color=""#F0F000"">Lock Vehicle</t>"], "vehicle_lock\vehicle_lock.sqf"];']
+	,['Load AIS Wounding (All-Players)', '_this addAction [format["<t color=""#F0F000"">Load Wounding (Players)</t>"], {[] spawn TCB_Global_Load}];']
+	,['Load AIS Wounding (All-Faction)', '_this addAction [format["<t color=""#F0F000"">Load Wounding (Faction)</t>"], {[] spawn TCB_Global_Load_Faction}];']
+	,['Lock Vehicle', 'JP_VL_Action = _this addAction [format["<t color=""#F0F000"">Lock Vehicle</t>"], {[(_this select 0)] spawn JP_VL_Global_Lock}];']
 	,['======= Misc =======','']
 	,['Create Local Marker', '_this execVM "'+MCC_path+'mcc\general_scripts\create_local_marker.sqf";']
 	,['Void Map Marker', '_this execVM "void_map_marker.sqf";']
