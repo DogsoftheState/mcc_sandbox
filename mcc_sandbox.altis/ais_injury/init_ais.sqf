@@ -5,7 +5,7 @@
 #include "ais_config.sqf";
 
 //Load AIS Wounding on the unit in the first parameter
-TCB_Load =
+AIS_Load =
 {
 	_unit = _this select 0;
 	
@@ -34,6 +34,12 @@ TCB_Load =
 				[_unit] execFSM ("ais_injury\fsm\ais_marker.fsm");
 			} else {
 				_unit setVariable ["tcb_ais_agony", false];
+
+				//Failsafe in case the FSM doesn't remove the actions
+				_unit removeAction (_unit getVariable "fa_action");
+				_unit removeAction (_unit getVariable "drag_action");
+				_unit setVariable ["fa_action",nil];
+				_unit setVariable ["drag_action",nil];
 			};
 		};
 	};
@@ -75,14 +81,14 @@ TCB_Load =
 		_timeend = time + 2;
 		waitUntil {!isNil {_unit getVariable "BIS_fnc_feedback_hitArrayHandler"} || {time > _timeend}};	// work around to ensure this EH is the last one that was added
 		_unit removeAllEventHandlers "HandleDamage";
-		["TCB_Load: %1 --- adding HandleDamage eventhandler", _unit] call BIS_fnc_logFormat;
+		["AIS_Load: %1 --- adding HandleDamage eventhandler", _unit] call BIS_fnc_logFormat;
 		_unit addEventHandler ["HandleDamage", {_this call tcb_fnc_handleDamage}];
 	};
 	
 	//Start the Finite State Machine
 	[_unit] execFSM ("ais_injury\fsm\ais.fsm");
 	
-    //Not sure yet what this bit does but here we go
+    //Setup an event to trigger on all KeyDown input events
 	if (isPlayer _unit) then {
 		waitUntil {sleep 0.3; !isNull (findDisplay 46)};
 		(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call tcb_fnc_keyUnbind"];
@@ -114,40 +120,40 @@ TCB_Load =
 };
 
 //Loads AIS Wounding on the unit that called the action
-TCB_Action_Load =
+AIS_Action_Load =
 {
-	[_caller] spawn TCB_Load;
+	[_caller] spawn AIS_Load;
 };
 
 //Loads AIS Wounding on all playable units currently in the mission
-TCB_Basic_Load =
+AIS_Basic_Load =
 {
-	{[_x] spawn TCB_Load} forEach playableUnits;  
+	{[_x] spawn AIS_Load} forEach playableUnits;  
 };
 
 //Loads AIS Wounding on all units currently in the player's faction
-TCB_Faction_Load =
+AIS_Faction_Load =
 {
 	_playerFaction = side (group player);
 	{
 		if((side _x) == _playerFaction) then {
-			{[_x] spawn TCB_Load} forEach units _x;
+			{[_x] spawn AIS_Load} forEach units _x;
 		};
 	} forEach allGroups;
 };
 
 //Loads AIS Wounding on all playable/switchable units currently in the mission
 //This also forces the loading globally on the server and all clients
-TCB_Global_Load =
+AIS_Global_Load =
 {
-	[[2, {[] spawn TCB_Basic_Load}], "CP_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+	[[2, {[] spawn AIS_Basic_Load}], "CP_fnc_globalExecute", true, true] spawn BIS_fnc_MP;
 };
 
 //Loads AIS Wounding on all units currently in the player's faction
 //This also forces the loading globally on the server and all clients
-TCB_Global_Load_Faction =
+AIS_Global_Load_Faction =
 {
-	[[2, {[] spawn TCB_Faction_Load}], "CP_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+	[[2, {[] spawn AIS_Faction_Load}], "CP_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 };
 
-call TCB_Global_Load;
+call AIS_Global_Load;

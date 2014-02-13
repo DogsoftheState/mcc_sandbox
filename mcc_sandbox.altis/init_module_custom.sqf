@@ -7,6 +7,9 @@ call compile preprocessFile "ais_injury\init_ais.sqf";
 //--------------------------Vehicle Locking System ------------------------------
 call compile preprocessFile "vehicle_lock\vehicle_lock.sqf";
 
+//--------------------------Idle Info System ------------------------------------
+call compile preprocessFile "idle_info\idle_info.sqf";
+
 //----------------------TAA Name Tag---------------------------------------------
 // Source: http://www.armaholic.com/forums.php?m=posts&q=25214
 
@@ -57,7 +60,7 @@ mccPresets = [
 	,['Kneel', '_this setUnitPos "Middle";']
 	,['Prone', '_this setUnitPos "DOWN";']
 	,['Can be controled using MCC Console', '(group _this) setvariable ["MCC_canbecontrolled",true,true];']
-	,['Load AIS Wounding', '[_this] spawn TCB_Load;']
+	,['Load AIS Wounding', '[_this] spawn AIS_Load;']
 	,['======= Vehicles =======','']
 	,['Set Empty (Fuel)', '_this setfuel 0;']
 	,['Set Empty (Ammo)', '_this setvehicleammo 0;']
@@ -83,8 +86,7 @@ mccPresets = [
 	,['FA18 GBU31', '[_this,"js_a_fa18_GBU31_JDAM"] execVM "TVS\scripts\init.sqf";']
 	,['======= Actions =======','']
 	,['Virtual Ammobox System (VAS)', '_this addAction [format["<t color=""#F0F000"">Virtual Ammobox</t>"], "VAS\open.sqf", _this, 100, true];']
-	,['Load AIS Wounding (All-Players)', '_this addAction [format["<t color=""#F0F000"">Load Wounding (Players)</t>"], {[] spawn TCB_Global_Load}];']
-	,['Load AIS Wounding (All-Faction)', '_this addAction [format["<t color=""#F0F000"">Load Wounding (Faction)</t>"], {[] spawn TCB_Global_Load_Faction}];']
+	,['Load AIS Wounding (All-Faction)', '_this addAction [format["<t color=""#F0F000"">Load Wounding (Faction)</t>"], {[] spawn AIS_Global_Load_Faction}];']
 	,['Lock Vehicle', 'JP_VL_Action = _this addAction [format["<t color=""#F0F000"">Lock Vehicle</t>"], {[(_this select 0)] spawn JP_VL_Global_Lock}];']
 	,['======= Misc =======','']
 	,['Create Local Marker', '_this execVM "'+MCC_path+'mcc\general_scripts\create_local_marker.sqf";']
