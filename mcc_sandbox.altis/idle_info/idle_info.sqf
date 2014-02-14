@@ -1,4 +1,6 @@
 ii_idle_time = 300;
+ii_enable_3d_icon = 1;
+ii_enable_chat_messages = 0;
 
 //Reset the player idle time
 II_Reset_Idle =
@@ -13,7 +15,9 @@ II_Reset_Idle =
 		ii_unit_is_idle = [_unit, false];
 		publicVariable "ii_unit_is_idle";
 
-		//_unit sideChat "I am no longer idle!";
+		if(ii_enable_chat_messages == 1) then {
+			_unit sideChat "I am no longer idle!";
+		};
 	};
 };
 
@@ -57,23 +61,29 @@ II_Load =
 		if (_is_idle) then {
 			_unit setVariable ["ii_is_idle", true];
 
-			//_unit sideChat "I have just gone idle. Slap me!";
+			if(ii_enable_chat_messages == 1) then {
+				_unit sideChat "I have just gone idle. Slap me!";
+			};
 		} else {
 			_unit setVariable ["ii_is_idle", false];
 
-			//_unit sideChat "I am no longer idle!";
+			if(ii_enable_chat_messages == 1) then {
+				_unit sideChat "I am no longer idle!";
+			};
 		};
 	};
 
-	//Setup the 3D icon that shows up when the unit is idle
-	_3d = addMissionEventHandler ["Draw3D",
-	{
+	if(ii_enable_3d_icon == 1) then {
+		//Setup the 3D icon that shows up when the unit is idle
+		_3d = addMissionEventHandler ["Draw3D",
 		{
-			if ((_x distance player) < 30 && (_x getVariable "ii_is_idle") && (alive _x)) then {
-				drawIcon3D["a3\ui_f\data\map\MapControl\taskIcon_ca.paa", [1,1,1,1], _x, 0.5, 0.5, 0, format["%1 (%2m)", name _x, ceil (player distance _x)], 0, 0.02];
-			};
-		} forEach playableUnits;
-	}];
+			{
+				if ((_x distance player) < 50 && (_x getVariable "ii_is_idle") && (alive _x)) then {
+					drawIcon3D["a3\ui_f\data\map\Diary\Icons\playerconnecting_ca.paa", [0.15,1,0.3,1], _x, 0.5, 0.5, 0, format["%1 (%2m)", name _x, ceil (player distance _x)], 0, 0.02];
+				};
+			} forEach playableUnits;
+		}];
+	};
 
     //Setup an event to trigger on all KeyDown input events
 	if (isPlayer _unit) then {

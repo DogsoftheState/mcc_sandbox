@@ -110,7 +110,7 @@ if (!(_unit getVariable "tcb_ais_agony") && {alive _unit}) then {
 		};
 		
 		case "" : {
-			_damage = damage vehicle _unit + _return; //(_unit getVariable "tcb_ais_overall") + _return;
+			_damage = (damage vehicle _unit) + _return; //(_unit getVariable "tcb_ais_overall") + _return;
 			_unit setVariable ["tcb_ais_overall", _damage];
 			if (_damage >= 0.9) then {
 				_unit allowDamage false;
@@ -125,7 +125,7 @@ if (!(_unit getVariable "tcb_ais_agony") && {alive _unit}) then {
 		default {};
 	};
 
-	if (_agony && {!(_unit getVariable "tcb_ais_agony")}) then {
+	if (_agony && {!(_unit getVariable "tcb_ais_agony")}) exitwith {
 		_unit setVariable ["tcb_ais_agony", true];
 		_delay = time + 5;
 		_unit setVariable ["tcb_ais_fall_in_agony_time_delay", _delay];
@@ -142,6 +142,11 @@ if (!(_unit getVariable "tcb_ais_agony") && {alive _unit}) then {
 };
 
 //Necessary for BIS stuff to work
-BIS_hitArray = _this; BIS_wasHit = true;
+//BIS_hitArray = [_unit, _bodypart, _damage, _source, _ammo];
+//BIS_wasHit = true;
 
-_return
+//_return
+
+//Fix for critical damage. Players are still wounded but cannot die from a single, large amount of damage
+_unit setDamage 0;
+0

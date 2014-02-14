@@ -123,6 +123,6 @@ vas_r_backpacks = [];
 //Magazines to remove from VAS
 vas_r_magazines = [];
 //Items to remove from VAS
-vas_r_items = ["muzzle_snds_H","muzzle_snds_B","muzzle_snds_L","muzzle_snds_H_MG"];
+vas_r_items = ["optic_Nightstalker"];
 //Goggles to remove from VAS
 vas_r_glasses = [];

@@ -5,7 +5,7 @@ private ["_playerdown","_closestsquadmate","_min_distance","_distance"];
 _playerdown = _this select 0;
 _closestsquadmate = if (count _this > 1) then {_this select 1} else {nil};
 
-sleep 15;
+sleep 5;
 if (count _this > 1) then {
 	if (!alive _closestsquadmate || {_closestsquadmate getVariable "tcb_ais_agony"}) then {
 		_closestsquadmate = Nil;

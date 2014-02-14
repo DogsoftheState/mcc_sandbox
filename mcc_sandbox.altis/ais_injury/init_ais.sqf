@@ -24,28 +24,36 @@ AIS_Load =
 	"tcb_ais_in_agony" addPublicVariableEventHandler {
 		_unit = (_this select 1) select 0;
 		_in_agony = (_this select 1) select 1;
-		_side = _unit getVariable "tcb_ais_side";
-		if (playerSide == _side) then {
-			if (_in_agony) then {
-				_unit setVariable ["tcb_ais_agony", true];
-				
-				[side _unit,"HQ"] sideChat format ["%1 is down and needs help at %2", name _unit, mapGridPosition _unit];
-				
-				[_unit] execFSM ("ais_injury\fsm\ais_marker.fsm");
-			} else {
-				_unit setVariable ["tcb_ais_agony", false];
 
-				//Failsafe in case the FSM doesn't remove the actions
-				_unit removeAction (_unit getVariable "fa_action");
-				_unit removeAction (_unit getVariable "drag_action");
-				_unit setVariable ["fa_action",nil];
-				_unit setVariable ["drag_action",nil];
+		if(alive _unit) then {
+			_side = _unit getVariable "tcb_ais_side";
+			if (playerSide == _side) then {
+				if (_in_agony) then {
+					_unit setVariable ["tcb_ais_agony", true];
+
+					_unit playActionNow "agonyStart";
+					
+					[side _unit,"HQ"] sideChat format ["%1 is down and needs help at %2", name _unit, mapGridPosition _unit];
+					
+					[_unit] execFSM ("ais_injury\fsm\ais_marker.fsm");
+				} else {
+					_unit setVariable ["tcb_ais_agony", false];
+	
+					_unit playActionNow "agonyStop";
+					
+					//Failsafe in case the FSM doesn't remove the actions
+					_unit removeAction (_unit getVariable "fa_action");
+					_unit removeAction (_unit getVariable "drag_action");
+					_unit setVariable ["fa_action",nil];
+					_unit setVariable ["drag_action",nil];
+				};
 			};
 		};
 	};
 	
 	tcb_healerStopped = false;
 	_unit setVariable ["unit_is_unconscious", false];
+	_unit setVariable ["tcb_ais_agony", false];
 	_unit setVariable ["tcb_ais_headhit", 0];
 	_unit setVariable ["tcb_ais_handshit", 0];
 	_unit setVariable ["tcb_ais_bodyhit", 0];
@@ -77,13 +85,11 @@ AIS_Load =
 	};
 	
 	//Setup the damage handler
-	if(!isServer) then {
-		_timeend = time + 2;
-		waitUntil {!isNil {_unit getVariable "BIS_fnc_feedback_hitArrayHandler"} || {time > _timeend}};	// work around to ensure this EH is the last one that was added
-		_unit removeAllEventHandlers "HandleDamage";
-		["AIS_Load: %1 --- adding HandleDamage eventhandler", _unit] call BIS_fnc_logFormat;
-		_unit addEventHandler ["HandleDamage", {_this call tcb_fnc_handleDamage}];
-	};
+	_timeend = time + 2;
+	waitUntil {!isNil {_unit getVariable "BIS_fnc_feedback_hitArrayHandler"} || {time > _timeend}};	// work around to ensure this EH is the last one that was added
+	_unit removeAllEventHandlers "HandleDamage";
+	["AIS_Load: %1 --- adding HandleDamage eventhandler", _unit] call BIS_fnc_logFormat;
+	_unit addEventHandler ["HandleDamage", {_this call tcb_fnc_handleDamage}];
 	
 	//Start the Finite State Machine
 	[_unit] execFSM ("ais_injury\fsm\ais.fsm");
@@ -116,7 +122,7 @@ AIS_Load =
 	};
 	
     //Debug message to side chat so that everyone knows when units have AIS Wounding loaded
-	_unit sideChat "AIS Wounding Loaded";
+	[side _unit,"HQ"] sideChat format ["%1 - AIS Wounding Loaded!", name _unit];
 };
 
 //Loads AIS Wounding on the unit that called the action
