@@ -22,5 +22,6 @@ class tcb_ais {
 		addf(deadcam);
 		addf(lookingForWoundedMates);
 		addf(checklauncher);
+		addf(serverAgonyLoop);
 	};
 };

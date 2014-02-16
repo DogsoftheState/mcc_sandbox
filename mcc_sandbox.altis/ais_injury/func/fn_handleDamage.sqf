@@ -13,6 +13,7 @@ if(isNull _source) exitwith {0};
 
 //Make unconscious/agony players take no damage while in the captive state
 //This state is intentionally lost via the FSM if the unit fires a weapon
+//TODO - Change this to just reduce damage instead of giving temporary invulnerability
 if((_unit getVariable "tcb_ais_agony") && (captive _unit) && (isPlayer _unit)) exitwith {
 	0
 };
@@ -36,24 +37,18 @@ if (!(_unit getVariable "tcb_ais_agony") && {alive _unit}) then {
 				_unit setHit ["body", _damage];
 			};
 		};
-		
-		if (tcb_ais_realistic_mode) then {
-			case "head" : {
-				_damage = (_unit getVariable "tcb_ais_headhit") + _return;
-				_unit setVariable ["tcb_ais_headhit", _damage];
-				if (_damage >= 0.9) then {
-					_agony = true;
-					if (!tcb_ais_revive_guaranty) then {
-						if (_damage > _revive_factor) then {_unit setVariable ["tcb_ais_unit_died", true]};
-					};
-				} else {
-					_unit setHit ["head", _damage];
+		case "head" : {
+			_damage = (_unit getVariable "tcb_ais_headhit") + _return;
+			_unit setVariable ["tcb_ais_headhit", _damage];
+			if (_damage >= 0.9) then {
+				_agony = true;
+				if (!tcb_ais_revive_guaranty) then {
+					if (_damage > _revive_factor) then {_unit setVariable ["tcb_ais_unit_died", true]};
 				};
+			} else {
+				_unit setHit ["head", _damage];
 			};
-		} else {
-			case "head" : {};
 		};
-		
 		case "legs" : {
 			_damage = (_unit getVariable "tcb_ais_legshit") + _return;
 			_unit setVariable ["tcb_ais_legshit", _damage];
@@ -129,9 +124,11 @@ if (!(_unit getVariable "tcb_ais_agony") && {alive _unit}) then {
 		_unit setVariable ["tcb_ais_agony", true];
 		_delay = time + 5;
 		_unit setVariable ["tcb_ais_fall_in_agony_time_delay", _delay];
+
+		0
 	};
     
-	_return = 0;
+	_return = _damage;
 } else {
 	if (!alive _unit) exitWith {_unit setVariable ["tcb_ais_unit_died", true]; _damage};
 	if (time > (_unit getVariable "tcb_ais_fall_in_agony_time_delay")) then {
@@ -141,12 +138,11 @@ if (!(_unit getVariable "tcb_ais_agony") && {alive _unit}) then {
 	_return = _unit getVariable "tcb_ais_overall";
 };
 
-//Necessary for BIS stuff to work
-//BIS_hitArray = [_unit, _bodypart, _damage, _source, _ammo];
-//BIS_wasHit = true;
+if(tcb_ais_revive_guaranty) then {
+	if (_return >= 0.9) then {
+		_return = 0.89;
+	};
+};
 
-//_return
-
-//Fix for critical damage. Players are still wounded but cannot die from a single, large amount of damage
-_unit setDamage 0;
+_unit setDamage _return;
 0

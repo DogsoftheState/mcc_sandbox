@@ -18,42 +18,61 @@ AIS_Load =
 	
 	//Make sure that AIS isn't already loaded on this unit
 	if (!isNil {_unit getVariable "tcb_ais_aisInit"}) exitWith {};
-	_unit setVariable ["tcb_ais_aisInit",true];
+	_unit setVariable ["tcb_ais_aisInit", true];
+	_unit setVariable ["tcb_ais_aisLoaded", false];
 	
     //Synchronize the agony state using the public variable broadcast
 	"tcb_ais_in_agony" addPublicVariableEventHandler {
 		_unit = (_this select 1) select 0;
 		_in_agony = (_this select 1) select 1;
 
-		if(alive _unit) then {
-			_side = _unit getVariable "tcb_ais_side";
-			if (playerSide == _side) then {
-				if (_in_agony) then {
-					_unit setVariable ["tcb_ais_agony", true];
+		if(!alive _unit) exitWith {};
 
-					_unit playActionNow "agonyStart";
-					
-					[side _unit,"HQ"] sideChat format ["%1 is down and needs help at %2", name _unit, mapGridPosition _unit];
-					
-					[_unit] execFSM ("ais_injury\fsm\ais_marker.fsm");
-				} else {
-					_unit setVariable ["tcb_ais_agony", false];
-	
-					_unit playActionNow "agonyStop";
-					
-					//Failsafe in case the FSM doesn't remove the actions
-					_unit removeAction (_unit getVariable "fa_action");
-					_unit removeAction (_unit getVariable "drag_action");
-					_unit setVariable ["fa_action",nil];
-					_unit setVariable ["drag_action",nil];
-				};
+		if (isNil {_unit getVariable "tcb_ais_agony"}) then {
+			_unit setVariable ["tcb_ais_agony", false];
+		};
+
+		//diag_log format ["%1 current agony state - %2", _unit, _unit getVariable "tcb_ais_agony"];
+		//diag_log format ["%1 agony state received - %2", _unit, _in_agony];
+
+		//If agony is true and it's not already true on the unit
+		if (_in_agony && !(_unit getVariable "tcb_ais_agony")) then {
+			_unit setVariable ["tcb_ais_agony", true];
+
+			_unit playActionNow "agonyStart";
+
+			//Announce the unit down in side chat and put up a map marker
+			//Note: This only applies to units on the player's side
+			if (playerSide == side _unit) then {
+				[side _unit,"HQ"] sideChat format ["%1 is down and needs help at %2", name _unit, mapGridPosition _unit];
+				
+				[_unit] execFSM ("ais_injury\fsm\ais_marker.fsm");
 			};
+
+			[_unit] spawn tcb_fnc_serverAgonyLoop;
+		};
+
+		if (!_in_agony) then {
+			_unit setVariable ["tcb_ais_agony", false];
+
+			_unit playActionNow "agonyStop";
+			
+			//Failsafe in case the FSM doesn't remove the actions
+			_unit removeAction (_unit getVariable "fa_action");
+			_unit removeAction (_unit getVariable "drag_action");
+			_unit setVariable ["fa_action",nil];
+			_unit setVariable ["drag_action",nil];
+		};
+
+		//Failsafe to load AIS in case the broadcast is sent to a player that connected after AIS loaded for this unit 
+		if (isNil {_unit getVariable "tcb_ais_aisInit"}) then {
+			[_unit] spawn AIS_Load;
 		};
 	};
-	
+
+	//Initialize some basic unit variables
 	tcb_healerStopped = false;
 	_unit setVariable ["unit_is_unconscious", false];
-	_unit setVariable ["tcb_ais_agony", false];
 	_unit setVariable ["tcb_ais_headhit", 0];
 	_unit setVariable ["tcb_ais_handshit", 0];
 	_unit setVariable ["tcb_ais_bodyhit", 0];
@@ -71,7 +90,7 @@ AIS_Load =
 			{
 				if((side _x) == _playerFaction) then {
 					{
-						if ((_x distance player) < 30 && (_x getVariable "tcb_ais_agony") && (alive _x)) then {
+						if ((_x distance player) < tcb_ais_3d_icon_range && (_x getVariable "tcb_ais_agony") && (alive _x)) then {
 							drawIcon3D["a3\ui_f\data\map\MapControl\hospital_ca.paa", [1,0,0,1], _x, 0.5, 0.5, 0, format["%1 (%2m)", name _x, ceil (player distance _x)], 0, 0.02];
 						};
 					} forEach units _x;
@@ -80,15 +99,17 @@ AIS_Load =
 		}];
 	};
 	
+	//If the body delete time is configured then add the event handler to remove the body
 	if (tcb_ais_delTime > 0) then {
 		_unit addEventHandler ["killed",{[_this select 0, tcb_ais_delTime] spawn tcb_fnc_delbody}];
 	};
 	
-	//Setup the damage handler
+	//Work around to ensure this damage EH is the last one that was added
 	_timeend = time + 2;
-	waitUntil {!isNil {_unit getVariable "BIS_fnc_feedback_hitArrayHandler"} || {time > _timeend}};	// work around to ensure this EH is the last one that was added
+	waitUntil {!isNil {_unit getVariable "BIS_fnc_feedback_hitArrayHandler"} || {time > _timeend}};
 	_unit removeAllEventHandlers "HandleDamage";
-	["AIS_Load: %1 --- adding HandleDamage eventhandler", _unit] call BIS_fnc_logFormat;
+
+	//Setup the damage handler
 	_unit addEventHandler ["HandleDamage", {_this call tcb_fnc_handleDamage}];
 	
 	//Start the Finite State Machine
@@ -115,51 +136,25 @@ AIS_Load =
 			_unit addEventHandler ["killed",{_this spawn tcb_fnc_deadcam}];
 		};
 	};
+
+	//Finished loading so set the flag
+	_unit setVariable ["tcb_ais_aisLoaded", true];
 	
     //If this unit is the player show a hint to let them know AIS Wounding is loaded
 	if (isPlayer _unit) then {
 		hint "AIS Wounding Loaded";
 	};
 	
-    //Debug message to side chat so that everyone knows when units have AIS Wounding loaded
-	[side _unit,"HQ"] sideChat format ["%1 - AIS Wounding Loaded!", name _unit];
+    //Debug message to side chat so that everyone knows when units on their side have AIS Wounding loaded
+	if(playerSide == (side _unit)) then {
+		[side _unit,"HQ"] sideChat format ["%1 - AIS Wounding Loaded!", name _unit];
+	};
 };
 
-//Loads AIS Wounding on the unit that called the action
-AIS_Action_Load =
+//Globally loads AIS Wounding on all playable units
+AIS_Load_Global_Players =
 {
-	[_caller] spawn AIS_Load;
+	[[2, {{[_x] spawn AIS_Load} forEach playableUnits}], "CP_fnc_globalExecute", true, true] spawn BIS_fnc_MP;
 };
 
-//Loads AIS Wounding on all playable units currently in the mission
-AIS_Basic_Load =
-{
-	{[_x] spawn AIS_Load} forEach playableUnits;  
-};
-
-//Loads AIS Wounding on all units currently in the player's faction
-AIS_Faction_Load =
-{
-	_playerFaction = side (group player);
-	{
-		if((side _x) == _playerFaction) then {
-			{[_x] spawn AIS_Load} forEach units _x;
-		};
-	} forEach allGroups;
-};
-
-//Loads AIS Wounding on all playable/switchable units currently in the mission
-//This also forces the loading globally on the server and all clients
-AIS_Global_Load =
-{
-	[[2, {[] spawn AIS_Basic_Load}], "CP_fnc_globalExecute", true, true] spawn BIS_fnc_MP;
-};
-
-//Loads AIS Wounding on all units currently in the player's faction
-//This also forces the loading globally on the server and all clients
-AIS_Global_Load_Faction =
-{
-	[[2, {[] spawn AIS_Faction_Load}], "CP_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-};
-
-call AIS_Global_Load;
+call AIS_Load_Global_Players;

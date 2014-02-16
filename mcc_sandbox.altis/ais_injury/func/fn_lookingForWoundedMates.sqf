@@ -5,7 +5,11 @@ _unit = _this select 0;
 _need_help = false;
 _help_him = objNull;
 
-{if (_x getVariable "tcb_ais_agony") then {_need_help = true}; if (_need_help) exitWith {_help_him = _x}} forEach __includedMates;
+{
+	if (_x getVariable "tcb_ais_agony") then {_need_help = true};
+	if (_need_help) exitWith {_help_him = _x}
+} forEach __includedMates;
+
 //diag_log format ["%1 ---- %2",_unit,_help_him];
 
 if (_need_help) then {
