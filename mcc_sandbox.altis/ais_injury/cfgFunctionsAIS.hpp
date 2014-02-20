@@ -23,5 +23,10 @@ class tcb_ais {
 		addf(lookingForWoundedMates);
 		addf(checklauncher);
 		addf(serverAgonyLoop);
+		addf(showMessage);
+		addf(setUnitDamage);
+		addf(getUnitDamage);
+		addf(cleanUpActions);
+		addf(handleHeal);
 	};
 };

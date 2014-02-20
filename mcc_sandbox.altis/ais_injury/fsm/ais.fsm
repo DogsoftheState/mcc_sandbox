@@ -2,41 +2,41 @@
 /*%FSM<HEAD>*/
 /*
 item0[] = {"start",0,250,-609.394836,-334.812927,-555.514771,-300.866486,0.000000,"start"};
-item1[] = {"_",8,218,-389.901001,-332.848480,-342.710327,-302.246521,0.000000,""};
-item2[] = {"healthy",2,250,-121.197121,-346.219635,-23.077042,-290.459534,0.000000,"healthy"};
+item1[] = {"true",8,218,-389.901001,-334.008606,-342.710327,-303.406647,0.000000,"true"};
+item2[] = {"healthy",2,4346,-121.197121,-346.219635,-23.077042,-290.459534,0.000000,"healthy"};
 item3[] = {"fall_in_agony",4,218,-117.047508,-259.680817,-27.047356,-209.680801,0.000000,"fall in agony"};
-item4[] = {"agony",2,4346,-123.965309,-24.655529,-22.604576,41.624901,0.000000,"agony"};
-item5[] = {"dead",4,218,101.743843,-175.030121,206.412582,-110.048569,100.000000,"dead"};
+item4[] = {"agony",2,250,-122.805183,-25.815657,-21.444450,40.464771,0.000000,"agony"};
+item5[] = {"dead",4,218,102.903969,-176.190262,207.572708,-111.208710,100.000000,"dead"};
 item6[] = {"healed",4,218,-228.072388,-166.228516,-175.571960,-134.978012,50.000000,"healed"};
 item7[] = {"die___clean_up",2,250,122.001694,-247.638123,188.334717,-215.044495,0.000000,"die &" \n "clean up"};
 item8[] = {"is_playable",4,218,118.492813,-343.494995,190.724411,-293.914337,0.000000,"is" \n "playable"};
 item9[] = {"un_anim",2,250,-390.007019,-162.277451,-341.908752,-138.116821,0.000000,"un-anim"};
 item10[] = {"dragged",4,218,60.306198,153.701035,113.991310,188.337036,10.000000,"dragged"};
 item11[] = {"drag_anim1",2,250,4.858387,220.769318,70.415916,248.421844,0.000000,"drag anim1"};
-item12[] = {"released",4,218,-34.406578,155.562027,24.865532,180.421005,1.000000,"released"};
+item12[] = {"released",4,218,-32.086323,154.401886,27.185787,179.260864,1.000000,"released"};
 item13[] = {"first_aid",4,218,-276.926025,148.085205,-223.240860,182.721298,8.000000,"first aid"};
 item14[] = {"fa_finish",4,218,-181.055389,154.788269,-121.783318,179.647293,1.000000,"fa finish"};
 item15[] = {"first_aid__anim",2,250,-229.994186,241.969513,-183.292465,275.907227,0.000000,"first aid" \n " anim"};
 item16[] = {"",7,210,-210.896317,327.294342,-202.896301,335.294342,0.000000,""};
-item17[] = {"",7,210,33.031792,326.461151,41.031792,334.461151,0.000000,""};
+item17[] = {"",7,210,34.191921,327.621277,42.191921,335.621277,0.000000,""};
 item18[] = {"",7,210,298.303589,327.157135,306.303619,335.157135,0.000000,""};
-item19[] = {"",7,210,298.978455,-146.591995,306.978424,-138.591980,0.000000,""};
-item20[] = {"",7,210,-77.429451,163.647308,-69.429451,171.647308,0.000000,""};
+item19[] = {"",7,210,298.978455,-148.912247,306.978424,-140.912231,0.000000,""};
+item20[] = {"",7,210,-76.269318,162.487183,-68.269318,170.487183,0.000000,""};
 item21[] = {"anim_left_in_err",4,218,-383.593964,225.039948,-285.661163,292.347504,0.000000,"anim" \n "left" \n "in error"};
-item22[] = {"unit_in_vehicle",4,218,47.180607,-34.166283,119.653847,7.070496,1.000000,"unit in" \n "vehicle"};
-item23[] = {"eject",2,250,135.946075,-0.611609,170.893402,22.618364,0.000000,"eject"};
-item24[] = {"ejected",4,218,55.855968,21.762249,113.196968,48.434372,0.000000,"ejected"};
+item22[] = {"unit_in_vehicle",4,218,31.659626,-11.993446,104.132874,29.243340,1.000000,"unit in" \n "vehicle"};
+item23[] = {"eject",2,250,138.266327,-4.091993,173.213654,19.137981,0.000000,"eject"};
+item24[] = {"ejected",4,218,39.226345,40.609161,104.327843,75.041771,0.000000,"ejected"};
 item25[] = {"wait_for_respawn",2,250,129.987915,-461.594849,180.752777,-425.861938,0.000000,"wait for" \n "respawn"};
 item26[] = {"alive_again",4,218,-114.678238,-469.424042,-45.365829,-417.283844,0.000000,"alive" \n "again"};
 item27[] = {"not_is_playable",4,218,237.442368,-256.145935,327.442383,-206.145935,1.000000,"not is" \n "playable"};
 item28[] = {"exit",1,250,403.828094,-248.545135,448.886108,-213.525848,0.000000,"exit"};
-item29[] = {"set_Entity",2,250,-397.948425,-454.502167,-335.358643,-431.151062,0.000000,"set Entity"};
+item29[] = {"set_Entity",2,250,-397.948425,-455.662292,-335.358643,-432.311188,0.000000,"set Entity"};
 item30[] = {"has_firstaidkit",4,218,-483.379700,-11.889394,-403.752716,29.232147,2.000000,"has firstaidkit"};
 item31[] = {"remove_first_aid",2,250,-499.199921,62.696358,-387.581726,94.320892,0.000000,"remove first aid kits"};
 item32[] = {"one_more_",4,218,-483.379700,127.547928,-403.752716,168.669464,1.000000,"one more?"};
-item33[] = {"all_removed",4,218,-340.699677,57.288811,-261.072693,98.410347,0.000000,"all removed"};
-item34[] = {"parachute",4,218,190.660721,-1.644098,255.093002,30.308128,1.000000,"parachute"};
-item35[] = {"handle_Parachute",2,250,185.694153,54.154137,257.646362,96.634224,0.000000,"handle Parachute"};
+item33[] = {"all_removed",4,218,-338.379425,58.448944,-258.752441,99.570480,0.000000,"all removed"};
+item34[] = {"parachute",4,218,200.638489,-11.621874,273.939911,26.982201,1.000000,"parachute"};
+item35[] = {"handle_Parachute",2,250,182.368225,58.588707,290.905640,92.199661,0.000000,"handle Parachute"};
 link0[] = {0,1};
 link1[] = {1,2};
 link2[] = {2,3};
@@ -85,8 +85,8 @@ link44[] = {32,31};
 link45[] = {33,4};
 link46[] = {34,35};
 link47[] = {35,24};
-globals[] = {0.000000,0,0,0,0,640,480,1,56,6316128,1,-618.435486,483.265564,567.386230,-599.648315,860,911,1};
-window[] = {2,-1,-1,-1,-1,987,250,1509,250,3,878};
+globals[] = {0.000000,0,0,0,0,640,480,1,56,6316128,1,-661.263123,526.092102,444.079010,-565.893555,1071,911,1};
+window[] = {2,-1,-1,-1,-1,912,175,1434,175,3,1089};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -115,8 +115,8 @@ class FSM
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
-        /*%FSM<LINK "_">*/
-        class _
+        /*%FSM<LINK "true">*/
+        class true
         {
           priority = 0.000000;
           to="healthy";
@@ -135,21 +135,11 @@ class FSM
       init = /*%FSM<STATEINIT""">*/"_unit setVariable [""tcb_ais_side"", _side, true];" \n
        "_unit setVariable [""tcb_ais_unit_died"", false];" \n
        "_unit setVariable [""unit_is_unconscious"", false];" \n
-       "" \n
        "_unit setVariable [""tcb_ais_agony"", false];" \n
-       "_unit setCaptive false;" \n
-       "" \n
-       "_unit setVariable [""tcb_ais_headhit"", 0];" \n
-       "_unit setVariable [""tcb_ais_bodyhit"", 0];" \n
-       "_unit setVariable [""tcb_ais_overall"", 0];" \n
-       "_unit setVariable [""tcb_ais_legshit"", 0];" \n
-       "_unit setVariable [""tcb_ais_handshit"", 0];" \n
-       "_unit setVariable [""tcb_ais_fall_in_agony_time_delay"", 999999];" \n
-       "" \n
        "_unit setVariable [""tcb_ais_itemStorage"", [0,0]];" \n
-       "_black_in = false;" \n
-       "tcb_ais_unit_died = false;" \n
        "" \n
+       "_unit setCaptive false;" \n
+       "_black_in = false;" \n
        "" \n
        "if (_unit getVariable ""tcb_ais_leader"" && {count units group _unit > 0} && {leader group _unit != _unit}) then {" \n
        "	(group _unit) selectLeader _unit;" \n
@@ -204,7 +194,6 @@ class FSM
        "" \n
        "if (!(_unit getVariable ""unit_is_unconscious"")) then {" \n
        "	_unit setVariable [""unit_is_unconscious"", true];" \n
-       "	_unit setVariable [""tcb_ais_agony"", true];" \n
        "" \n
        "	tcb_ais_in_agony = [_unit,true];" \n
        "	publicVariable ""tcb_ais_in_agony"";" \n
@@ -215,9 +204,10 @@ class FSM
        "" \n
        "	if (_unit == player) then {" \n
        "		showHud false;" \n
-       "		_unit execFSM (""ais_injury\fsm\bloodloss.fsm"");" \n
        "		_unit switchCamera ""INTERNAL"";" \n
        "	};" \n
+       "" \n
+       "	_unit execFSM (""ais_injury\fsm\bloodloss.fsm"");" \n
        "	" \n
        "	[side _unit,""HQ""] sideChat format [""%1 is down and needs help at %2"",name _unit, mapGridPosition _unit];" \n
        "" \n
@@ -230,10 +220,10 @@ class FSM
        "	};" \n
        "" \n
        "	if(_unit != player) then {" \n
-       "		_fa_action = _unit addAction [format[""<t color='#F00000'>First Aid to %1</t>"",name _unit],{_this spawn tcb_fnc_firstAid},_unit,10,false,true,""""," \n
+       "		_fa_action = _unit addAction [format[""<t color='#F00000'>First Aid to %1</t>"",name _unit],{_this spawn tcb_fnc_firstAid},_unit,100,false,true,""""," \n
        "				""{not isNull (_target getVariable _x)} count ['healer','dragger'] == 0 && alive _target && vehicle _target == _target" \n
        "		""];" \n
-       "		_drag_action = _unit addAction [format[""<t color='#FC9512'>Drag %1</t>"",name _unit],{_this spawn tcb_fnc_drag},_unit,10,false,true,""""," \n
+       "		_drag_action = _unit addAction [format[""<t color='#FC9512'>Drag %1</t>"",name _unit],{_this spawn tcb_fnc_drag},_unit,100,false,true,""""," \n
        "				""{not isNull (_target getVariable _x)} count ['healer','dragger'] == 0 && alive _target && vehicle _target == _target" \n
        "		""];" \n
        "		_unit setVariable [""fa_action"",_fa_action,false];" \n
@@ -247,16 +237,6 @@ class FSM
        "		_unit disableAI ""AUTOTARGET"";" \n
        "		_unit disableAI ""ANIM"";" \n
        "	};" \n
-       "" \n
-       "	_unit allowDamage true;" \n
-       "	_average_damage = (" \n
-       "		(_unit getVariable ""tcb_ais_headhit"") +" \n
-       "		(_unit getVariable ""tcb_ais_bodyhit"") +" \n
-       "		(_unit getVariable ""tcb_ais_overall"")" \n
-       "	)/3;" \n
-       "	if (isNil ""_average_damage"") then {_average_damage = 0.6};" \n
-       "	if (_average_damage >= 0.9) then {_average_damage = 0.86};" \n
-       "	_unit setDamage _average_damage;" \n
        "" \n
        "	if (_unit == leader group _unit) then {" \n
        "		_unit setVariable [""tcb_ais_leader"", true];" \n
@@ -285,6 +265,8 @@ class FSM
        "	if (sunOrMoon == 0) then {" \n
        "		_unit action [""nvGogglesOff"",_unit];" \n
        "	};" \n
+       "" \n
+       "	_unit allowDamage true;" \n
        "};" \n
        "" \n
        "if (surfaceIsWater [getPos _unit select 0, getPos _unit select 1]) then {" \n
@@ -341,8 +323,9 @@ class FSM
           priority = 2.000000;
           to="remove_first_aid";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"(items _unit) find ""FirstAidKit"" >= 0		||" \n
-           "{(items _unit) find ""Medikit"" >= 0}"/*%FSM</CONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(!isPlayer _unit) && (" \n
+           "(items _unit) find ""FirstAidKit"" >= 0		||" \n
+           "(items _unit) find ""Medikit"" >= 0)"/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
@@ -369,23 +352,12 @@ class FSM
        "_unit setVariable [""healer"", ObjNull,true];" \n
        "disableUserInput false;" \n
        " " \n
-       "tcb_ais_in_agony = [_unit,false];" \n
+       "tcb_ais_in_agony = [_unit, false];" \n
        "publicVariable ""tcb_ais_in_agony"";" \n
        "" \n
-       "if (!isPlayer _unit) then {" \n
-       "	_unit removeAction (_unit getVariable ""fa_action"");" \n
-       "	_unit removeAction (_unit getVariable ""drag_action"");" \n
-       "	_unit setVariable [""fa_action"",nil];" \n
-       "	_unit setVariable [""drag_action"",nil];" \n
-       "	if (!isNil {_unit getVariable ""drag_action""}) then {" \n
-       "		_unit removeAction (_unit getVariable ""drop_action"");" \n
-       "		_unit setVariable [""drop_action"",nil];" \n
-       "	};" \n
-       "	if (!isNil {_unit getVariable ""carry_action""}) then {" \n
-       "		_unit removeAction (_unit getVariable ""carry_action"");" \n
-       "		_unit setVariable [""carry_action"",nil];" \n
-       "	};" \n
+       "[_unit] call tcb_fnc_cleanUpActions;" \n
        "" \n
+       "if (!isPlayer _unit) then {" \n
        "	_unit stop false;" \n
        "	_unit enableAI ""MOVE"";" \n
        "	_unit enableAI ""TARGET"";" \n
@@ -394,10 +366,20 @@ class FSM
        "};" \n
        "" \n
        "detach _unit;" \n
+       "" \n
        "_unit setVariable [""tcb_ais_agony"", false];" \n
        "_unit setVariable [""unit_is_unconscious"", false];" \n
+       "_unit setVariable [""tcb_ais_healed_counter"", 0];" \n
+       "" \n
+       "_unit setVariable [""tcb_ais_headhit"", 0];" \n
+       "_unit setVariable [""tcb_ais_bodyhit"", 0];" \n
+       "_unit setVariable [""tcb_ais_overall"", 0];" \n
+       "_unit setVariable [""tcb_ais_legshit"", 0];" \n
+       "_unit setVariable [""tcb_ais_handshit"", 0];" \n
+       "" \n
        "_unit setCaptive false;" \n
        "_unit_is_in_vehicle = false;" \n
+       "" \n
        "if (_unit == player) then {showHud true};" \n
        "" \n
        "_store = _unit getVariable ""tcb_ais_itemStorage"";" \n
@@ -406,7 +388,8 @@ class FSM
        "};" \n
        "if ((_store select 1) > 0) then {" \n
        "	for ""_j"" from 1 to (_store select 1) do {_unit addItem ""Medikit""};" \n
-       "};"/*%FSM</STATEINIT""">*/;
+       "};" \n
+       "_unit setVariable [""tcb_ais_itemStorage"", [0,0]];"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -437,28 +420,14 @@ class FSM
     class un_anim
     {
       name = "un_anim";
-      init = /*%FSM<STATEINIT""">*/"//diag_log format [""un-anim block in fsm - %1"", _unit];" \n
-       "" \n
-       "disableUserInput false;" \n
+      init = /*%FSM<STATEINIT""">*/"disableUserInput false;" \n
        "_unit playActionNow ""agonyStop"";" \n
        "" \n
-       "tcb_ais_in_agony = [_unit,false];" \n
+       "tcb_ais_in_agony = [_unit, false];" \n
        "publicVariable ""tcb_ais_in_agony"";" \n
        "" \n
-       "if (!isPlayer _unit) then {" \n
-       "	_unit removeAction (_unit getVariable ""fa_action"");" \n
-       "	_unit removeAction (_unit getVariable ""drag_action"");" \n
-       "	_unit setVariable [""fa_action"",nil];" \n
-       "	_unit setVariable [""drag_action"",nil];" \n
-       "	if (!isNil {_unit getVariable ""drag_action""}) then {" \n
-       "		_unit removeAction (_unit getVariable ""drop_action"");" \n
-       "		_unit setVariable [""drop_action"",nil];" \n
-       "	};" \n
-       "	if (!isNil {_unit getVariable ""carry_action""}) then {" \n
-       "		_unit removeAction (_unit getVariable ""carry_action"");" \n
-       "		_unit setVariable [""carry_action"",nil];" \n
-       "	};" \n
-       "};" \n
+       "[_unit] call tcb_fnc_cleanUpActions;" \n
+       "" \n
        "detach _unit;" \n
        "_unit setCaptive false;" \n
        "if (_unit == player) then {showHud true};" \n
@@ -470,6 +439,7 @@ class FSM
        "if ((_store select 1) > 0) then {" \n
        "	for ""_j"" from 1 to (_store select 1) do {_unit addItem ""Medikit""};" \n
        "};" \n
+       "_unit setVariable [""tcb_ais_itemStorage"", [0,0]];" \n
        "" \n
        "if (!isPlayer _unit) then {" \n
        "	_unit enableAI ""MOVE"";" \n
@@ -482,12 +452,16 @@ class FSM
        "	if ({isPlayer _x} count (units group _unit) <= 2) then {" \n
        "		[_unit] spawn tcb_fnc_lookingForWoundedMates;" \n
        "	};" \n
-       "};"/*%FSM</STATEINIT""">*/;
+       "};" \n
+       "" \n
+       "_healed_counter = _unit getVariable ""tcb_ais_healed_counter"";" \n
+       "_healed_counter = _healed_counter + 1;" \n
+       "_unit setVariable [""tcb_ais_healed_counter"", _healed_counter];"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
-        /*%FSM<LINK "_">*/
-        class _
+        /*%FSM<LINK "true">*/
+        class true
         {
           priority = 0.000000;
           to="healthy";
@@ -605,7 +579,10 @@ class FSM
        "	_parachute = false;" \n
        "	unAssignVehicle _unit;" \n
        "	_unit action [""eject"", vehicle _unit];" \n
-       "	_unit setDamage ((damage _unit) max (0.5 + random 0.4));" \n
+       "	_random_damage = ((damage _unit) max (0.5 + random 0.4));" \n
+       "	_unit setVariable [""tcb_ais_headhit"", _random_damage];" \n
+       "	_unit setVariable [""tcb_ais_bodyhit"", _random_damage];" \n
+       "	_unit setVariable [""tcb_ais_overall"", _random_damage];" \n
        "	_sleep2 = time + 2;" \n
        "};" \n
        "" \n
@@ -688,8 +665,8 @@ class FSM
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
-        /*%FSM<LINK "_">*/
-        class _
+        /*%FSM<LINK "true">*/
+        class true
         {
           priority = 0.000000;
           to="healthy";
@@ -705,17 +682,14 @@ class FSM
     class remove_first_aid
     {
       name = "remove_first_aid";
-      init = /*%FSM<STATEINIT""">*/"//diag_log format [""remove kit block in fsm - %1"", _unit];" \n
-       "" \n
-       "" \n
-       "if ((items _unit) find ""FirstAidKit"" > -1) then {" \n
+      init = /*%FSM<STATEINIT""">*/"if ((items _unit) find ""FirstAidKit"" >= 0) then {" \n
        "	_store = _unit getVariable ""tcb_ais_itemStorage"";" \n
        "	_fak = _store select 0;" \n
        "	_fak = _fak + 1;" \n
        "	_unit setVariable [""tcb_ais_itemStorage"", [_fak,_store select 1]];" \n
        "	_unit removeItem ""FirstAidKit"";" \n
        "};" \n
-       "if ((items _unit) find ""Medikit"" > -1) then {" \n
+       "if ((items _unit) find ""Medikit"" >= 0) then {" \n
        "	_store = _unit getVariable ""tcb_ais_itemStorage"";" \n
        "	_mk = _store select 1;" \n
        "	_mk = _mk + 1;" \n
@@ -754,7 +728,10 @@ class FSM
     class handle_Parachute
     {
       name = "handle_Parachute";
-      init = /*%FSM<STATEINIT""">*/"_unit setDamage ((damage _unit) max (0.5 + random 0.4));" \n
+      init = /*%FSM<STATEINIT""">*/"_random_damage = ((damage _unit) max (0.5 + random 0.4));" \n
+       "_unit setVariable [""tcb_ais_headhit"", _random_damage];" \n
+       "_unit setVariable [""tcb_ais_bodyhit"", _random_damage];" \n
+       "_unit setVariable [""tcb_ais_overall"", _random_damage];" \n
        "_parachute = false;" \n
        "_sleep2 = time + 6.5;" \n
        "_black_in = true;" \n

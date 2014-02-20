@@ -1,5 +1,5 @@
 // by EightSix
-// or maybee BI...
+// or maybe BI...
 private ["_unit","_display", "_texLower", "_texMiddle", "_texUpper", "_x", "_y", "_w", "_h"];
 _unit = _this select 0;
 if (_unit != player) exitWith {};
