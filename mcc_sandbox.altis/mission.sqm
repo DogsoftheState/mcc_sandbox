@@ -34,8 +34,8 @@ class Mission
 		forecastWind=1;
 		forecastWaves=1;
 		year=2014;
-		month=1;
-		day=15;
+		month=2;
+		day=22;
 		hour=12;
 		minute=0;
 		startFogDecay=0.0049333;
@@ -43,8 +43,327 @@ class Mission
 	};
 	class Groups
 	{
-		items=14;
+		items=22;
 		class Item0
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14688.84,17.858521,16399.77};
+					id=99;
+					side="WEST";
+					vehicle="B_officer_F";
+					player="PLAYER COMMANDER";
+					leader=1;
+					rank="COLONEL";
+					skill=0.60000002;
+					text="UnitBL_ASL_SL";
+					init="GrpBL_ASL = group this;";
+					description="NATO High Command";
+				};	
+			};
+		};
+		class Item1
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=6;
+				class Item0
+				{
+					position[]={14688.84,17.858521,16399.77};
+					id=1;
+					side="WEST";
+					vehicle="B_Soldier_SL_F";
+					player="PLAY CDG";
+					leader=1;
+					rank="CORPORAL";
+					skill=0.60000002;
+					text="UnitBL_A1_FTL";
+					init="GrpBL_A1 = group this;";
+					description="NATO Alpha Fireteam Leader";
+				};
+				class Item1
+				{
+					position[]={14689.995,17.857635,16399.277};
+					id=2;
+					side="WEST";
+					vehicle="B_medic_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_A1_MED";
+					init="GrpBL_A1 = group this;";
+					description="NATO Alpha Medic";
+				};
+
+				class Item2
+				{
+					position[]={14702.016,17.864851,16383.86};
+					id=3;
+					side="WEST";
+					vehicle="B_Soldier_M_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_A1_MRK";
+					init="GrpBL_A1 = group this;";
+					description="NATO Alpha Marksman";
+				};
+				class Item3
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=4;
+					side="WEST";
+					vehicle="B_Soldier_AR_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_A1_AR";
+					init="GrpBL_A1 = group this;";
+					description="NATO Alpha Automatic Rifleman";
+				};
+				class Item4
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=5;
+					side="WEST";
+					vehicle="B_Soldier_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_A1_R";
+					init="GrpBL_A1 = group this;";
+					description="NATO Alpha Rifleman";
+				};
+				class Item5
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=6;
+					side="WEST";
+					vehicle="B_Soldier_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_A1_R";
+					init="GrpBL_A1 = group this;";
+					description="NATO Alpha Rifleman";
+				};
+			};
+		};
+		class Item2
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=2;
+				class Item0
+				{
+					position[]={14702.016,17.864851,16383.86};
+					id=11;
+					side="WEST";
+					vehicle="B_Sniper_F";
+					player="PLAY CDG";
+					leader=1;
+					skill=0.60000002;
+					text="UnitBL_SN1_SN";
+					init="GrpBL_SN1 = group this;";
+					description="NATO Alpha Sniper";
+				};
+				class Item1
+				{
+					position[]={14702.016,17.864851,16383.86};
+					id=12;
+					side="WEST";
+					vehicle="B_Spotter_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_SN1_SP";
+					init="GrpBL_SN1 = group this;";
+					description="NATO Alpha Spotter";
+				};
+			};
+		};
+		class Item3
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=2;
+				class Item0
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=51;
+					side="WEST";
+					vehicle="B_helipilot_F";
+					player="PLAY CDG";
+					leader=1;
+					skill=0.60000002;
+					text="UnitBL_AH1_P";
+					init="GrpBL_AH1 = group this;";
+					description="NATO Alpha Heli Pilot";
+				};
+				class Item1
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=52;
+					side="WEST";
+					vehicle="B_Soldier_repair_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_AH1_E";
+					init="GrpBL_AH1 = group this;";
+					description="NATO Alpha Engineer";
+				};
+			};
+		};
+		class Item4
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=6;
+				class Item0
+				{
+					position[]={14688.84,17.858521,16399.77};
+					id=21;
+					side="WEST";
+					vehicle="B_Soldier_SL_F";
+					player="PLAY CDG";
+					leader=1;
+					rank="CORPORAL";
+					skill=0.60000002;
+					text="UnitBL_A2_FTL";
+					init="GrpBL_A2 = group this;";
+					description="NATO Bravo Fireteam Leader";
+				};
+				class Item1
+				{
+					position[]={14689.995,17.857635,16399.277};
+					id=22;
+					side="WEST";
+					vehicle="B_medic_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_A2_MED";
+					init="GrpBL_A2 = group this;";
+					description="NATO Bravo Medic";
+				};
+				class Item2
+				{
+					position[]={14702.016,17.864851,16383.86};
+					id=23;
+					side="WEST";
+					vehicle="B_Soldier_M_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_A2_MRK";
+					init="GrpBL_A2 = group this;";
+					description="NATO Bravo Marksman";
+				};
+				class Item3
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=24;
+					side="WEST";
+					vehicle="B_Soldier_AR_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_A2_AR";
+					init="GrpBL_A2 = group this;";
+					description="NATO Bravo Automatic Rifleman";
+				};
+				class Item4
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=25;
+					side="WEST";
+					vehicle="B_Soldier_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_A2_R";
+					init="GrpBL_A2 = group this;";
+					description="NATO Bravo Rifleman";
+				};
+				class Item5
+				{
+					position[]={14687.455,17.860001,16395.102};
+					id=26;
+					side="WEST";
+					vehicle="B_Soldier_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_A2_R";
+					init="GrpBL_A2 = group this;";
+					description="NATO Bravo Rifleman";
+				};
+			};
+		};
+		class Item5
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=2;
+				class Item0
+				{
+					position[]={14702.016,17.864851,16383.86};
+					id=31;
+					side="WEST";
+					vehicle="B_Sniper_F";
+					player="PLAY CDG";
+					leader=1;
+					skill=0.60000002;
+					text="UnitBL_SN2_SN";
+					init="GrpBL_SN2 = group this;";
+					description="NATO Bravo Sniper";
+				};
+				class Item1
+				{
+					position[]={14702.016,17.864851,16383.86};
+					id=32;
+					side="WEST";
+					vehicle="B_Spotter_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_SN2_SP";
+					init="GrpBL_SN2 = group this;";
+					description="NATO Bravo Spotter";
+				};
+			};
+		};
+		class Item6
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=2;
+				class Item0
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=41;
+					side="WEST";
+					vehicle="B_helipilot_F";
+					player="PLAY CDG";
+					leader=1;
+					skill=0.60000002;
+					text="UnitBL_TH1_P";
+					init="GrpBL_TH1 = group this;";
+					description="NATO Bravo Heli Pilot";
+				};
+				class Item1
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=42;
+					side="WEST";
+					vehicle="B_Soldier_repair_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					text="UnitBL_TH1_E";
+					init="GrpBL_TH1 = group this;";
+					description="NATO Bravo Engineer";
+				};
+			};
+		};
+		class Item7
 		{
 			side="WEST";
 			class Vehicles
@@ -102,7 +421,7 @@ class Mission
 				};
 			};
 		};
-		class Item1
+		class Item8
 		{
 			side="WEST";
 			class Vehicles
@@ -110,74 +429,115 @@ class Mission
 				items=6;
 				class Item0
 				{
-					position[]={14724.463,17.83,16311.764};
-					id=1;
+					position[]={14694.454,17.860001,16392.258};
+					id=71;
 					side="WEST";
-					vehicle="B_recon_TL_F";
-					player="PLAYER COMMANDER";
+					vehicle="B_diver_TL_F";
+					player="PLAY CDG";
 					leader=1;
-					rank="SERGEANT";
+					rank="CORPORAL";
 					skill=0.60000002;
-					description="NATO Special Forces Team 1 Team Leader";
+					text="UnitBL_SF1_TL";
+					init="GrpBL_SF1 = group this;";
+					description="NATO Delta Diver Team Leader";
 				};
 				class Item1
 				{
-					position[]={14725.12,17.83,16309.35};
-					id=2;
+					position[]={14694.454,17.860001,16392.258};
+					id=72;
 					side="WEST";
-					vehicle="B_recon_F";
+					vehicle="B_diver_F";
 					player="PLAY CDG";
-					rank="CORPORAL";
 					skill=0.60000002;
-					description="NATO Special Forces Team 1 Automatic Riffleman";
+					text="UnitBL_SF1_D";
+					init="GrpBL_SF1 = group this;";
+					description="NATO Delta Diver";
 				};
 				class Item2
 				{
-					position[]={14726.689,17.83,16309.451};
-					id=3;
+					position[]={14694.454,17.860001,16392.258};
+					id=73;
 					side="WEST";
-					vehicle="B_recon_M_F";
+					vehicle="B_diver_F";
 					player="PLAY CDG";
-					rank="CORPORAL";
 					skill=0.60000002;
-					description="NATO Special Forces Team 1 Marksman";
+					text="UnitBL_SF1_D";
+					init="GrpBL_SF1 = group this;";
+					description="NATO Delta Diver";
 				};
 				class Item3
 				{
-					position[]={14728.278,17.83,16309.416};
-					id=4;
+					position[]={14694.454,17.860001,16392.258};
+					id=74;
 					side="WEST";
-					vehicle="B_recon_JTAC_F";
+					vehicle="B_diver_F";
 					player="PLAY CDG";
-					rank="CORPORAL";
 					skill=0.60000002;
-					description="NATO Special Forces Team 1 JTAC-AT";
+					text="UnitBL_SF1_D";
+					init="GrpBL_SF1 = group this;";
+					description="NATO Delta Diver";
 				};
 				class Item4
 				{
-					position[]={14729.763,17.83,16309.467};
-					id=5;
+					position[]={14694.454,17.860001,16392.258};
+					id=75;
 					side="WEST";
-					vehicle="B_recon_exp_F";
+					vehicle="B_diver_F";
 					player="PLAY CDG";
-					rank="CORPORAL";
 					skill=0.60000002;
-					description="NATO Special Forces Team 1 Explosive Specialist";
+					text="UnitBL_SF1_D";
+					init="GrpBL_SF1 = group this;";
+					description="NATO Delta Diver";
 				};
 				class Item5
 				{
-					position[]={14731.231,17.83,16309.533};
-					id=6;
+					position[]={14694.454,17.860001,16392.258};
+					id=76;
 					side="WEST";
-					vehicle="B_recon_medic_F";
+					vehicle="B_diver_F";
 					player="PLAY CDG";
-					rank="CORPORAL";
 					skill=0.60000002;
-					description="NATO Special Forces Team 1 Medic";
+					text="UnitBL_SF1_D";
+					init="GrpBL_SF1 = group this;";
+					description="NATO Delta Diver";
 				};
 			};
 		};
-		class Item2
+		class Item9
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=2;
+				class Item0
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=81;
+					side="WEST";
+					vehicle="I_G_resistanceLeader_F";
+					player="PLAY CDG";
+					leader=1;
+					rank="LIEUTENANT";
+					skill=0.60000002;
+					text="Stavros";
+					description="Stavros";
+				};
+				class Item1
+				{
+					position[]={14694.454,17.860001,16392.258};
+					id=82;
+					side="WEST";
+					vehicle="I_G_Story_SF_Captain_F";
+					player="PLAY CDG";
+					rank="SERGEANT";
+					skill=0.60000002;
+					text="Miller";
+					description="Miller";
+				};
+			};
+		};
+		///////////////////////////////////////////////////////////
+		class Item10
 		{
 			side="EAST";
 			class Vehicles
@@ -235,7 +595,7 @@ class Mission
 				};
 			};
 		};
-		class Item3
+		class Item11
 		{
 			side="EAST";
 			class Vehicles
@@ -310,7 +670,8 @@ class Mission
 				};
 			};
 		};
-		class Item4
+		///////////////////////////////////////////////////////////
+		class Item12
 		{
 			side="GUER";
 			class Vehicles
@@ -332,7 +693,7 @@ class Mission
 				};	
 			};
 		};
-		class Item5
+		class Item13
 		{
 			side="GUER";
 			class Vehicles
@@ -344,7 +705,7 @@ class Mission
 					id=201;
 					side="GUER";
 					vehicle="I_G_Soldier_SL_F";
-					player="PLAYER COMMANDER";
+					player="PLAY CDG";
 					leader=1;
 					rank="CORPORAL";
 					skill=0.60000002;
@@ -415,7 +776,7 @@ class Mission
 				};
 			};
 		};
-		class Item6
+		class Item14
 		{
 			side="GUER";
 			class Vehicles
@@ -448,7 +809,7 @@ class Mission
 				};
 			};
 		};
-		class Item7
+		class Item15
 		{
 			side="GUER";
 			class Vehicles
@@ -481,7 +842,7 @@ class Mission
 				};
 			};
 		};
-		class Item8
+		class Item16
 		{
 			side="GUER";
 			class Vehicles
@@ -499,7 +860,7 @@ class Mission
 					skill=0.60000002;
 					text="UnitGR_A2_FTL";
 					init="GrpGR_A2 = group this;";
-					description="Green Bravo Squad Leader";
+					description="Green Bravo Fireteam Leader";
 				};
 				class Item1
 				{
@@ -563,7 +924,7 @@ class Mission
 				};
 			};
 		};
-		class Item9
+		class Item17
 		{
 			side="GUER";
 			class Vehicles
@@ -596,7 +957,7 @@ class Mission
 				};
 			};
 		};
-		class Item10
+		class Item18
 		{
 			side="GUER";
 			class Vehicles
@@ -629,7 +990,7 @@ class Mission
 				};
 			};
 		};
-		class Item11
+		class Item19
 		{
 			side="GUER";
 			class Vehicles
@@ -687,7 +1048,7 @@ class Mission
 				};
 			};
 		};
-		class Item12
+		class Item20
 		{
 			side="GUER";
 			class Vehicles
@@ -736,13 +1097,12 @@ class Mission
 					position[]={14694.454,17.860001,16392.258};
 					id=274;
 					side="GUER";
-					vehicle="I_diver_TL_F";
+					vehicle="I_diver_F";
 					player="PLAY CDG";
-					leader=1;
 					skill=0.60000002;
-					text="UnitGR_SF1_TL";
+					text="UnitGR_SF1_D";
 					init="GrpGR_SF1 = group this;";
-					description="Green Delta Diver Team Leader";
+					description="Green Delta Diver";
 				};
 				class Item4
 				{
@@ -770,7 +1130,7 @@ class Mission
 				};
 			};
 		};
-		class Item13
+		class Item21
 		{
 			side="GUER";
 			class Vehicles
