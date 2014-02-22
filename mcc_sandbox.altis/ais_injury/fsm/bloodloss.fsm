@@ -1,7 +1,7 @@
 /*%FSM<COMPILE "D:\Utilities\FSM Editor Personal Edition\scriptedFSM.cfg, bloodloss">*/
 /*%FSM<HEAD>*/
 /*
-item0[] = {"start",0,250,-386.841858,-274.763580,-321.196259,-237.337494,0.000000,"start"};
+item0[] = {"start",0,4346,-386.841858,-274.763580,-321.196259,-237.337494,0.000000,"start"};
 item1[] = {"true",8,218,-294.160950,-276.279480,-222.604858,-237.345810,0.000000,"true"};
 item2[] = {"Effects2",2,250,-58.868343,-188.520935,-3.639973,-147.885513,0.000000,"Effects2"};
 item3[] = {"sleep",4,218,-64.407600,-100.484978,1.512154,-59.180626,0.000000,"sleep"};
@@ -11,7 +11,7 @@ item6[] = {"death",1,250,-234.448166,16.387945,-181.906342,46.989937,0.000000,"d
 item7[] = {"end",1,250,136.211731,6.727341,186.337524,40.571522,0.000000,"end"};
 item8[] = {"Effects1",2,250,-187.445648,-275.000092,-128.734100,-237.515472,0.000000,"Effects1"};
 item9[] = {"true",8,218,-65.256653,-275.840057,3.623799,-235.226547,0.000000,"true"};
-item10[] = {"__isPlayer__isIn",4,4314,-399.323578,-115.627823,-309.323578,-49.417061,0.000000,"!isPlayer" \n "!isInAgony"};
+item10[] = {"__isPlayer__isIn",4,218,-399.323578,-115.627823,-309.323578,-49.417061,0.000000,"!isPlayer" \n "!isInAgony"};
 item11[] = {"exit",1,250,-379.510406,14.058210,-327.335480,46.046249,0.000000,"exit"};
 link0[] = {0,1};
 link1[] = {0,10};
@@ -26,7 +26,7 @@ link9[] = {8,9};
 link10[] = {9,2};
 link11[] = {10,11};
 globals[] = {0.000000,0,0,0,0,640,480,1,22,6316128,1,-438.949554,227.492523,183.215668,-406.520813,740,911,1};
-window[] = {2,-1,-1,-1,-1,786,50,1310,50,3,758};
+window[] = {2,-1,-1,-1,-1,886,150,1410,150,3,758};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -37,14 +37,14 @@ class FSM
     class start
     {
       name = "start";
-      init = /*%FSM<STATEINIT""">*/"private [""_value"",""_average_damage"",""_fatigue_old"",""_fatigue""];" \n
+      init = /*%FSM<STATEINIT""">*/"private [""_passed_time"",""_average_damage""];" \n
        "" \n
        "_unit = _this;" \n
        "" \n
        "_randomfactor = tcb_ais_random_lifetime_factor + random 30;" \n
        "_time_of_agony = time;" \n
-       "" \n
-       "_fatigue_start = 0.3;" \n
+       "_passed_time = 0;" \n
+       "_timeleft = 999;" \n
        "" \n
        "_ppEff = [];" \n
        "if (isPlayer _unit && player == _unit) then {" \n
@@ -82,11 +82,13 @@ class FSM
     class Effects2
     {
       name = "Effects2";
-      init = /*%FSM<STATEINIT""">*/"_average_damage = [_unit] call tcb_fnc_getUnitDamage;" \n
+      init = /*%FSM<STATEINIT""">*/"if(isNull(_unit getVariable [""healer"", objNull])) then {" \n
+       "	_passed_time = time - _time_of_agony;" \n
+       "};" \n
+       "" \n
+       "_average_damage = [_unit] call tcb_fnc_getUnitDamage;" \n
        "_damage_inverse = 1 - _average_damage;" \n
        "_bleed_time = (_damage_inverse * _randomfactor) + 30;" \n
-       "_passed_time = time - _time_of_agony;" \n
-       "" \n
        "_blinkduration = 0.7 + (random 0.4);" \n
        "_timeleft = (_bleed_time - _passed_time) - _blinkduration;" \n
        "_timeleft_normalized = 1 - (_passed_time / _bleed_time);" \n
@@ -184,7 +186,9 @@ class FSM
     class Effects1
     {
       name = "Effects1";
-      init = /*%FSM<STATEINIT""">*/"[_unit] spawn tcb_fnc_injuredEffects;"/*%FSM</STATEINIT""">*/;
+      init = /*%FSM<STATEINIT""">*/"[_unit] spawn tcb_fnc_injuredEffects;" \n
+       "" \n
+       "_unit setVariable [""tcb_ais_bleedout_time"", 1, true];"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {

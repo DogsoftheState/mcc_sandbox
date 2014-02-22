@@ -4,9 +4,9 @@ tcb_ais_random_lifetime_factor  =   200;            //  a higher value means you
                                                     //  the time depends on the damage the unit takes before they are unconcious. The time is randomized and not exact.
 tcb_ais_show_injury_marker      =   1;              //  Set value to 1 and a marker show injured units on the map. 0 means this feature is disabled.
 tcb_ais_show_3d_icons           =   1;              //  Set value to 1 and a 3D-icon show you ingame the position of injured units within a range of 30 metres (default). 0 means this feature is disabled.
-tcb_ais_3d_icon_range			=	50;				//	Range for the 3D icons, if enabled
+tcb_ais_3d_icon_range			=	50;				//	Max range for the 3D icons, if enabled
 tcb_ais_dead_dialog             =   1;              //  Set value to 1 to enable the deadcam and the dead dialog. 0 means this feature is disabled.
-tcb_ais_delTime                 =   0;				//  Time in seconds until dead bodys are deleted. If zero seconds are select this feature is disabled. (only units witch was handled from AIS Injury System will be deleted!)
+tcb_ais_delTime                 =   300;			//  Time in seconds until dead bodys are deleted. If zero seconds are select this feature is disabled. (only units witch was handled from AIS Injury System will be deleted!)
 tcb_ais_firstaid_distance		=	2;				//	Maximum distance between the healer and the injured to do first aid
 
 tcb_ais_killcam_quotes = [

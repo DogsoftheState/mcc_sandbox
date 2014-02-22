@@ -13,7 +13,6 @@ _isMedic = _healer call tcb_fnc_isMedic;
 _current_headhit = _unit getVariable "tcb_ais_headhit";
 _current_bodyhit = _unit getVariable "tcb_ais_bodyhit";
 _current_overall = _unit getVariable "tcb_ais_overall";
-
 _current_legshit = _unit getVariable "tcb_ais_legshit";
 _current_handshit = _unit getVariable "tcb_ais_handshit";
 
@@ -39,17 +38,12 @@ switch (true) do {
 	};
 };
 
-_unit setVariable ["tcb_ais_headhit", _core_healed * _current_headhit];
-_unit setVariable ["tcb_ais_bodyhit", _core_healed * _current_bodyhit];
-_unit setVariable ["tcb_ais_overall", _core_healed * _current_overall];
+_unit setVariable ["tcb_ais_headhit", _core_healed * _current_headhit, true];
+_unit setVariable ["tcb_ais_bodyhit", _core_healed * _current_bodyhit, true];
+_unit setVariable ["tcb_ais_overall", _core_healed * _current_overall, true];
+_unit setVariable ["tcb_ais_legshit", _extremeties_healed * _current_legshit, true];
+_unit setVariable ["tcb_ais_handshit", _extremeties_healed * _current_handshit, true];
 
-_unit setVariable ["tcb_ais_legshit", _extremeties_healed * _current_legshit];
-_unit setVariable ["tcb_ais_handshit", _extremeties_healed * _current_handshit];
-
-if(!isServer) then {
-	//Broadcast the damage change
-	tcb_ais_update_damage = [_unit, true, false, (_unit getVariable "tcb_ais_headhit"), (_unit getVariable "tcb_ais_bodyhit"), (_unit getVariable "tcb_ais_overall"), (_unit getVariable "tcb_ais_legshit"), (_unit getVariable "tcb_ais_handshit")];
-	publicVariable "tcb_ais_update_damage";
-};
+[_unit] call tcb_fnc_setUnitDamage;
 
 false

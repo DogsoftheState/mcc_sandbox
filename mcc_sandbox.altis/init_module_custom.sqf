@@ -1,6 +1,3 @@
-//-----------------------BTC Logistic -------------------------------------------
-call compile preprocessFile "=BTC=_Logistic\=BTC=_logistic_Init.sqf";
-
 //--------------------------AIS Wounding System ---------------------------------
 call compile preprocessFile "ais_injury\init_ais.sqf";
 
@@ -68,6 +65,7 @@ mccPresets = [
 	,['Set Locked', '_this setVehicleLock "LOCKED";']
 	,['Add Crew (UAV)','createVehicleCrew _this;group _this setvariable ["MCC_canbecontrolled",true,true];']
 	,['ECM - can jamm IED','if (isServer) then {_this setvariable ["MCC_ECM",true,true]};']
+	,['IgiLoad','[_this] execVM "IgiLoad\IgiLoad.sqf";']
 	,['======= Objects =======','']
 	,['Pickable Object','_this call MCC_fnc_pickItem;']
 	,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1} else {0}}];']

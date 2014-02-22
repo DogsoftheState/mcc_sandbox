@@ -8,7 +8,7 @@ _has_medikit = ((items _healer) find "Medikit" > -1);
 _has_firstaidkit = ((items _healer) find "FirstAidKit" >= 0);
 _isMedic = _healer call tcb_fnc_isMedic;
 
-//If the healer is AI move them until they're within 4 meters of the injured
+//If the healer is AI move them until they're within range of the injured
 if (!isPlayer _healer && {_healer distance _unit > tcb_ais_firstaid_distance}) then {
 	_healer setBehaviour "AWARE";
 	_healer doMove (position _unit);
@@ -99,9 +99,9 @@ _healed_counter = _unit getVariable "tcb_ais_healed_counter";
 //Calculate the healing time in seconds
 //Base is up to 60 seconds plus the healed counter penalty
 //The healed counter penalty is 5 seconds for every revive the unit has undergone
-//There is also a minimum time of 5 seconds regardless of the damage or healed counter
+//There is also a minimum time of 10 seconds regardless of the damage or healed counter
 _heal_time = _damage * 60 + _healed_counter * 5;
-if(_heal_time < 5) then {_heal_time = 5};
+if(_heal_time < 10) then {_heal_time = 10};
 
 //Run the healing progress bar
 sleep 1;
@@ -153,7 +153,6 @@ if (!tcb_healerStopped && ((_has_medikit && _isMedic) || _has_firstaidkit)) then
 	_current_headhit = _unit getVariable "tcb_ais_headhit";
 	_current_bodyhit = _unit getVariable "tcb_ais_bodyhit";
 	_current_overall = _unit getVariable "tcb_ais_overall";
-
 	_current_legshit = _unit getVariable "tcb_ais_legshit";
 	_current_handshit = _unit getVariable "tcb_ais_handshit";
 
@@ -179,16 +178,13 @@ if (!tcb_healerStopped && ((_has_medikit && _isMedic) || _has_firstaidkit)) then
 		};
 	};
 
-	_unit setVariable ["tcb_ais_headhit", _core_healed * _current_headhit];
-	_unit setVariable ["tcb_ais_bodyhit", _core_healed * _current_bodyhit];
-	_unit setVariable ["tcb_ais_overall", _core_healed * _current_overall];
+	_unit setVariable ["tcb_ais_headhit", _core_healed * _current_headhit, true];
+	_unit setVariable ["tcb_ais_bodyhit", _core_healed * _current_bodyhit, true];
+	_unit setVariable ["tcb_ais_overall", _core_healed * _current_overall, true];
+	_unit setVariable ["tcb_ais_legshit", _extremeties_healed * _current_legshit, true];
+	_unit setVariable ["tcb_ais_handshit", _extremeties_healed * _current_handshit, true];
 
-	_unit setVariable ["tcb_ais_legshit", _extremeties_healed * _current_legshit];
-	_unit setVariable ["tcb_ais_handshit", _extremeties_healed * _current_handshit];
-
-	//Broadcast the damage change
-	tcb_ais_update_damage = [_unit, true, false, (_unit getVariable "tcb_ais_headhit"), (_unit getVariable "tcb_ais_bodyhit"), (_unit getVariable "tcb_ais_overall"), (_unit getVariable "tcb_ais_legshit"), (_unit getVariable "tcb_ais_handshit")];
-	publicVariable "tcb_ais_update_damage";
+	[_unit] call tcb_fnc_setUnitDamage;
 
 	_unit setVariable ["tcb_ais_agony", false, true];
 } else {

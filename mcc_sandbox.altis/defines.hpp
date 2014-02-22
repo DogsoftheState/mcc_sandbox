@@ -781,7 +781,6 @@ class CfgObjectCompositions
 class RscTitles
 {
 	#include "ais_injury\dialogs\rscTitlesAIS.hpp"
-	#include "=BTC=_Logistic\=BTC=_Lift\=BTC=_Hud.h"
 	#include "TAA_name\GUI\TAA_dynamic_name.hpp"
 	
 	titles[]={"img"};

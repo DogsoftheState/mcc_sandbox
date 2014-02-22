@@ -14,7 +14,7 @@ if (count _this > 1) then {
 	};
 };
 
-//If the closest squadmate was not defined in the function call search through medics
+//If the closest squadmate was not defined in the function parameters then search through medics in our group
 if (isNil "_closestsquadmate") then {
 	_closestsquadmate = _playerdown;
 	_min_distance = 100000;
@@ -25,10 +25,10 @@ if (isNil "_closestsquadmate") then {
 			_closestsquadmate = _x;
 		};
 	} foreach __includedMates;
-};
 
-if (!alive _closestsquadmate || {_closestsquadmate getVariable "tcb_ais_agony"}) then {
-	_closestsquadmate = Nil;
+	if (!alive _closestsquadmate || {_closestsquadmate getVariable "tcb_ais_agony"}) then {
+		_closestsquadmate = Nil;
+	};
 };
 
 //If we don't have a closest squadmate go through everyone else in the group and find the closest one
@@ -42,10 +42,10 @@ if (isNil "_closestsquadmate") then {
 			_closestsquadmate = _x;
 		};
 	} foreach __includedMates;
-};
 
-if (!alive _closestsquadmate || {_closestsquadmate getVariable "tcb_ais_agony"}) then {
-	_closestsquadmate = Nil;
+	if (!alive _closestsquadmate || {_closestsquadmate getVariable "tcb_ais_agony"}) then {
+		_closestsquadmate = Nil;
+	};
 };
 
 //Last ditch effort to find someone, somewhere to come help
@@ -67,10 +67,19 @@ if (isNil "_closestsquadmate") then {
 			} foreach units _x;
 		};
 	} forEach allGroups;
+
+	if (!alive _closestsquadmate || {_closestsquadmate getVariable "tcb_ais_agony"}) then {
+		_closestsquadmate = Nil;
+	};
+};
+
+//If the closest squadmate is still nil then set it to ourselves so that other code below works
+if (isNil "_closestsquadmate") then {
+	_closestsquadmate = _playerdown;
 };
 
 //Main loop to get the closest squadmate to the injured unit
-While {alive _playerdown && {_playerdown getVariable "tcb_ais_agony"} && {_closestsquadmate distance _playerdown < 4} && {alive _closestsquadmate} && {!(_closestsquadmate getVariable "tcb_ais_agony")}} do {
+While {alive _playerdown && {_playerdown getVariable "tcb_ais_agony"} && {_closestsquadmate distance _playerdown < tcb_ais_firstaid_distance} && {alive _closestsquadmate} && {!(_closestsquadmate getVariable "tcb_ais_agony")}} do {
 	if (currentCommand _closestsquadmate != "MOVE") then {_closestsquadmate Stop false; _closestsquadmate doMove position _playerdown};
 	sleep 3;
 };
