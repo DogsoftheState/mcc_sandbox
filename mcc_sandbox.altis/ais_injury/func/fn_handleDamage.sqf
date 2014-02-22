@@ -28,7 +28,7 @@ if (!alive _unit) exitWith {
 };
 
 if(tcb_ais_debugging) then {
-	diag_log format["%1 has %2 AIS damage and %3 vanilla damage", _unit, [_unit] call tcb_fnc_getUnitDamage, damage _unit];
+	//diag_log format["%1 has %2 AIS damage and %3 vanilla damage", _unit, [_unit] call tcb_fnc_getUnitDamage, damage _unit];
 };
 
 if(isNil {_unit getVariable "tcb_ais_bodyhit"}) then {_unit setVariable ["tcb_ais_bodyhit",0]};
@@ -144,7 +144,7 @@ _unit setVariable ["tcb_ais_handshit", (_unit getVariable "tcb_ais_handshit") * 
 if (_agony && !(_unit getVariable "tcb_ais_agony")) then {
 	//Set the invulnerability timer so the unit doesn't take damage when first going into agony
 	_delay = time + 10;
-	_unit setVariable ["tcb_ais_fall_in_agony_time_delay", _delay];
+	_unit setVariable ["tcb_ais_fall_in_agony_time_delay", _delay, true];
 
 	//Set the agony state
 	_unit setVariable ["tcb_ais_agony", true, true];
@@ -163,7 +163,7 @@ if((_unit getVariable "tcb_ais_agony") && (time > _unit getVariable "tcb_ais_fal
 };
 
 if(tcb_ais_debugging) then {
-	diag_log format["%1 has %2 AIS damage and %3 vanilla damage", _unit, [_unit] call tcb_fnc_getUnitDamage, damage _unit];
+	//diag_log format["%1 has %2 AIS damage and %3 vanilla damage", _unit, [_unit] call tcb_fnc_getUnitDamage, damage _unit];
 };
 
 0

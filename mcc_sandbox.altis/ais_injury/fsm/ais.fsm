@@ -1,7 +1,7 @@
 /*%FSM<COMPILE "D:\Utilities\FSM Editor Personal Edition\scriptedFSM.cfg, ais">*/
 /*%FSM<HEAD>*/
 /*
-item0[] = {"start",0,4346,-609.394836,-334.812927,-555.514771,-300.866486,0.000000,"start"};
+item0[] = {"start",0,250,-609.394836,-334.812927,-555.514771,-300.866486,0.000000,"start"};
 item1[] = {"true",8,218,-389.901001,-334.008606,-342.710327,-303.406647,0.000000,"true"};
 item2[] = {"healthy",2,250,-121.197121,-346.219635,-23.077042,-290.459534,0.000000,"healthy"};
 item3[] = {"fall_in_agony",4,218,-117.047508,-259.680817,-27.047356,-209.680801,0.000000,"fall in agony"};
@@ -31,7 +31,7 @@ item26[] = {"alive_again",4,218,-114.678238,-469.424042,-45.365829,-417.283844,0
 item27[] = {"not_is_playable",4,218,237.442368,-256.145935,327.442383,-206.145935,1.000000,"not is" \n "playable"};
 item28[] = {"exit",1,250,403.828094,-248.545135,448.886108,-213.525848,0.000000,"exit"};
 item29[] = {"set_Entity",2,250,-397.948425,-455.662292,-335.358643,-432.311188,0.000000,"set Entity"};
-item30[] = {"has_firstaidkit",4,218,-483.379700,-11.889394,-403.752716,29.232147,2.000000,"has firstaidkit"};
+item30[] = {"has_firstaidkit",4,4314,-483.379700,-11.889394,-403.752716,29.232147,2.000000,"has firstaidkit"};
 item31[] = {"remove_first_aid",2,250,-499.199921,62.696358,-387.581726,94.320892,0.000000,"remove first aid kits"};
 item32[] = {"one_more_",4,218,-483.379700,127.547928,-403.752716,168.669464,1.000000,"one more?"};
 item33[] = {"all_removed",4,218,-338.379425,58.448944,-258.752441,99.570480,0.000000,"all removed"};
@@ -86,7 +86,7 @@ link45[] = {33,4};
 link46[] = {34,35};
 link47[] = {35,24};
 globals[] = {0.000000,0,0,0,0,640,480,1,56,6316128,1,-661.263123,526.092102,444.079010,-565.893555,1071,911,1};
-window[] = {2,-1,-1,-1,-1,912,175,1434,175,3,1089};
+window[] = {2,-1,-1,-1,-1,887,150,1409,150,3,1089};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -140,8 +140,13 @@ class FSM
        "_unit setVariable [""unit_is_unconscious"", false];" \n
        "_unit setVariable [""tcb_ais_agony"", false];" \n
        "_unit setVariable [""tcb_ais_itemStorage"", [0,0]];" \n
-       "_unit setVariable [""tcb_ais_bleedout_time"", 0];" \n
-       "_unit setVariable [""tcb_ais_fall_in_agony_time_delay"", 0];" \n
+       "" \n
+       "if(local _unit) then {" \n
+       "	_unit setVariable [""tcb_ais_bleedout_time"", 0, true];" \n
+       "	_unit setVariable [""tcb_ais_fall_in_agony_time_delay"", 0, true];" \n
+       "} else {" \n
+       "	_unit setVariable [""tcb_ais_fall_in_agony_time_delay"", 0];" \n
+       "};" \n
        "" \n
        "_unit setCaptive false;" \n
        "_black_in = false;" \n
@@ -435,14 +440,16 @@ class FSM
        "_unit setCaptive false;" \n
        "if (_unit == player) then {showHud true};" \n
        "" \n
-       "_store = _unit getVariable ""tcb_ais_itemStorage"";" \n
-       "if ((_store select 0) > 0) then {" \n
-       "	for ""_i"" from 1 to (_store select 0) do {_unit addItem ""FirstAidKit""};" \n
+       "if(local _unit) then {" \n
+       "	_store = _unit getVariable ""tcb_ais_itemStorage"";" \n
+       "	if ((_store select 0) > 0) then {" \n
+       "		for ""_i"" from 1 to (_store select 0) do {_unit addItem ""FirstAidKit""};" \n
+       "	};" \n
+       "	if ((_store select 1) > 0) then {" \n
+       "		for ""_j"" from 1 to (_store select 1) do {_unit addItem ""Medikit""};" \n
+       "	};" \n
+       "	_unit setVariable [""tcb_ais_itemStorage"", [0,0]];" \n
        "};" \n
-       "if ((_store select 1) > 0) then {" \n
-       "	for ""_j"" from 1 to (_store select 1) do {_unit addItem ""Medikit""};" \n
-       "};" \n
-       "_unit setVariable [""tcb_ais_itemStorage"", [0,0]];" \n
        "" \n
        "if (!isPlayer _unit) then {" \n
        "	_unit enableAI ""MOVE"";" \n
@@ -457,9 +464,11 @@ class FSM
        "	};" \n
        "};" \n
        "" \n
-       "_healed_counter = _unit getVariable ""tcb_ais_healed_counter"";" \n
-       "_healed_counter = _healed_counter + 1;" \n
-       "_unit setVariable [""tcb_ais_healed_counter"", _healed_counter];"/*%FSM</STATEINIT""">*/;
+       "if(local _unit) then {" \n
+       "	_healed_counter = _unit getVariable ""tcb_ais_healed_counter"";" \n
+       "	_healed_counter = _healed_counter + 1;" \n
+       "	_unit setVariable [""tcb_ais_healed_counter"", _healed_counter, true];" \n
+       "};"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {

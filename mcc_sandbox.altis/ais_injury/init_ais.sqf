@@ -39,6 +39,33 @@ AIS_Load =
 	_unit setVariable ["tcb_ais_aisInit", true];
 	_unit setVariable ["tcb_ais_aisLoaded", false];
 
+	"tcb_ais_healed" addPublicVariableEventHandler {
+		_unit = (_this select 1) select 0;
+
+		_head = (_this select 1) select 1;
+		_body = (_this select 1) select 2;
+		_overall = (_this select 1) select 3;
+		_legs = (_this select 1) select 4;
+		_hands = (_this select 1) select 5;
+
+		//Make sure that _unit is valid
+		if (isNil "_unit") exitWith {};
+
+		//Make sure that _unit is alive
+		if(!alive _unit) exitWith {};
+	
+		//Make sure that _unit is local
+		if(!local _unit) exitWith {};
+
+		_unit setVariable ["tcb_ais_headhit", _head, true];
+		_unit setVariable ["tcb_ais_bodyhit", _body, true];
+		_unit setVariable ["tcb_ais_overall", _overall, true];
+		_unit setVariable ["tcb_ais_legshit", _legs, true];
+		_unit setVariable ["tcb_ais_handshit", _hands, true];
+
+		[_unit] call tcb_fnc_setUnitDamage;
+	};
+
 	//Setup the agony public variable handler
 	"tcb_ais_in_agony" addPublicVariableEventHandler {
 		_unit = (_this select 1) select 0;

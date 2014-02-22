@@ -159,10 +159,10 @@ if (!tcb_healerStopped && ((_has_medikit && _isMedic) || _has_firstaidkit)) then
 	_core_healed = 1;
 	_extremeties_healed = 1;
 	switch (true) do {
-		//Medic: Yes, Medikit: Yes - Free and heal 100% of damage
+		//Medic: Yes, Medikit: Yes - Free and heal 99% of damage
 		case (_isMedic && _has_medikit) : {
-			_core_healed = 0;
-			_extremeties_healed = 0;
+			_core_healed = 0.01;
+			_extremeties_healed = 0.01;
 		};
 		//Medic: Yes, FirstAid: Yes - Consume FirstAid and heal 75% of most damage and 50% of legs and hands
 		case (_isMedic && _has_firstaidkit) : {
@@ -178,13 +178,26 @@ if (!tcb_healerStopped && ((_has_medikit && _isMedic) || _has_firstaidkit)) then
 		};
 	};
 
-	_unit setVariable ["tcb_ais_headhit", _core_healed * _current_headhit, true];
-	_unit setVariable ["tcb_ais_bodyhit", _core_healed * _current_bodyhit, true];
-	_unit setVariable ["tcb_ais_overall", _core_healed * _current_overall, true];
-	_unit setVariable ["tcb_ais_legshit", _extremeties_healed * _current_legshit, true];
-	_unit setVariable ["tcb_ais_handshit", _extremeties_healed * _current_handshit, true];
+	if(local _unit) then {
+		_unit setVariable ["tcb_ais_headhit", _core_healed * _current_headhit, true];
+		_unit setVariable ["tcb_ais_bodyhit", _core_healed * _current_bodyhit, true];
+		_unit setVariable ["tcb_ais_overall", _core_healed * _current_overall, true];
+		_unit setVariable ["tcb_ais_legshit", _extremeties_healed * _current_legshit, true];
+		_unit setVariable ["tcb_ais_handshit", _extremeties_healed * _current_handshit, true];
+	
+		[_unit] call tcb_fnc_setUnitDamage;
+	} else {
+		_unit setVariable ["tcb_ais_headhit", _core_healed * _current_headhit];
+		_unit setVariable ["tcb_ais_bodyhit", _core_healed * _current_bodyhit];
+		_unit setVariable ["tcb_ais_overall", _core_healed * _current_overall];
+		_unit setVariable ["tcb_ais_legshit", _extremeties_healed * _current_legshit];
+		_unit setVariable ["tcb_ais_handshit", _extremeties_healed * _current_handshit];
+	
+		[_unit] call tcb_fnc_setUnitDamage;
 
-	[_unit] call tcb_fnc_setUnitDamage;
+		tcb_ais_healed = [_unit, _core_healed * _current_headhit, _core_healed * _current_bodyhit, _core_healed * _current_overall, _extremeties_healed * _current_legshit, _extremeties_healed * _current_handshit];
+		publicVariable "tcb_ais_healed";
+	};
 
 	_unit setVariable ["tcb_ais_agony", false, true];
 } else {

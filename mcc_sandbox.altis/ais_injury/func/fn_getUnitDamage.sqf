@@ -9,6 +9,12 @@ if(!local _unit) exitWith {
 	damage _unit
 };
 
+if(isNil {_unit getVariable "tcb_ais_bodyhit"}) then {_unit setVariable ["tcb_ais_bodyhit",0]};
+if(isNil {_unit getVariable "tcb_ais_headhit"}) then {_unit setVariable ["tcb_ais_headhit",0]};
+if(isNil {_unit getVariable "tcb_ais_overall"}) then {_unit setVariable ["tcb_ais_overall",0]};
+if(isNil {_unit getVariable "tcb_ais_legshit"}) then {_unit setVariable ["tcb_ais_legshit",0]};
+if(isNil {_unit getVariable "tcb_ais_handshit"}) then {_unit setVariable ["tcb_ais_handshit",0]};
+
 _current_head_damage = _unit getVariable "tcb_ais_headhit";
 _current_body_damage = _unit getVariable "tcb_ais_bodyhit";
 _current_overall_damage = _unit getVariable "tcb_ais_overall";
@@ -24,7 +30,7 @@ if(isNil "_average_damage") exitWith {
 };
 if(_average_damage <= 0) exitWith {
 	if(tcb_ais_debugging) then {
-		//diag_log format["Average was 0 - %1 damage: %2", _unit, damage _unit];
+		diag_log format["Average was 0 - %1 damage: %2", _unit, damage _unit];
 	};
 	damage _unit
 };
