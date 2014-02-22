@@ -49,28 +49,6 @@ class Mission
 			side="WEST";
 			class Vehicles
 			{
-				items=1;
-				class Item0
-				{
-					position[]={14688.84,17.858521,16399.77};
-					id=99;
-					side="WEST";
-					vehicle="B_officer_F";
-					player="PLAYER COMMANDER";
-					leader=1;
-					rank="COLONEL";
-					skill=0.60000002;
-					text="UnitBL_ASL_SL";
-					init="GrpBL_ASL = group this;";
-					description="NATO High Command";
-				};	
-			};
-		};
-		class Item1
-		{
-			side="WEST";
-			class Vehicles
-			{
 				items=6;
 				class Item0
 				{
@@ -149,7 +127,7 @@ class Mission
 				};
 			};
 		};
-		class Item2
+		class Item1
 		{
 			side="WEST";
 			class Vehicles
@@ -182,7 +160,7 @@ class Mission
 				};
 			};
 		};
-		class Item3
+		class Item2
 		{
 			side="WEST";
 			class Vehicles
@@ -215,7 +193,7 @@ class Mission
 				};
 			};
 		};
-		class Item4
+		class Item3
 		{
 			side="WEST";
 			class Vehicles
@@ -297,7 +275,7 @@ class Mission
 				};
 			};
 		};
-		class Item5
+		class Item4
 		{
 			side="WEST";
 			class Vehicles
@@ -330,7 +308,7 @@ class Mission
 				};
 			};
 		};
-		class Item6
+		class Item5
 		{
 			side="WEST";
 			class Vehicles
@@ -363,7 +341,7 @@ class Mission
 				};
 			};
 		};
-		class Item7
+		class Item6
 		{
 			side="WEST";
 			class Vehicles
@@ -421,7 +399,7 @@ class Mission
 				};
 			};
 		};
-		class Item8
+		class Item7
 		{
 			side="WEST";
 			class Vehicles
@@ -501,6 +479,28 @@ class Mission
 					init="GrpBL_SF1 = group this;";
 					description="NATO Delta Diver";
 				};
+			};
+		};
+		class Item8
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14688.84,17.858521,16399.77};
+					id=99;
+					side="WEST";
+					vehicle="B_officer_F";
+					player="PLAYER COMMANDER";
+					leader=1;
+					rank="COLONEL";
+					skill=0.60000002;
+					text="UnitBL_ASL_SL";
+					init="GrpBL_ASL = group this;";
+					description="NATO High Command";
+				};	
 			};
 		};
 		class Item9
@@ -676,28 +676,6 @@ class Mission
 			side="GUER";
 			class Vehicles
 			{
-				items=1;
-				class Item0
-				{
-					position[]={14688.84,17.858521,16399.77};
-					id=200;
-					side="GUER";
-					vehicle="I_G_officer_F";
-					player="PLAYER COMMANDER";
-					leader=1;
-					rank="COLONEL";
-					skill=0.60000002;
-					text="UnitGR_ASL_SL";
-					init="GrpGR_ASL = group this; nul = [""dc"",this] call f_fnc_assignGear;";
-					description="High Command";
-				};	
-			};
-		};
-		class Item13
-		{
-			side="GUER";
-			class Vehicles
-			{
 				items=6;
 				class Item0
 				{
@@ -776,7 +754,7 @@ class Mission
 				};
 			};
 		};
-		class Item14
+		class Item13
 		{
 			side="GUER";
 			class Vehicles
@@ -809,7 +787,7 @@ class Mission
 				};
 			};
 		};
-		class Item15
+		class Item14
 		{
 			side="GUER";
 			class Vehicles
@@ -842,7 +820,7 @@ class Mission
 				};
 			};
 		};
-		class Item16
+		class Item15
 		{
 			side="GUER";
 			class Vehicles
@@ -924,7 +902,7 @@ class Mission
 				};
 			};
 		};
-		class Item17
+		class Item16
 		{
 			side="GUER";
 			class Vehicles
@@ -957,7 +935,7 @@ class Mission
 				};
 			};
 		};
-		class Item18
+		class Item17
 		{
 			side="GUER";
 			class Vehicles
@@ -990,7 +968,7 @@ class Mission
 				};
 			};
 		};
-		class Item19
+		class Item18
 		{
 			side="GUER";
 			class Vehicles
@@ -1048,7 +1026,7 @@ class Mission
 				};
 			};
 		};
-		class Item20
+		class Item19
 		{
 			side="GUER";
 			class Vehicles
@@ -1128,6 +1106,28 @@ class Mission
 					init="GrpGR_SF1 = group this;";
 					description="Green Delta Diver";
 				};
+			};
+		};
+		class Item20
+		{
+			side="GUER";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14688.84,17.858521,16399.77};
+					id=200;
+					side="GUER";
+					vehicle="I_G_officer_F";
+					player="PLAYER COMMANDER";
+					leader=1;
+					rank="COLONEL";
+					skill=0.60000002;
+					text="UnitGR_ASL_SL";
+					init="GrpGR_ASL = group this; nul = [""dc"",this] call f_fnc_assignGear;";
+					description="High Command";
+				};	
 			};
 		};
 		class Item21

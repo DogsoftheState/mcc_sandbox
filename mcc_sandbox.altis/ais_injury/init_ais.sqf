@@ -21,6 +21,8 @@ AIS_Load =
 			_unit setVariable ["tcb_ais_legshit", (_unit getVariable "tcb_ais_legshit"), true];
 			_unit setVariable ["tcb_ais_handshit", (_unit getVariable "tcb_ais_handshit"), true];
 
+			_unit setVariable ["tcb_ais_revived_counter", (_unit getVariable "tcb_ais_revived_counter"), true];
+
 			if(_unit getVariable "tcb_ais_agony") then {
 				tcb_ais_in_agony = [_unit, true];
 				publicVariable "tcb_ais_in_agony";

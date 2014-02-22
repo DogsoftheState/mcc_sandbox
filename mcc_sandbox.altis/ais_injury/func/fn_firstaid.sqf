@@ -1,6 +1,6 @@
 // by BonInf*
 // changed by psycho, chessmaster42
-private ["_injuredperson","_healer","_behaviour","_timenow","_relpos","_dir","_offset","_time","_damage","_heal_time","_isMedic","_animChangeEVH","_has_medikit","_has_firstaidkit"];
+private ["_injuredperson","_healer","_behaviour","_timenow","_relpos","_dir","_offset","_time","_damage","_heal_time","_isMedic","_animChangeEVH","_has_medikit","_has_firstaidkit","_revived_counter"];
 _unit = _this select 0;
 _healer = _this select 1;
 _behaviour = behaviour _healer;
@@ -94,13 +94,14 @@ _unit setDir _dir;
 //Get some values for the first aid timer/progress
 _time = time;
 _damage = damage _unit;
-_healed_counter = _unit getVariable "tcb_ais_healed_counter";
+if(isNil {_unit getVariable "tcb_ais_revived_counter"}) then {_unit setVariable ["tcb_ais_revived_counter",0]};
+_revived_counter = _unit getVariable "tcb_ais_revived_counter";
 
 //Calculate the healing time in seconds
 //Base is up to 60 seconds plus the healed counter penalty
 //The healed counter penalty is 5 seconds for every revive the unit has undergone
 //There is also a minimum time of 10 seconds regardless of the damage or healed counter
-_heal_time = _damage * 60 + _healed_counter * 5;
+_heal_time = _damage * 60 + _revived_counter * 5;
 if(_heal_time < 10) then {_heal_time = 10};
 
 //Run the healing progress bar
@@ -198,6 +199,9 @@ if (!tcb_healerStopped && ((_has_medikit && _isMedic) || _has_firstaidkit)) then
 		tcb_ais_healed = [_unit, _core_healed * _current_headhit, _core_healed * _current_bodyhit, _core_healed * _current_overall, _extremeties_healed * _current_legshit, _extremeties_healed * _current_handshit];
 		publicVariable "tcb_ais_healed";
 	};
+
+	_revived_counter = _revived_counter + 1;
+	_unit setVariable ["tcb_ais_revived_counter", _revived_counter, true];
 
 	_unit setVariable ["tcb_ais_agony", false, true];
 } else {
