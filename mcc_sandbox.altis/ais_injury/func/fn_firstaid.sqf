@@ -179,6 +179,9 @@ if (!tcb_healerStopped && ((_has_medikit && _isMedic) || _has_firstaidkit)) then
 		};
 	};
 
+	_revived_counter = _unit getVariable "tcb_ais_revived_counter";
+	_revived_counter = _revived_counter + 1;
+
 	if(local _unit) then {
 		_unit setVariable ["tcb_ais_headhit", _core_healed * _current_headhit, true];
 		_unit setVariable ["tcb_ais_bodyhit", _core_healed * _current_bodyhit, true];
@@ -187,6 +190,8 @@ if (!tcb_healerStopped && ((_has_medikit && _isMedic) || _has_firstaidkit)) then
 		_unit setVariable ["tcb_ais_handshit", _extremeties_healed * _current_handshit, true];
 	
 		[_unit] call tcb_fnc_setUnitDamage;
+
+		_unit setVariable ["tcb_ais_revived_counter", _revived_counter, true];
 	} else {
 		_unit setVariable ["tcb_ais_headhit", _core_healed * _current_headhit];
 		_unit setVariable ["tcb_ais_bodyhit", _core_healed * _current_bodyhit];
@@ -196,12 +201,9 @@ if (!tcb_healerStopped && ((_has_medikit && _isMedic) || _has_firstaidkit)) then
 	
 		[_unit] call tcb_fnc_setUnitDamage;
 
-		tcb_ais_healed = [_unit, _core_healed * _current_headhit, _core_healed * _current_bodyhit, _core_healed * _current_overall, _extremeties_healed * _current_legshit, _extremeties_healed * _current_handshit];
+		tcb_ais_healed = [_unit, _core_healed * _current_headhit, _core_healed * _current_bodyhit, _core_healed * _current_overall, _extremeties_healed * _current_legshit, _extremeties_healed * _current_handshit, _revived_counter];
 		publicVariable "tcb_ais_healed";
 	};
-
-	_revived_counter = _revived_counter + 1;
-	_unit setVariable ["tcb_ais_revived_counter", _revived_counter, true];
 
 	_unit setVariable ["tcb_ais_agony", false, true];
 } else {

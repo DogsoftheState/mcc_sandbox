@@ -1,5 +1,5 @@
 // by chessmaster42
-private ['_unit','_healer'];
+private ['_unit','_healer','_has_medikit','_has_firstaidkit','_isMedic'];
 _unit = _this select 0;
 _healer = _this select 1;
 
@@ -55,7 +55,7 @@ if(local _unit) then {
 
 	[_unit] call tcb_fnc_setUnitDamage;
 
-	tcb_ais_healed = [_unit, _core_healed * _current_headhit, _core_healed * _current_bodyhit, _core_healed * _current_overall, _extremeties_healed * _current_legshit, _extremeties_healed * _current_handshit];
+	tcb_ais_healed = [_unit, _core_healed * _current_headhit, _core_healed * _current_bodyhit, _core_healed * _current_overall, _extremeties_healed * _current_legshit, _extremeties_healed * _current_handshit, _revived_counter, -1];
 	publicVariable "tcb_ais_healed";
 };
 

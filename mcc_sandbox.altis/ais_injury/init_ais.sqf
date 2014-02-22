@@ -50,6 +50,8 @@ AIS_Load =
 		_legs = (_this select 1) select 4;
 		_hands = (_this select 1) select 5;
 
+		_revived_counter = (_this select 1) select 6;
+
 		//Make sure that _unit is valid
 		if (isNil "_unit") exitWith {};
 
@@ -66,6 +68,8 @@ AIS_Load =
 		_unit setVariable ["tcb_ais_handshit", _hands, true];
 
 		[_unit] call tcb_fnc_setUnitDamage;
+
+		if(_revived_counter > 0) then {_unit setVariable ["tcb_ais_revived_counter", _revived_counter, true]};
 	};
 
 	//Setup the agony public variable handler

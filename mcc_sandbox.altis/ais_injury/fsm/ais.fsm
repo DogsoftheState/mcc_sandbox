@@ -86,7 +86,7 @@ link45[] = {33,4};
 link46[] = {34,35};
 link47[] = {35,24};
 globals[] = {0.000000,0,0,0,0,640,480,1,56,6316128,1,-707.635315,572.464111,483.523499,-605.338013,1071,911,1};
-window[] = {2,-1,-1,-1,-1,762,25,1284,25,3,1089};
+window[] = {2,-1,-1,-1,-1,937,200,1459,200,3,1089};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -146,7 +146,7 @@ class FSM
        "	_unit setCaptive false;" \n
        "};" \n
        "" \n
-       "if(_unit == player) then {_black_in = false};" \n
+       "if(isNil ""_black_in"") then {_black_in = false]};" \n
        "" \n
        "if (_unit getVariable ""tcb_ais_leader"" && {count units group _unit > 0} && {leader group _unit != _unit}) then {" \n
        "	(group _unit) selectLeader _unit;" \n
