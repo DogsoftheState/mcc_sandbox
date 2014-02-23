@@ -1,4 +1,5 @@
 // by Bon_Inf*
+// changed by chessmaster42
 private["_injuredperson","_dragger"];
 _injuredperson = _this select 0;
 _dragger = _this select 1;
@@ -7,7 +8,7 @@ if (!isNull(_injuredperson getVariable "healer") || {!isNull(_injuredperson getV
 if (_injuredperson distance _dragger > 3) exitWith {[format ["%1 is too far away to be dragged.", name _injuredperson]] spawn tcb_fnc_showMessage};
 if (!alive _injuredperson) exitWith {[format ["R.I.P. %1", name _injuredperson]] spawn tcb_fnc_showMessage};
 
-_injuredperson setVariable ["dragger",_dragger,true];
+_injuredperson setVariable ["dragger", _dragger, true];
 _injuredperson attachTo [_dragger, [0, 1, 0.08]];
 _injuredperson setDir 180;
 

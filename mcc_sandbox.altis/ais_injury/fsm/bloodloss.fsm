@@ -82,14 +82,17 @@ class FSM
     class Effects2
     {
       name = "Effects2";
-      init = /*%FSM<STATEINIT""">*/"if(isNull(_unit getVariable [""healer"", objNull])) then {" \n
-       "	_passed_time = time - _time_of_agony;" \n
+      init = /*%FSM<STATEINIT""">*/"_blinkduration = 0.7 + (random 0.4);" \n
+       "" \n
+       "//Pause the bleedout timer by pushing the initial agony time forward by the blink time" \n
+       "if(!isNull(_unit getVariable [""healer"", objNull])) then {" \n
+       "	_time_of_agony = _time_of_agony + _blinkduration;" \n
        "};" \n
        "" \n
+       "_passed_time = time - _time_of_agony;" \n
        "_average_damage = [_unit] call tcb_fnc_getUnitDamage;" \n
        "_damage_inverse = 1 - _average_damage;" \n
-       "_bleed_time = (_damage_inverse * _randomfactor) + 30;" \n
-       "_blinkduration = 0.7 + (random 0.4);" \n
+       "_bleed_time = (_damage_inverse * _randomfactor) + 60;" \n
        "_timeleft = (_bleed_time - _passed_time) - _blinkduration;" \n
        "_timeleft_normalized = 1 - (_passed_time / _bleed_time);" \n
        "_txt = format [""%1 Seconds"", floor _timeleft];" \n
@@ -156,7 +159,9 @@ class FSM
        "	{_x ppEffectEnable false} forEach _ppEff;" \n
        "	ppEffectDestroy _ppEff;" \n
        "	resetCamShake;" \n
-       "};"/*%FSM</STATEINIT""">*/;
+       "};" \n
+       "" \n
+       "_unit setVariable [""tcb_ais_bleedout_time"", 0, true];"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -186,9 +191,7 @@ class FSM
     class Effects1
     {
       name = "Effects1";
-      init = /*%FSM<STATEINIT""">*/"[_unit] spawn tcb_fnc_injuredEffects;" \n
-       "" \n
-       "_unit setVariable [""tcb_ais_bleedout_time"", 1, true];"/*%FSM</STATEINIT""">*/;
+      init = /*%FSM<STATEINIT""">*/"[_unit] spawn tcb_fnc_injuredEffects;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {

@@ -44,10 +44,14 @@ if(!(_has_medikit && _isMedic) && !_has_firstaidkit) exitWith {
 	if (isPlayer _healer) then {[format ["%1 cannot be healed. No first aid available.", name _unit]] spawn tcb_fnc_showMessage};
 };
 
+//Make sure the unit is healable
 rtn = call tcb_fnc_isHealable;
 if (!rtn) exitWith {};
 
-_unit setVariable ["healer", _healer, true];
+//Add the healer to the unit
+tcb_ais_start_heal = [_unit, _healer];
+publicVariable "tcb_ais_start_heal";
+
 tcb_healerStopped = false;
 
 _healer selectWeapon primaryWeapon _healer;
@@ -128,7 +132,10 @@ if (isPlayer _healer) then {_healer removeEventHandler ["AnimChanged", _animChan
 //Detach the injured from the healer
 detach _healer;
 detach _unit;
-_unit setVariable ["healer", ObjNull, true];
+
+//Clear the healer from the unit
+tcb_ais_start_heal = [_unit, ObjNull];
+publicVariable "tcb_ais_start_heal";
 
 //If the healer is an AI then start up all other AI tasks
 if (!isPlayer _healer) then {

@@ -3,6 +3,7 @@ private ['_unit','_healer','_has_medikit','_has_firstaidkit','_isMedic'];
 _unit = _this select 0;
 _healer = _this select 1;
 
+//Bail out if either the unit or the healer are in agony
 if(_unit getVariable "tcb_ais_agony") exitWith {false};
 if(_healer getVariable "tcb_ais_agony") exitWith {false};
 

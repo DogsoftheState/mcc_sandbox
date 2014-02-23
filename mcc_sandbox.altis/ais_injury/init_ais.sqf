@@ -12,34 +12,17 @@ AIS_Load =
 	//Make sure that _unit is valid
 	if (isNil "_unit") exitWith {};
 	
-	//If this unit is already loaded then sync the unit info and exit
-	if (!isNil {_unit getVariable "tcb_ais_aisInit"}) exitWith {
-		if(local _unit) then {
-			_unit setVariable ["tcb_ais_headhit", (_unit getVariable "tcb_ais_headhit"), true];
-			_unit setVariable ["tcb_ais_bodyhit", (_unit getVariable "tcb_ais_bodyhit"), true];
-			_unit setVariable ["tcb_ais_overall", (_unit getVariable "tcb_ais_overall"), true];
-			_unit setVariable ["tcb_ais_legshit", (_unit getVariable "tcb_ais_legshit"), true];
-			_unit setVariable ["tcb_ais_handshit", (_unit getVariable "tcb_ais_handshit"), true];
-
-			_unit setVariable ["tcb_ais_revived_counter", (_unit getVariable "tcb_ais_revived_counter"), true];
-
-			if(_unit getVariable "tcb_ais_agony") then {
-				tcb_ais_in_agony = [_unit, true];
-				publicVariable "tcb_ais_in_agony";
-			};
-
-			if(tcb_ais_debugging) then {
-				diag_log format["AIS already loaded for local %1", _unit];
-			};
-		} else {
-			if(tcb_ais_debugging) then {
-				diag_log format["AIS already loaded for remote %1", _unit];
-			};
-		};
-	};
+	//If this unit is already loaded then exit
+	if (!isNil {_unit getVariable "tcb_ais_aisInit"}) exitWith {};
 
 	_unit setVariable ["tcb_ais_aisInit", true];
-	_unit setVariable ["tcb_ais_aisLoaded", false];
+
+	"tcb_ais_start_heal" addPublicVariableEventHandler {
+		_unit = (_this select 1) select 0;
+		_healer = (_this select 1) select 1;
+
+		_unit setVariable ["healer", _healer, true];
+	};
 
 	"tcb_ais_healed" addPublicVariableEventHandler {
 		_unit = (_this select 1) select 0;
@@ -70,34 +53,6 @@ AIS_Load =
 		[_unit] call tcb_fnc_setUnitDamage;
 
 		if(_revived_counter > 0) then {_unit setVariable ["tcb_ais_revived_counter", _revived_counter, true]};
-	};
-
-	//Setup the agony public variable handler
-	"tcb_ais_in_agony" addPublicVariableEventHandler {
-		_unit = (_this select 1) select 0;
-		_in_agony = (_this select 1) select 1;
-
-		//Make sure that _unit is valid
-		if (isNil "_unit") exitWith {};
-
-		//Make sure that _unit is alive
-		if(!alive _unit) exitWith {};
-	
-		if(tcb_ais_debugging) then {
-			diag_log format ["%1 agony: %2->%3", _unit, _unit getVariable "tcb_ais_agony", _in_agony];
-		};
-
-		if (_in_agony) then {
-			_side = _unit getVariable "tcb_ais_side";
-
-			//Announce the unit down in side chat
-			[_side, "HQ"] sideChat format ["%1 is down and needs help at %2", name _unit, mapGridPosition _unit];
-		
-			//And put up a map marker
-			if (playerSide == _side) then {
-				[_unit] execFSM ("ais_injury\fsm\ais_marker.fsm");
-			};
-		};
 	};
 
 	//Setup the 3D icons if enabled
@@ -167,9 +122,6 @@ AIS_Load =
 		};
 	};
 
-	//Finished loading so set the flag
-	_unit setVariable ["tcb_ais_aisLoaded", true];
-	
     //If this unit is the local player show a hint to let them know AIS Wounding is loaded
 	if (_unit == player) then {
 		hint "AIS Wounding Loaded";
