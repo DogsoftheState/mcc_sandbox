@@ -8,6 +8,7 @@ tcb_ais_3d_icon_range			=	50;				//	Max range for the 3D icons, if enabled
 tcb_ais_dead_dialog             =   1;              //  Set value to 1 to enable the deadcam and the dead dialog. 0 means this feature is disabled.
 tcb_ais_delTime                 =   300;			//  Time in seconds until dead bodys are deleted. If zero seconds are select this feature is disabled. (only units witch was handled from AIS Injury System will be deleted!)
 tcb_ais_firstaid_distance		=	2;				//	Maximum distance between the healer and the injured to do first aid
+tcb_ais_allow_self_revive		=	true;			//	Enable if you want to allow the medic to self-revive using first aid while down. Key combo is Ctrl+E
 
 tcb_ais_killcam_quotes = [
     [(localize "STR_QUOTE_1"),(localize "STR_AUTHOR_1")],

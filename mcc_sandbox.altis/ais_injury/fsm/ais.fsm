@@ -86,7 +86,7 @@ link45[] = {33,4};
 link46[] = {34,35};
 link47[] = {35,24};
 globals[] = {0.000000,0,0,0,0,640,480,1,56,6316128,1,-676.266418,541.094849,456.840546,-578.655457,1071,911,1};
-window[] = {2,-1,-1,-1,-1,812,75,1334,75,3,1089};
+window[] = {2,-1,-1,-1,-1,862,125,1384,125,3,1089};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -217,9 +217,9 @@ class FSM
        "		_unit execFSM (""ais_injury\fsm\bloodloss.fsm"");" \n
        "	};" \n
        "	" \n
-       "	//If there are fewer than 3 living players in the group then send an AI to come help" \n
-       "	if ({isPlayer _x} count (units group _unit) <= 2) then {" \n
-       "		[_unit] spawn tcb_fnc_sendaihealer;" \n
+       "	//If there are fewer than 3 players not in agony in the group then send an AI to come help" \n
+       "	if ({isPlayer _x && !(_x getVariable ""tcb_ais_agony"")} count (units group _unit) < 3) then {" \n
+       "		[_unit] spawn tcb_fnc_sendAIHealer;" \n
        "	};" \n
        "" \n
        "	//If the unit is not the local/current player setup the actions" \n

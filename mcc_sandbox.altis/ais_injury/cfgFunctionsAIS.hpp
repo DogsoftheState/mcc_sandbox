@@ -16,7 +16,7 @@ class tcb_ais {
 		addf(drop);
 		addf(injuredEffects);
 		addf(progressBarInit);
-		addf(sendaihealer);
+		addf(sendAIHealer);
 		addf(delbody);
 		addf(quote);
 		addf(deadcam);

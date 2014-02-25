@@ -1,97 +1,112 @@
 // by BonInf*
 // changed by Psycho, chessmaster42
-#define __includedMates (units group _playerdown - [_playerdown])
-private ["_playerdown","_closestsquadmate","_min_distance","_distance"];
-_playerdown = _this select 0;
+private ["_unit","_closestsquadmate","_min_distance","_distance"];
+_unit = _this select 0;
 _closestsquadmate = if (count _this > 1) then {_this select 1} else {nil};
+
+//If the unit needing aid is no longer alive or is no longer in agony, exit
+if(!alive _unit || !(_unit getVariable "tcb_ais_agony")) exitWith {};
 
 sleep 5;
 
 //If we got a closest squadmate in the function call but they are dead or in agony, remove them from the check
-if (count _this > 1) then {
+if (!isNil "_closestsquadmate") then {
 	if (!alive _closestsquadmate || {_closestsquadmate getVariable "tcb_ais_agony"}) then {
 		_closestsquadmate = Nil;
 	};
 };
 
-//If the closest squadmate was not defined in the function parameters then search through medics in our group
+//First loop through group check conditions:
+//1. Must be closer than last unit
+//2. Must NOT be a player
+//3. Must be a medic
+//4. Must have medical supplies
+//5. Must be alive
+//6. Must not be in agony
 if (isNil "_closestsquadmate") then {
-	_closestsquadmate = _playerdown;
 	_min_distance = 100000;
 	{
-		_distance = _playerdown distance _x;
-		if (_distance < _min_distance && {!isPlayer _x} && {_x call tcb_fnc_isMedic}) then {
+		_has_medikit = ((items _x) find "Medikit" > -1);
+		_has_firstaidkit = ((items _x) find "FirstAidKit" >= 0);
+		_isMedic = _x call tcb_fnc_isMedic;
+		_distance = _unit distance _x;
+		if (_distance < _min_distance && {!isPlayer _x} && _isMedic && (_has_medikit || _has_firstaidkit) && alive _x && !(_x getVariable "tcb_ais_agony")) then {
 			_min_distance = _distance;
 			_closestsquadmate = _x;
 		};
-	} foreach __includedMates;
-
-	if (!alive _closestsquadmate || {_closestsquadmate getVariable "tcb_ais_agony"}) then {
-		_closestsquadmate = Nil;
-	};
+	} foreach (units group _unit - [_unit]);
 };
 
-//If we don't have a closest squadmate go through everyone else in the group and find the closest one
+//Second loop through group check conditions:
+//1. Must be closer than last unit
+//2. Must NOT be a player
+//3. Must have a first aid kit
+//4. Must be alive
+//5. Must not be in agony
 if (isNil "_closestsquadmate") then {
-	_closestsquadmate = _playerdown;
 	_min_distance = 100000;
 	{
-		_distance = _playerdown distance _x;
-		if (_distance < _min_distance && {!isPlayer _x}) then {
+		_has_firstaidkit = ((items _x) find "FirstAidKit" >= 0);
+		_distance = _unit distance _x;
+		if (_distance < _min_distance && {!isPlayer _x} && _has_firstaidkit && alive _x && !(_x getVariable "tcb_ais_agony")) then {
 			_min_distance = _distance;
 			_closestsquadmate = _x;
 		};
-	} foreach __includedMates;
-
-	if (!alive _closestsquadmate || {_closestsquadmate getVariable "tcb_ais_agony"}) then {
-		_closestsquadmate = Nil;
-	};
+	} foreach (units group _unit - [_unit]);
 };
 
-//Last ditch effort to find someone, somewhere to come help
-//This only works if unit is within 500 meters
-//TODO - Find a way to improve the speed of this check
+//First loop through faction check conditions:
+//1. Must be within 500 meters
+//2. Must be on the same side as _unit
+//3. Must be closer than last unit
+//4. Must NOT be a player
+//5. Must have medical supplies
+//6. Must be alive
+//7. Must NOT be in agony
 if (isNil "_closestsquadmate") then {
-	_closestsquadmate = _playerdown;
 	_min_distance = 500;
-	_playerFaction = side (group _playerdown);
+	_playerFaction = side (group _unit);
 	{
 		//Ensure that the group we're checking is on the same side as the injured unit
 		if((side _x) == _playerFaction) then {
 			{
-				_distance = _playerdown distance _x;
-				if (_distance < _min_distance && {!isPlayer _x}) then {
+				_has_medikit = ((items _x) find "Medikit" > -1);
+				_has_firstaidkit = ((items _x) find "FirstAidKit" >= 0);
+				_isMedic = _x call tcb_fnc_isMedic;
+				_distance = _unit distance _x;
+				if (_distance < _min_distance && {!isPlayer _x} && ((_isMedic && _has_medikit) || _has_firstaidkit) && alive _x && !(_x getVariable "tcb_ais_agony")) then {
 					_min_distance = _distance;
 					_closestsquadmate = _x;
 				};
 			} foreach units _x;
 		};
 	} forEach allGroups;
-
-	if (!alive _closestsquadmate || {_closestsquadmate getVariable "tcb_ais_agony"}) then {
-		_closestsquadmate = Nil;
-	};
 };
 
-//If the closest squadmate is still nil then set it to ourselves so that other code below works
-if (isNil "_closestsquadmate") then {
-	_closestsquadmate = _playerdown;
+//If the closest squadmate is still nil then wait a bit, calculate a new closest squadmate, and exit
+if (isNil "_closestsquadmate") exitWith {
+	sleep 15;
+	[_unit] spawn tcb_fnc_sendAIHealer;
 };
 
-//Main loop to get the closest squadmate to the injured unit
-While {alive _playerdown && {_playerdown getVariable "tcb_ais_agony"} && {_closestsquadmate distance _playerdown < tcb_ais_firstaid_distance} && {alive _closestsquadmate} && {!(_closestsquadmate getVariable "tcb_ais_agony")}} do {
-	if (currentCommand _closestsquadmate != "MOVE") then {_closestsquadmate Stop false; _closestsquadmate doMove position _playerdown};
-	sleep 3;
+//Main wait loop to get the closest squadmate to the unit
+_closestsquadmate setBehaviour "AWARE";
+_closestsquadmate doMove (position _unit);
+WaitUntil {
+	_closestsquadmate distance _unit <= tcb_ais_firstaid_distance		 		||
+	{!alive _unit}			 					||
+	{!(_unit getVariable "tcb_ais_agony")} 	||
+	{!alive _closestsquadmate}				 					||
+	{_closestsquadmate getVariable "tcb_ais_agony"}
 };
 
-//If the closest squadmate goes down by the time they get to the injured unit, call this function again to calculate a new closest squadmate
-if (!alive _closestsquadmate || {_closestsquadmate getVariable "tcb_ais_agony"} || {isNull _closestsquadmate}) then {
-	[_playerdown] spawn tcb_fnc_sendaihealer;
+//If the closest squadmate goes down by the time they get to the injured unit then wait a bit, calculate a new closest squadmate, and exit
+if (!alive _closestsquadmate || {_closestsquadmate getVariable "tcb_ais_agony"}) exitWith {
+	sleep 15;
+	[_unit] spawn tcb_fnc_sendAIHealer;
 };
 
 //If the injured unit is still viable start the first aid
-if (alive _playerdown && {_playerdown getVariable "tcb_ais_agony"}) then {
-	if (_closestsquadmate != _playerdown && {!(_closestsquadmate getVariable "tcb_ais_agony")}) then {
-		[_playerdown, _closestsquadmate] spawn tcb_fnc_firstAid;
-	};
+if (alive _unit && {_unit getVariable "tcb_ais_agony"}) then {
+	[_unit, _closestsquadmate] spawn tcb_fnc_firstAid;
 };

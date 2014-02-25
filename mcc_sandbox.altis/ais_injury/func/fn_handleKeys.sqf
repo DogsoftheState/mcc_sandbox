@@ -5,15 +5,27 @@ _key = _this select 1;
 _shift_state = _this select 2;
 _ctrl_state = _this select 3;
 
-_return = [_this] call tcb_fnc_keyUnbind;
+_return = _this call tcb_fnc_keyUnbind;
 
 //If one of the unbindings triggered then leave here
 if(_return) exitWith {true};
 
+if(tcb_ais_debugging) then {
+	diag_log format["%1 pressed uncaptured key %2", player, _key];
+};
+
 //Check for self-revive key binding (Ctrl+E)
 //The First Aid function checks that the player is a medic and has supplies, no need to check it here
-if(_ctrl_state && _key == 12 && (player getVariable 'unit_is_unconscious')) then {
+if(_ctrl_state && {_key in [12]} && (player getVariable 'unit_is_unconscious') && tcb_ais_allow_self_revive) then {
+	if(tcb_ais_debugging) then {
+		diag_log format["%1 starting self-revive ...", player];
+	};
+
 	[player, player, true] call tcb_fnc_firstaid;
+
+	if(tcb_ais_debugging) then {
+		diag_log format["%1 finished self-revive", player];
+	};
 };
 
 false

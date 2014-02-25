@@ -11,7 +11,7 @@ _isMedic = _healer call tcb_fnc_isMedic;
 
 //If the unit and the healer are the same and it's the player then we are self-reviving
 //This should ONLY ever happen from the medic's special key binding while in agony
-_self_revive = (_unit == _healer) && (_unit == player) && _isMedic && (_has_medikit || _has_firstaidkit);
+_self_revive = (_unit == _healer) && (_unit == player) && _isMedic && (_has_medikit || _has_firstaidkit) && tcb_ais_allow_self_revive;
 
 //If the healer is also in agony then leave here
 if (_healer getVariable "tcb_ais_agony" && !_self_revive) exitWith {};

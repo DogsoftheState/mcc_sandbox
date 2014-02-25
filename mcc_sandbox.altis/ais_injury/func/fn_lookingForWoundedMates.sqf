@@ -1,4 +1,5 @@
 // by psycho
+// changed by chessmaster42
 #define __includedMates (units group _unit - [_unit])
 private ["_unit","_need_help","_help_him"];
 _unit = _this select 0;
@@ -10,10 +11,12 @@ _help_him = objNull;
 	if (_need_help) exitWith {_help_him = _x}
 } forEach __includedMates;
 
-//diag_log format ["%1 ---- %2",_unit,_help_him];
+if(tcb_ais_debugging) then {
+	diag_log format["%1 is going to help %2", _unit, _help_him];
+};
 
 if (_need_help) then {
 	if (!isNull _help_him) then {
-		[_help_him,_unit] spawn tcb_fnc_sendAIhealer;
+		[_help_him, _unit] spawn tcb_fnc_sendAIHealer;
 	};
 };
