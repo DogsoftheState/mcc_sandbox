@@ -62,10 +62,13 @@ publicVariable "tcb_ais_start_heal";
 
 tcb_healerStopped = false;
 
-_healer selectWeapon primaryWeapon _healer;
-sleep 1;
-_healer playAction "medicStart";
-tcb_animDelay = time + 2;
+//Start the medic animation as long as this isn't a self-revive
+if(!_self_revive) then {
+	_healer selectWeapon primaryWeapon _healer;
+	sleep 1;
+	_healer playAction "medicStart";
+	tcb_animDelay = time + 2;
+};
 
 //If the healer is an AI then stop all other AI tasks
 if (!isPlayer _healer) then {
@@ -158,8 +161,8 @@ if (!isPlayer _healer) then {
 	_healer enableAI "ANIM";
 };
 
-//If the healer is still healthy stop animations and restore behaviour
-if (alive _healer && {!(_healer getVariable "tcb_ais_agony")}) then {
+//If the healer is still healthy and this isn't a self-revive then stop animations and restore behaviour
+if (alive _healer && {!(_healer getVariable "tcb_ais_agony")} && !_self_revive) then {
 	_healer playAction "medicStop";
 	_healer setBehaviour _behaviour;
 };
