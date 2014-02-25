@@ -30,9 +30,9 @@ private ["_ArmaColor","_Red","_Blue","_Green"];
 	_Green 	= _this select 1;
 	_Blue 	= _this select 2;
 //--- Convert
-	_R 		= round (_Red	/maxRange);
-	_G 		= round (_Green	/maxRange);
-	_B 		= round (_Blue	/maxRange);
+	_R 		= _Red	/255;
+	_G 		= _Green	/255;
+	_B 		= _Blue	/255;
 //--- to return
 _ArmaColor	= [_R, _G, _B];
 //--- return

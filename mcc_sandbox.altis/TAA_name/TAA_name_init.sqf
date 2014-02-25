@@ -50,14 +50,15 @@ player addAction ["<t underline='true' color='#354EFB'>Tag Settings</t>","create
 /***************************************************
 ********************Don't edit below****************
 ****************************************************/
-#define TAA_VERSION "V3.1 TAA name - Black Puma"
+#define TAA_VERSION "V3.2"
 TAA_MUTEX_HUD = false;
 if(TAA_name_HUD_available)then{
 waitUntil{player!=objNull};
 sleep 1;
 	HUD_NAME_KEYDOWN = (findDisplay 46) displayAddEventHandler ["KeyDown", "[_this select 1] call fnc_dynamic_name;"];
 	HUD_NAME_KEYUP =(findDisplay 46) displayAddEventHandler ["KeyUp", "[_this select 1] call fnc_dynamic_name_hide;"];
-hint format ["%1",TAA_VERSION];
+	_Init_Mess	= localize "STR_TAA_TAG_SUBJECT";
+	hint format [_Init_Mess,TAA_VERSION];
 };
 
 /********************************************
@@ -108,7 +109,19 @@ TAA_name_Size				= 1;
 TAA_name_Posx				= 0.6;
 //PosY : number Position x of the text(recommended : 0.9)	
 TAA_name_Posy				= 0.9;
+
+
+
 TAA_CURSOR_MUTEX 	= false;
 TAA_name_Show		= false;
+_Subject_title = localize "STR_TAA_TAG_SUBJECT";
+_Subject_title = format[_Subject_title,""];
+player createDiarySubject [_Subject_title,_Subject_title];
+_Help 			= localize "STR_TAA_TAG_ABOUT";
+_Help_content = localize "STR_TAA_TAG_ABOUT_CONTENT";
+_Help_content = format[_Help_content,"'http://www.armaholic.com/forums.php?m=posts&q=25214&n=last#bottom'"];
+
+player createDiaryRecord [_Subject_title,[_Help,_Help_content]];
+
 [] call TAA_name;
 

@@ -29,7 +29,7 @@ class TAA_settings{
             moving = 1;
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])",
                                  "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", "(profilenamespace getvariable ['GUI_BCG_RGB_A',0.7])"};
-            text= "Tag Name System V3.1";
+            text= "Tag Name System V3.2";
 			x = 0.293628 * safezoneW + safezoneX;
 			y = 0.269026 * safezoneH + safezoneY;
 			w = 0.412744 * safezoneW;
@@ -190,7 +190,7 @@ class TAA_settings{
 			onButtonClick = "TAA_name_HUD_key_ID = (findDisplay 10000) displayAddEventHandler ['KeyDown', '_this select 1 call fnc_assign_key;'];";
 			text="$STR_TAA_TAG_ASSIGN_TXT";
 		};
-/*		class RscButton_perm: TAAButtonMenu_action
+		class RscButton_perm: TAAButtonMenu_action
 		{
 			idc=-1;
 			x = 0.365858 * safezoneW + safezoneX;
@@ -200,7 +200,7 @@ class TAA_settings{
 			toolTip = "";
 			onButtonClick = "createDialog 'TAA_Custom_settings';";
 			text="Custom";
-		};*/
+		};
 		class RscButton_1600: TAAButton
 		{
 			idc = 1600;

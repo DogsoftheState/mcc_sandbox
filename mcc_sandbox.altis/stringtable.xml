@@ -689,3 +689,21 @@
         <English>Enable or disable :</English>
         <French>Activer désactiver :</French>
 </Key>
+<Key ID="STR_TAA_TAG_SUBJECT">
+        <English>%1 TAA name</English>
+        <French>%1 TAA name</French>
+</Key>
+<Key ID="STR_TAA_TAG_RESET">
+	<English>Reset</English>
+    <French>Réinitialiser</French>
+</Key>
+<Key ID="STR_TAA_TAG_ABOUT">
+        <English>About</English>
+        <French>A propos</French>
+</Key>
+<Key ID="STR_TAA_TAG_ABOUT_CONTENT">
+        <English>TAA name system allow you to display the names of the players when your cursor above and when you press keys windows (default). You can assign an other key to display players.Armaholic TAA name topic :  %1
+		<English>
+        <French>TAA name system permet d'afficher le nom du joueur sur le curseur ou d'afficher les joueurs prés de vous en appuyant sur la touche windows (par défaut).Armaholic TAA name topic :  %1
+		</French>
+</Key>

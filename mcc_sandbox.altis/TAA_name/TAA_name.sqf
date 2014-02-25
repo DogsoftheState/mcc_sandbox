@@ -110,6 +110,9 @@ TAA_MUTEX_HUD 	= true;
 											_ColorUI 		= format["<t size='%1' color='%2'>",_Size,_Color];
 										};
 									};
+									if(!isNil{_x getVariable "TAA_TAG_PLAYER_CUSTOM"})then{
+										_ColorUI 		= format["<t size='%1' color='%2'>",_Size,(_x getVariable "TAA_TAG_PLAYER_CUSTOM")];
+									};
 									_colorInsigna = format["<t size='%1' color='%2'>",_Size,_insigna];
 									_Content	= format["%1 %2</t>",_rank,_name];
 									_Display 	= format["%4%3</t> %1%2 ", _ColorUI, _Content,_rankIcon,_colorInsigna];
@@ -200,6 +203,9 @@ TAA_MUTEX_HUD 	= true;
 										{
 											_ColorUI 		= format["<t size='%1' color='%2'>",_Size,_Color];
 										};
+									};
+									if(!isNil{_x getVariable "TAA_TAG_PLAYER_CUSTOM"})then{
+										_ColorUI 		= format["<t size='%1' color='%2'>",_Size,(_x getVariable "TAA_TAG_PLAYER_CUSTOM")];
 									};
 									_colorInsigna = format["<t size='%1' color='%2'>",_Size,_insigna];
 									_Content	= format["%1 %2</t>",_rank,_name];
