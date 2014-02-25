@@ -1,12 +1,20 @@
 // by BonInf*
 // changed by psycho, chessmaster42
-private ["_injuredperson","_healer","_behaviour","_timenow","_relpos","_dir","_offset","_time","_damage","_heal_time","_isMedic","_animChangeEVH","_has_medikit","_has_firstaidkit","_revived_counter"];
+private ["_unit","_healer","_self_revive","_behaviour","_timenow","_relpos","_dir","_offset","_time","_damage","_heal_time","_isMedic","_animChangeEVH","_has_medikit","_has_firstaidkit","_revived_counter"];
 _unit = _this select 0;
 _healer = _this select 1;
+
 _behaviour = behaviour _healer;
 _has_medikit = ((items _healer) find "Medikit" > -1);
 _has_firstaidkit = ((items _healer) find "FirstAidKit" >= 0);
 _isMedic = _healer call tcb_fnc_isMedic;
+
+//If the unit and the healer are the same and it's the player then we are self-reviving
+//This should ONLY ever happen from the medic's special key binding while in agony
+_self_revive = (_unit == _healer) && (_unit == player) && _isMedic && (_has_medikit || _has_firstaidkit);
+
+//If the healer is also in agony then leave here
+if (_healer getVariable "tcb_ais_agony" && !_self_revive) exitWith {};
 
 //If the healer is AI move them until they're within range of the injured
 if (!isPlayer _healer && {_healer distance _unit > tcb_ais_firstaid_distance}) then {
@@ -24,7 +32,7 @@ if (!isPlayer _healer && {_healer distance _unit > tcb_ais_firstaid_distance}) t
 };
 
 //If the healer is also in agony by the time they get to the injured then leave here
-if (_healer getVariable "tcb_ais_agony") exitWith {};
+if (_healer getVariable "tcb_ais_agony" && !_self_revive) exitWith {};
 
 //Stop the healing if the injured died before the healer arrived
 if (!alive _unit) exitWith {
@@ -115,11 +123,15 @@ while {
 	&& {alive _healer}
 	&& {alive _unit}
 	&& {(_healer distance _unit) < tcb_ais_firstaid_distance}
-	&& {!(_healer getVariable "tcb_ais_agony")}
 	&& {!tcb_healerStopped}
 } do {
 	sleep 0.5;
+
+	//If the healer is a player then run the progress bar on-screen
 	if (isPlayer _healer) then {["Applying First Aid", ((time - _time) / (_heal_time)) min 1] spawn tcb_fnc_progressbar};
+
+	//if the healer goes into agony but this isn't a self-revive then interrupt the process
+	if(_healer getVariable "tcb_ais_agony" && !_self_revive) then {tcb_healerStopped = true};
 
 	//Refresh first aid checks in case the items are removed during the first aid process
 	_has_medikit = ((items _healer) find "Medikit" > -1);
@@ -156,61 +168,9 @@ if (alive _healer && {!(_healer getVariable "tcb_ais_agony")}) then {
 if (!alive _healer) exitWith {};
 if (!alive _unit) exitWith {["It's already too late for this guy."] spawn tcb_fnc_showMessage};
 
-//Do the actual unit healing as long as the process wasn't interrupted and we still have medical supplies
-if (!tcb_healerStopped && ((_has_medikit && _isMedic) || _has_firstaidkit)) then {
-	_current_headhit = _unit getVariable "tcb_ais_headhit";
-	_current_bodyhit = _unit getVariable "tcb_ais_bodyhit";
-	_current_overall = _unit getVariable "tcb_ais_overall";
-	_current_legshit = _unit getVariable "tcb_ais_legshit";
-	_current_handshit = _unit getVariable "tcb_ais_handshit";
-
-	_core_healed = 1;
-	_extremeties_healed = 1;
-	switch (true) do {
-		//Medic: Yes, Medikit: Yes - Free and heal 99% of damage
-		case (_isMedic && _has_medikit) : {
-			_core_healed = 0.01;
-			_extremeties_healed = 0.01;
-		};
-		//Medic: Yes, FirstAid: Yes - Consume FirstAid and heal 75% of most damage and 50% of legs and hands
-		case (_isMedic && _has_firstaidkit) : {
-			_healer removeItem "FirstAidKit";
-			_core_healed = 0.25;
-			_extremeties_healed = 0.5;
-		};
-		//Medic: No, FirstAid: Yes - Consume FirstAid and heal 50% of damage of damage and 10% of legs and hands
-		case (!_isMedic && _has_firstaidkit) : {
-			_healer removeItem "FirstAidKit";
-			_core_healed = 0.5;
-			_extremeties_healed = 0.9;
-		};
-	};
-
-	_revived_counter = _unit getVariable "tcb_ais_revived_counter";
-	_revived_counter = _revived_counter + 1;
-
-	if(local _unit) then {
-		_unit setVariable ["tcb_ais_headhit", _core_healed * _current_headhit, true];
-		_unit setVariable ["tcb_ais_bodyhit", _core_healed * _current_bodyhit, true];
-		_unit setVariable ["tcb_ais_overall", _core_healed * _current_overall, true];
-		_unit setVariable ["tcb_ais_legshit", _extremeties_healed * _current_legshit, true];
-		_unit setVariable ["tcb_ais_handshit", _extremeties_healed * _current_handshit, true];
-	
-		[_unit] call tcb_fnc_setUnitDamage;
-
-		_unit setVariable ["tcb_ais_revived_counter", _revived_counter, true];
-	} else {
-		_unit setVariable ["tcb_ais_headhit", _core_healed * _current_headhit];
-		_unit setVariable ["tcb_ais_bodyhit", _core_healed * _current_bodyhit];
-		_unit setVariable ["tcb_ais_overall", _core_healed * _current_overall];
-		_unit setVariable ["tcb_ais_legshit", _extremeties_healed * _current_legshit];
-		_unit setVariable ["tcb_ais_handshit", _extremeties_healed * _current_handshit];
-	
-		[_unit] call tcb_fnc_setUnitDamage;
-
-		tcb_ais_healed = [_unit, _core_healed * _current_headhit, _core_healed * _current_bodyhit, _core_healed * _current_overall, _extremeties_healed * _current_legshit, _extremeties_healed * _current_handshit, _revived_counter];
-		publicVariable "tcb_ais_healed";
-	};
+//Do the actual unit healing as long as the process wasn't interrupted
+if (!tcb_healerStopped) then {
+	[_unit, _healer] call tcb_fnc_handleHeal;
 
 	_unit setVariable ["tcb_ais_agony", false, true];
 } else {

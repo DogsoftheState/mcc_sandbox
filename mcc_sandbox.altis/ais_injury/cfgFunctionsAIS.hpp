@@ -27,5 +27,6 @@ class tcb_ais {
 		addf(getUnitDamage);
 		addf(cleanUpActions);
 		addf(handleHeal);
+		addf(handleKeys);
 	};
 };

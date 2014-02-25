@@ -103,7 +103,7 @@ AIS_Load =
     //Setup an event to trigger on all KeyDown input events
 	if (_unit == player) then {
 		waitUntil {sleep 0.3; !isNull (findDisplay 46)};
-		(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call tcb_fnc_keyUnbind"];
+		(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call tcb_fnc_handleKeys"];
 	};
 	
 	//Setup the death cam if enabled

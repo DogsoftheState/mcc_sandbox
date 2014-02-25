@@ -3,13 +3,11 @@ private ['_unit','_healer','_has_medikit','_has_firstaidkit','_isMedic'];
 _unit = _this select 0;
 _healer = _this select 1;
 
-//Bail out if either the unit or the healer are in agony
-if(_unit getVariable "tcb_ais_agony") exitWith {false};
-if(_healer getVariable "tcb_ais_agony") exitWith {false};
-
 _has_medikit = ((items _healer) find "Medikit" > -1);
 _has_firstaidkit = ((items _healer) find "FirstAidKit" >= 0);
 _isMedic = _healer call tcb_fnc_isMedic;
+
+if(!(_isMedic && _has_medikit) && !_has_firstaidkit) exitWith {false};
 
 _current_headhit = _unit getVariable "tcb_ais_headhit";
 _current_bodyhit = _unit getVariable "tcb_ais_bodyhit";
