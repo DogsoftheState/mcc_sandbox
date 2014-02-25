@@ -85,8 +85,8 @@ link44[] = {32,31};
 link45[] = {33,4};
 link46[] = {34,35};
 link47[] = {35,24};
-globals[] = {0.000000,0,0,0,0,640,480,1,56,6316128,1,-707.635315,572.464111,483.523499,-605.338013,1071,911,1};
-window[] = {2,-1,-1,-1,-1,937,200,1459,200,3,1089};
+globals[] = {0.000000,0,0,0,0,640,480,1,56,6316128,1,-676.266418,541.094849,456.840546,-578.655457,1071,911,1};
+window[] = {2,-1,-1,-1,-1,787,50,1309,50,3,1089};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -213,7 +213,9 @@ class FSM
        "	};" \n
        "" \n
        "	//Start the bloodloss system" \n
-       "	_unit execFSM (""ais_injury\fsm\bloodloss.fsm"");" \n
+       "	if(local _unit) then {" \n
+       "		_unit execFSM (""ais_injury\fsm\bloodloss.fsm"");" \n
+       "	};" \n
        "	" \n
        "	//If there are fewer than 3 living players in the group then send an AI to come help" \n
        "	if ({isPlayer _x} count (units group _unit) <= 2) then {" \n

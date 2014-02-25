@@ -145,10 +145,18 @@ AIS_Load =
 	};
 };
 
+//Load AIS Wounding on all playable units
+AIS_Load_Players =
+{
+	{
+		[_x] spawn AIS_Load;
+	} forEach playableUnits;
+};
+
 //Globally loads AIS Wounding on all playable units
 AIS_Load_Global_Players =
 {
-	[[2, {{[_x] spawn AIS_Load} forEach playableUnits}], "CP_fnc_globalExecute", true, true] spawn BIS_fnc_MP;
+	[[], "AIS_Load_Players", true, true] spawn BIS_fnc_MP;
 };
 
 call AIS_Load_Global_Players;
