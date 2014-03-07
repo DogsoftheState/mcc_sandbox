@@ -136,10 +136,15 @@ if (_agony && !(_unit getVariable "tcb_ais_agony")) then {
 //Determine if the unit can die from this damage
 _can_die = if((_unit getVariable "tcb_ais_agony") && (time > (_unit getVariable "tcb_ais_fall_in_agony_time_delay"))) then {true} else {false};
 
+//If revive guaranty is turned off then force enable _can_die
+if(!tcb_ais_revive_guaranty) then {
+    _can_die = true;
+};
+
 //If the unit can die make sure that we don't scale the damage at all
 //Otherwise scale down the damage
 if(_can_die) then {
-	_scale = 1.0
+	_scale = 1.0;
 } else {
 	_scale = tcb_ais_damage_limit / (([_unit] call tcb_fnc_getUnitDamage) max tcb_ais_damage_limit);
 };

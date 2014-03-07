@@ -14,6 +14,7 @@ _current_bodyhit = _unit getVariable "tcb_ais_bodyhit";
 _current_overall = _unit getVariable "tcb_ais_overall";
 _current_legshit = _unit getVariable "tcb_ais_legshit";
 _current_handshit = _unit getVariable "tcb_ais_handshit";
+_revived_counter = _unit getVariable "tcb_ais_revived_counter";
 
 _core_healed = 1;
 _extremeties_healed = 1;
@@ -54,7 +55,7 @@ if(local _unit) then {
 
 	[_unit] call tcb_fnc_setUnitDamage;
 
-	tcb_ais_healed = [_unit, _core_healed * _current_headhit, _core_healed * _current_bodyhit, _core_healed * _current_overall, _extremeties_healed * _current_legshit, _extremeties_healed * _current_handshit, _revived_counter, -1];
+	tcb_ais_healed = [_unit, _core_healed * _current_headhit, _core_healed * _current_bodyhit, _core_healed * _current_overall, _extremeties_healed * _current_legshit, _extremeties_healed * _current_handshit, _revived_counter];
 	publicVariable "tcb_ais_healed";
 };
 

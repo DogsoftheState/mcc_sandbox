@@ -1,8 +1,9 @@
-tcb_ais_revive_guaranty         =   true;           //  set to true for a 99% revive chance. False, and the unit got a 50/50 chance to fall in agony or die immediately
+tcb_ais_revive_guaranty         =   true;           //  set to true for a 100% revive chance. False, and the unit can die immediately
 tcb_ais_rambofactor             =   3;              //  a higher value means more damage tolerance for the unit before the unit are unconcious ( 1== low, 2 == normal, 3 == higher, 5 == extreme)
 tcb_ais_random_lifetime_factor  =   200;            //  a higher value means you got more time to heal the unit before bleeding out and die
                                                     //  the time depends on the damage the unit takes before they are unconcious. The time is randomized and not exact.
 tcb_ais_show_injury_marker      =   1;              //  Set value to 1 and a marker show injured units on the map. 0 means this feature is disabled.
+tcb_ais_show_injury_message     =   1;              //  Set value to 1 and a message in side chat will show when a unit is injured. 0 means this feature is disabled.
 tcb_ais_show_3d_icons           =   1;              //  Set value to 1 and a 3D-icon show you ingame the position of injured units within a range of 30 metres (default). 0 means this feature is disabled.
 tcb_ais_3d_icon_range			=	50;				//	Max range for the 3D icons, if enabled
 tcb_ais_dead_dialog             =   1;              //  Set value to 1 to enable the deadcam and the dead dialog. 0 means this feature is disabled.

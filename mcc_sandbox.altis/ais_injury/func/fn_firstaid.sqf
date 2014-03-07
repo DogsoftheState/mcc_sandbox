@@ -180,8 +180,13 @@ if (!alive _unit) exitWith {["It's already too late for this guy."] spawn tcb_fn
 
 //Do the actual unit healing as long as the process wasn't interrupted
 if (!tcb_healerStopped) then {
+    //Increment the revived counter
+    _unit setVariable ["tcb_ais_revived_counter", _revived_counter + 1];
+    
+    //Do the healing
 	[_unit, _healer] call tcb_fnc_handleHeal;
 
+	//Broadcast unit agony state
 	_unit setVariable ["tcb_ais_agony", false, true];
 } else {
 	if (isPlayer _healer) then {["You have stopped the healing process."] spawn tcb_fnc_showMessage};
