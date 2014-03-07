@@ -4,6 +4,12 @@ private ["_unit","_healer","_self_revive","_behaviour","_timenow","_relpos","_di
 _unit = _this select 0;
 _healer = _this select 1;
 
+//Before doing anything ensure that the wounding system is loaded on both the unit and the healer
+//This covers an edge case bug where sometimes the system doesn't load for a player but they try to do First Aid on another unit
+//[_unit] call AIS_Load;
+//[_healer] call AIS_Load;
+
+//Capture some details about the healer
 _behaviour = behaviour _healer;
 _has_medikit = ((items _healer) find "Medikit" > -1);
 _has_firstaidkit = ((items _healer) find "FirstAidKit" >= 0);
@@ -62,12 +68,13 @@ publicVariable "tcb_ais_start_heal";
 
 tcb_healerStopped = false;
 
+_healer selectWeapon primaryWeapon _healer;
+sleep 1;
+tcb_animDelay = time + 2;
+
 //Start the medic animation as long as this isn't a self-revive
 if(!_self_revive) then {
-	_healer selectWeapon primaryWeapon _healer;
-	sleep 1;
 	_healer playAction "medicStart";
-	tcb_animDelay = time + 2;
 };
 
 //If the healer is an AI then stop all other AI tasks

@@ -28,5 +28,6 @@ class tcb_ais {
 		addf(cleanUpActions);
 		addf(handleHeal);
 		addf(handleKeys);
+		addf(setupActions);
 	};
 };

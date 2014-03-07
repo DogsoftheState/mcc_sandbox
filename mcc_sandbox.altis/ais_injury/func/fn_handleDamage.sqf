@@ -1,6 +1,6 @@
 // by BonInf*
 // changed by psycho, chessmaster42
-private ['_unit','_bodypart','_damage','_source','_ammo','_scaled_damage','_agony','_part_total_damage','_average_damage','_scale','_delay'];
+private ['_unit','_bodypart','_damage','_source','_ammo','_scaled_damage','_agony','_part_total_damage','_scale','_delay','_can_die'];
 _unit 		= _this select 0;
 _bodypart	= _this select 1;
 _damage		= _this select 2;
@@ -123,16 +123,29 @@ switch _bodypart do {
 	};
 };
 
-//If the unit has a critical amount of damage, limit it to 90% and put the unit into agony
-_average_damage = [_unit] call tcb_fnc_getUnitDamage;
-_scale = 1.0;
-if(_average_damage >= 0.9) then {
-	_scale = 0.9 / _average_damage;
-	_agony = true;
+//If the agony request flag is set and the unit isn't already in agony, put the unit into agony
+if (_agony && !(_unit getVariable "tcb_ais_agony")) then {
+	//Set the invulnerability timer so the unit can't die when first going into agony
+	_delay = time + 10;
+	_unit setVariable ["tcb_ais_fall_in_agony_time_delay", _delay];
+
+	//Set the agony state
+	_unit setVariable ["tcb_ais_agony", true, true];
+};
+
+//Determine if the unit can die from this damage
+_can_die = if((_unit getVariable "tcb_ais_agony") && (time > (_unit getVariable "tcb_ais_fall_in_agony_time_delay"))) then {true} else {false};
+
+//If the unit can die make sure that we don't scale the damage at all
+//Otherwise scale down the damage
+if(_can_die) then {
+	_scale = 1.0
+} else {
+	_scale = tcb_ais_damage_limit / (([_unit] call tcb_fnc_getUnitDamage) max tcb_ais_damage_limit);
 };
 
 if(tcb_ais_debugging) then {
-	//diag_log format["%1 has %2 AIS damage and %3 vanilla damage", _unit, [_unit] call tcb_fnc_getUnitDamage, damage _unit];
+	//diag_log format["%1 Damaged: AIS=%2, Vanilla=%3, CanDie=%4", _unit, [_unit] call tcb_fnc_getUnitDamage, damage _unit, _can_die];
 };
 
 _unit setVariable ["tcb_ais_headhit", (_unit getVariable "tcb_ais_headhit") * _scale, true];
@@ -141,29 +154,10 @@ _unit setVariable ["tcb_ais_overall", (_unit getVariable "tcb_ais_overall") * _s
 _unit setVariable ["tcb_ais_legshit", (_unit getVariable "tcb_ais_legshit") * _scale, true];
 _unit setVariable ["tcb_ais_handshit", (_unit getVariable "tcb_ais_handshit") * _scale, true];
 
-if (_agony && !(_unit getVariable "tcb_ais_agony")) then {
-	//Set the invulnerability timer so the unit doesn't take damage when first going into agony
-	_delay = time + 10;
-	_unit setVariable ["tcb_ais_fall_in_agony_time_delay", _delay, true];
-
-	//Set the agony state
-	_unit setVariable ["tcb_ais_agony", true, true];
-
-	if(tcb_ais_debugging) then {
-		diag_log format["%1 going into agony state", _unit];
-	};
-};
-
-//If the unit is in agony
-//And has been down past the initial protection delay then allow for critical damage (aka death)
-if((_unit getVariable "tcb_ais_agony") && (time > _unit getVariable "tcb_ais_fall_in_agony_time_delay")) then {
-	[_unit, true] call tcb_fnc_setUnitDamage;
-} else {
-	[_unit] call tcb_fnc_setUnitDamage;
-};
+[_unit, _can_die] call tcb_fnc_setUnitDamage;
 
 if(tcb_ais_debugging) then {
-	//diag_log format["%1 has %2 AIS damage and %3 vanilla damage", _unit, [_unit] call tcb_fnc_getUnitDamage, damage _unit];
+	//diag_log format["%1 Damaged: AIS=%2, Vanilla=%3, CanDie=%4", _unit, [_unit] call tcb_fnc_getUnitDamage, damage _unit, _can_die];
 };
 
 0

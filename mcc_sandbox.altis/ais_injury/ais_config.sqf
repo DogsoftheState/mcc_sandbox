@@ -9,6 +9,7 @@ tcb_ais_dead_dialog             =   1;              //  Set value to 1 to enable
 tcb_ais_delTime                 =   300;			//  Time in seconds until dead bodys are deleted. If zero seconds are select this feature is disabled. (only units witch was handled from AIS Injury System will be deleted!)
 tcb_ais_firstaid_distance		=	2;				//	Maximum distance between the healer and the injured to do first aid
 tcb_ais_allow_self_revive		=	true;			//	Enable if you want to allow the medic to self-revive using first aid while down. Key combo is Ctrl+E
+tcb_ais_damage_limit			=	0.9;			//	Maximum damage a unit can have when healthy or during agony beginning delay
 
 tcb_ais_killcam_quotes = [
     [(localize "STR_QUOTE_1"),(localize "STR_AUTHOR_1")],
