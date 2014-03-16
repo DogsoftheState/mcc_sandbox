@@ -1,5 +1,8 @@
-//--------------------------AIS Wounding System ---------------------------------
-call compile preprocessFile "ais_injury\init_ais.sqf";
+//--------------------------IgiLoad----------------------------------------------
+[] execVM "IgiLoad\IgiLoadInit.sqf;
+
+//--------------------------CWS -------------------------------------------------
+call compile preprocessFile "cws_injury\cws_init.sqf";
 
 //--------------------------Vehicle Locking System ------------------------------
 call compile preprocessFile "vehicle_lock\vehicle_lock.sqf";
@@ -57,7 +60,7 @@ mccPresets = [
 	,['Kneel', '_this setUnitPos "Middle";']
 	,['Prone', '_this setUnitPos "DOWN";']
 	,['Can be controled using MCC Console', '(group _this) setvariable ["MCC_canbecontrolled",true,true];']
-	,['Load AIS Wounding', '[_this] spawn AIS_Load;']
+	,['Load CWS Wounding', '[_this] spawn CWS_Load;']
 	,['======= Vehicles =======','']
 	,['Set Empty (Fuel)', '_this setfuel 0;']
 	,['Set Empty (Ammo)', '_this setvehicleammo 0;']

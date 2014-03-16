@@ -50,7 +50,7 @@
 //---------------------------Functions------------------------------------------------
 class CfgFunctions
 {
-	#include "ais_injury\cfgFunctionsAIS.hpp"
+	#include "cws_injury\cfgFunctionsCWS.hpp"
 
 	class MCC
 	{
@@ -780,7 +780,7 @@ class CfgObjectCompositions
 
 class RscTitles
 {
-	#include "ais_injury\dialogs\rscTitlesAIS.hpp"
+	#include "cws_injury\dialogs\rscTitlesCWS.hpp"
 	#include "TAA_name\GUI\TAA_dynamic_name.hpp"
 	
 	titles[]={"img"};

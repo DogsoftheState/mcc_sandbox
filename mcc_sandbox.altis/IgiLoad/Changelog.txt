@@ -1,11 +1,54 @@
-//////////////////////////////////////////////////////////////////////////////////////////////
-//	IgiLoad v0.9.6																			//
-//	Author: Igi_PL																			//
-//	Version date: 2014.02.02																//
-//																							//
-//	USE:																					//
-//	In Vehicles "INITIALIZATION" field type: "null=[this] execVM "IgiLoad\IgiLoad.sqf";"	//
-//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	IgiLoad v0.9.8																							//
+//	Author: Igi_PL																							//
+//	Web: http://www.igipl.net/																				//
+//	Version date: 2014.03.09																				//
+//																											//
+//	USE:																									//
+//	1. In mission "init.sqf" add line: "0 = execVM "IgiLoad\IgiLoadInit.sqf";".								//
+//	2. In vehicles "INITIALIZATION" field type: "0 = [this] execVM "IgiLoad\IgiLoad.sqf";"					//
+//	3. Loading cargo from script. Force load: "0 = [Car, [typeOf Box], "B", true, Box] spawn IL_Do_Load;"	//
+//																											//
+//	Ways from points 1 and 2 can not be used simultaneously!!!												//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	Changelog v0.9.8:
+//	New: IL_Para_Jump_ATL - Separated parachute jump altitude.
+//	New: IL_Can_Inside - Disable loading for driver, pilot and co-pilot.
+//	New: New vehicles:	"caf_HLVW_open_AR", "caf_HLVW_open", "caf_HLVW_covered_ar", "caf_HLVW_covered", "CH_147F", "CH47F", "CH49_Mohawk_FG"
+//	New: New cargoes:	"JTF2_Offroad_armed_01", "CAF_Quadbike_OD", "CAF_Quadbike_AR", "rc_hmmwv", "HMMWV2", "HMMWV_M1035", "M1114_AGS_ACR",
+//						"HMMWV_M1151_M2", "HMMWV2_M2", "HMMWV2_MK19", "HMMWV2_TOW", "HMMWV", "HMMWV_M2", "HMMWV_MK19", "HMMWV_TOW"
+//	Change: If you have a parachute you do not get a second. Parachute, which you have, you have to open yourself.
+//	Fix: Damage during parachute jump.
+//	Fix: Bad color of smoke and chemical lights for vehicles.
+//	
+//	Changelog v0.9.7:
+//	New: The script can be run from "init.sqf". By adding line "0 = execVM "IgiLoad\IgiLoadInit.sqf";" to init.sqf. The archive contains a sample init.sqf file.
+//	Attention! The script can not be called in this way when it is called in the "INITIALIZATION" field.
+//	New: The script itself will launch in existing vehicles and vehicles that will be created during the game. Only with init.sqf.
+//	New: Changes in the code to improve performance of script.
+//	New: A separate action in the action menu for loading vehicles and separate for loading other stuff. Allows you to load the vehicle loaded with cargo. This can be a problem when trying to load the vehicle with loaded quad.
+//	New: Initialization thread does not start immediately. Delay takes about 2-3 minutes. Values are random for each player.
+//		 Control of delay time is done with the help of two variables: "IL_Check_Veh_Min" and "IL_Check_Veh_Max".
+//		 Attention, these variables also control the frequency of thread to check whether the vehicle has been added during the game.
+//	New: C-130J by theebu (http://forums.bistudio.com/showthread.php?173431-C-130J-Port-Release) is now supported.
+//		 Attention! Loading, unloading and unloading cargo on parachute are possible when the ramp is fully open.
+//	New: New vehicles:	C-130J - "C130J_Cargo", "C130J";
+//						Offroad - "C_Offroad_01_F", "B_G_Offroad_01_F";
+//						VAN - "C_Van_01_box_F", "B_G_Van_01_transport_F", "C_Van_01_transport_F".
+//	New: New cargoes:	MRAP (C-130J) - "I_MRAP_03_F", "I_MRAP_03_gmg_F", "I_MRAP_03_hmg_F", "B_MRAP_01_F", "B_MRAP_01_gmg_F", "B_MRAP_01_hmg_F", "O_MRAP_02_F", "O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F";
+//						UGV (C-130J, ZAMAK, HEMTT) - "B_UGV_01_rcws_F", "B_UGV_01_F", "O_UGV_01_rcws_F", "O_UGV_01_F", "I_UGV_01_rcws_F", "I_UGV_01_F";
+//						VAN (C-130J, ZAMAK, HEMTT) - "C_Van_01_box_F", "B_G_Van_01_transport_F", "C_Van_01_transport_F";
+//						Offroad (C-130J, ZAMAK, HEMTT) - "C_Offroad_01_F", "B_G_Offroad_01_F", "B_G_Offroad_01_armed_F";
+//						SUV (C-130J, HEMTT) - "C_SUV_01_F";
+//						Hatchback (C-130J, ZAMAK, HEMTT, Mohawk) - "C_Hatchback_01_F";
+//	Known Issue: Attention! The problem of exploding helicopters also occurs with the C-130J (http://feedback.arma3.com/view.php?id=17310). It also occurs when the boxes causing it will be loaded onto a vehicle, and the vehicle on the C-130J.
+//	Known Issue: C-130J Transport and IgiLoad usable ramp: Currently, only works with a closed bottom part of the ramp (you can also jump with a fully closed ramp). After solving the problem, I make appropriate changes in IgiLoad.
+//	Fix: SDV back on supported cargoes for CH-49 Mohawk.
+//	Fix: Parachutes collisions with CH-49 Mohawk in stationary flight.
+//	Change: Cargo parachutes for cargo.
+//	Change: Minimum altitude for the drop with parachute changed from 30 to 50 meters. The change forced by eliminating collisions and change parachute. Without changing this limit some players and cargo landed to the ground without a parachute.
+//	Change: Procedure "IL_Do_Load" has been modified in order to facilitate the preparation of vehicles loaded with cargo by scripts.
 //
 //	Changelog v0.9.6:
 //	New: Useble ramp added. Ramp allows parachute jumping without losing the backpack. To disable set variable "IL_Ramp" to false.
