@@ -5,14 +5,14 @@ item0[] = {"start",0,250,-609.394836,-334.812927,-555.514771,-300.866486,0.00000
 item1[] = {"true",8,218,-389.901001,-334.008606,-342.710327,-303.406647,0.000000,"true"};
 item2[] = {"healthy",2,250,-121.197121,-346.219635,-23.077042,-290.459534,0.000000,"healthy"};
 item3[] = {"fall_in_agony",4,218,-117.047508,-259.680817,-27.047356,-209.680801,0.000000,"fall in agony"};
-item4[] = {"agony",2,250,-122.805183,-25.815657,-21.444450,40.464771,0.000000,"agony"};
+item4[] = {"agony",2,4346,-122.805183,-25.815657,-21.444450,40.464771,0.000000,"agony"};
 item5[] = {"dead",4,218,102.903969,-176.190262,207.572708,-111.208710,100.000000,"dead"};
 item6[] = {"healed",4,218,-228.072388,-166.228516,-175.571960,-134.978012,50.000000,"healed"};
 item7[] = {"die___clean_up",2,250,122.001694,-247.638123,188.334717,-215.044495,0.000000,"die &" \n "clean up"};
 item8[] = {"is_playable",4,218,118.492813,-343.494995,190.724411,-293.914337,0.000000,"is" \n "playable"};
 item9[] = {"un_anim",2,250,-390.007019,-162.277451,-341.908752,-138.116821,0.000000,"un-anim"};
 item10[] = {"dragged",4,218,60.306198,153.701035,113.991310,188.337036,10.000000,"dragged"};
-item11[] = {"drag_anim1",2,4346,4.858387,220.769318,70.415916,248.421844,0.000000,"drag anim1"};
+item11[] = {"drag_anim1",2,250,4.858387,220.769318,70.415916,248.421844,0.000000,"drag anim1"};
 item12[] = {"released",4,218,-32.086323,154.401886,27.185787,179.260864,1.000000,"released"};
 item13[] = {"first_aid",4,218,-276.926025,148.085205,-223.240860,182.721298,8.000000,"first aid"};
 item14[] = {"fa_finish",4,218,-181.055389,154.788269,-121.783318,179.647293,1.000000,"fa finish"};
@@ -86,7 +86,7 @@ link45[] = {33,4};
 link46[] = {34,35};
 link47[] = {35,24};
 globals[] = {0.000000,0,0,0,0,640,480,1,56,6316128,1,-652.281982,517.110352,426.921021,-567.772156,1071,911,1};
-window[] = {2,-1,-1,-1,-1,912,175,1434,175,3,1089};
+window[] = {2,-1,-1,-1,-1,862,125,1384,125,3,1089};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -192,7 +192,7 @@ class FSM
        "" \n
        "	//Start the bloodloss system as long as the unit is local" \n
        "	if(local _unit) then {" \n
-       "		_unit execFSM (""ais_injury\fsm\cws_bloodloss.fsm"");" \n
+       "		_unit execFSM (""cws_injury\fsm\cws_bloodloss.fsm"");" \n
        "	};" \n
        "	" \n
        "	//If there are fewer than 3 players not in agony in the group then send an AI to come help" \n
@@ -252,7 +252,7 @@ class FSM
        "" \n
        "	//Put up the map marker if the unit is on the same side as the local/current player" \n
        "	if (playerSide == _side) then {" \n
-       "		[_unit] execFSM (""ais_injury\fsm\cws_marker.fsm"");" \n
+       "		[_unit] execFSM (""cws_injury\fsm\cws_marker.fsm"");" \n
        "	};" \n
        "};" \n
        "" \n
