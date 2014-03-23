@@ -85,8 +85,8 @@ link44[] = {32,31};
 link45[] = {33,4};
 link46[] = {34,35};
 link47[] = {35,24};
-globals[] = {0.000000,0,0,0,0,640,480,1,56,6316128,1,-652.281982,517.110352,426.921021,-567.772156,1071,911,1};
-window[] = {2,-1,-1,-1,-1,862,125,1384,125,3,1089};
+globals[] = {0.000000,0,0,0,0,640,480,1,56,6316128,1,-652.281982,517.110352,426.921021,-567.772156,933,921,1};
+window[] = {2,-1,-1,-1,-1,840,1984,3243,103,3,951};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -246,7 +246,7 @@ class FSM
        "" \n
        "	//Send out a chat message if the unit is on the same side as the local/current player" \n
        "	_side = _unit getVariable ""cws_ais_side"";" \n
-       "	if(cws_ais_show_injury_message) then {" \n
+       "	if(cws_ais_show_injury_message == 1) then {" \n
        "		[_side,""HQ""] sideChat format [""%1 is down and needs help at %2"", name _unit, mapGridPosition _unit];" \n
        "	};" \n
        "" \n

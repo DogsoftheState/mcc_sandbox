@@ -19,14 +19,15 @@ _duration = if (count _this > 2) then {_this select 2} else {10};
 
 disableSerialization;
 _layer = "cwsDeadLayer" call BIS_fnc_rscLayer;
-_layer cutRsc ["RscDeadQuote", "PLAIN"]; sleep 1;
+_layer cutRsc ["RscDeadQuote", "PLAIN"];
+sleep 1;
 _time = time;
 waitUntil {
-	_xxx = uinamespace getvariable "cws_ais_title";
+	_xxx = uinamespace getvariable "cws_title";
 	!isNil "_xxx" || {_time + 1 > time}
 };
 
-_display = uinamespace getvariable "cws_ais_title";
+_display = uinamespace getvariable "cws_title";
 if (isNil "_display") exitWith {};
 
 if (str (_display) != "no display") then {

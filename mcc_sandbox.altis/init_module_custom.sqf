@@ -1,5 +1,5 @@
 //--------------------------IgiLoad----------------------------------------------
-[] execVM "IgiLoad\IgiLoadInit.sqf;
+[] execVM "IgiLoad\IgiLoadInit.sqf";
 
 //--------------------------CWS -------------------------------------------------
 call compile preprocessFile "cws_injury\cws_init.sqf";
