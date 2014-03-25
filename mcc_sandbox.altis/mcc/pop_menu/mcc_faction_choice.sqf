@@ -33,7 +33,7 @@ if (isClass(_cfgside)) then
 		if (isClass(_cfgfaction)) then
 			{
 			_CfgfactionName	= getText (_cfgfaction >> "name");
-			if (_CfgfactionName == _factionDisplayName) then 
+			if ((_CfgfactionName == _factionDisplayName) || (configname(configFile >> "CfgFactionClasses" >> MCC_faction) == configname(_cfgfaction))) then 
 				{
 				for "_k" from 0 to ((count _Cfgfaction) - 1) do
 					{
@@ -248,6 +248,7 @@ publicVariableServer "MCC_MWGroupArrayStatic";
 //Add this two for general stuff
 MCC_groupTypes set [count MCC_groupTypes, ["Reinforcement","Reinforcement"]]; 
 MCC_groupTypes set [count MCC_groupTypes, ["Garrison","Garrison"]]; 
+MCC_groupTypes set [count MCC_groupTypes, ["Custom","Custom"]];
 
 GEN_INFANTRY   		= [mcc_sidename,mcc_faction,(MCC_groupTypes select 0) select 0,"LAND"]   call mcc_make_array_grps;
 

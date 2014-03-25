@@ -27,7 +27,15 @@ ctrlShow [MCC_3DComploadBcgIDC,false];
 
 disableSerialization;
 private ["_mccdialog","_comboBox","_displayname","_x"];
+
+MCC3DInitDone = false; 
+
 _mccdialog = findDisplay MCC3D_IDD;
+uiNamespace setVariable ["MCC3D_Dialog", _this select 0];
+
+
+((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0) ctrlMapAnimAdd [0, uiNamespace getVariable "MCC3D_DialogMapScale", getpos MCC_3D_CAM];
+ctrlMapAnimCommit ((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0);
 
 _comboBox = _mccdialog displayCtrl MCC_FACTION;		//fill combobox CFG factions
 	lbClear _comboBox;
@@ -44,7 +52,9 @@ lbClear _comboBox;
 	_index = _comboBox lbAdd _displayname;
 } foreach ["Infantry", "Vehicles", "Tracked/Static", "Motorcycle", "Helicopter", "Fixed-wing", "Ship", "D.O.C", "Ammo", "Objects (Fortifications)", "Objects (Dead Bodies)", "Objects (Furniture)", 
 			"Objects (Market)", "Objects (Construction)", "Objects (Signs)", "Objects (Flags)", "Objects (Military)","Objects (Small)", "Objects (Wrecks)", "Objects (Submerged)", "Objects (Tents)","Objects (Garbage)","Objects (Lamps)",
-			"Objects (Container)","Objects (Structures)","Objects (Helpers)","Objects (Training)","Mines","Animals"];
+			"Objects (Container)","Objects (Helpers)","Objects (Training)","Mines","Animals","Structures (Airport)","Structures (Military)","Structures (Cultural)","Structures (Walls)","Structures (Infrastructure)","Structures (commercial)",
+			"Structures (Industrial)","Structures (Town)","Structures (Village)","Structures (Fences)","Structures (General)","Backpacks","Intel","Items","Items (Headgear)","Items (Uniforms)","Items (Vests)","Weapons (Accessories)","Weapons (Handguns)",
+			"Weapons (Primary)","Weapons (Secondary)","Respawn Items"];
 _comboBox lbSetCurSel MCC_class_index;
 
 _comboBox = _mccdialog displayCtrl MCC_SETTING_EMPTY;		//fill combobox Empty on/off
@@ -70,3 +80,6 @@ lbClear _comboBox;
 	_comboBox lbAdd _displayname;
 } foreach MCC_ZoneLocation;
 _comboBox lbSetCurSel mcc_hc;	//MCC_ZoneLocation_index;	
+
+sleep 1; 
+MCC3DInitDone = true;

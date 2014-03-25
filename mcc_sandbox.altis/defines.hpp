@@ -1,19 +1,14 @@
 #define MCCPATH ""
-#define MCCVersion "18"
+#define MCCVersion "0.1"
 
 #include "mcc\dialogs\mcc_dialogs.hpp"
-#include "mcc\dialogs\mcc_guiTab1.hpp"
-#include "mcc\dialogs\mcc_guiTab2.hpp"
-#include "mcc\dialogs\mcc_guiTab3.hpp"
-#include "mcc\dialogs\mcc_guiTab4.hpp"
-#include "mcc\dialogs\mcc_guiTab5.hpp"
-
-#include "mcc\dialogs\mcc_guiTabLoading.hpp"
 
 #include "mcc\dialogs\mcc_saveLoadScreen.hpp"
 #include "mcc\dialogs\mcc_3d_dialog.hpp"
 #include "mcc\Dialogs\mcc_boxGen.hpp"
 #include "mcc\Dialogs\mcc_groupsGen.hpp"
+#include "mcc\Dialogs\mcc_loginDialog.hpp"
+#include "mcc\Dialogs\mcc_MWMainDialog.hpp"
 
 #include "mcc\Dialogs\mcc_playerConsole.hpp"
 #include "mcc\Dialogs\MCC_playerConsole2.hpp"
@@ -23,6 +18,8 @@
 
 #include "mcc\Dialogs\MCCMW_briefingMap.hpp"
 
+//---- test I should delete it at the end
+#include "mcc\dialogs\test.hpp"
 //--------------------------------CP------------------------------------------------
 
 #define CPPATH ""
@@ -214,6 +211,11 @@ class CfgFunctions
 			{
 				description = "Teleport the player when start location has been found";
 			};
+			
+			class spawnGroup
+			{
+				description = "MCC Custom group spawning";
+			};
 		};
 		
 		class ui
@@ -340,6 +342,16 @@ class CfgFunctions
 			class groupGenRefresh
 			{
 				description = "Refresh the group gen markers";
+			};
+			
+			class groupSpawn
+			{
+				description = "Create a group on the server";
+			};
+			
+			class groupGenUMRefresh
+			{
+				description = "Refresh the group gen units lists";
 			};
 		};
 		
@@ -522,6 +534,8 @@ class CfgFunctions
 			class transferSaveMenu {};
 			class transferSaveGear {};
 			class VASP {};
+			class quickAttachment {};
+			class accList {};
 		};
 	};
 };
@@ -782,9 +796,8 @@ class RscTitles
 {
 	#include "cws_injury\dialogs\rscTitlesCWS.hpp"
 	#include "TAA_name\GUI\TAA_dynamic_name.hpp"
-	
 	titles[]={"img"};
-
+	
 	class img
 	{
 		idd=-1;
@@ -806,6 +819,8 @@ class RscTitles
             h=0.4;
         };
 	};
+	
+	#include "mcc\dialogs\compass.hpp"
 };
 
 class CfgMusic {
@@ -1072,6 +1087,21 @@ class CfgSounds	{
 	sound[] = {"sounds\missile.ogg", 1, 1};
 	titles[] = {};
 	};
+	
+	class nvSound
+	{
+		name = "nvSound";
+		sound[] = {"sounds\nvSound.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MCC_button
+	{
+		name = "MCC_button";
+		sound[] = {"sounds\MCC_button.ogg", 1, 1};
+		titles[] = {};
+	};
+
 };
 
 class CfgNotifications

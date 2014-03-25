@@ -16,7 +16,7 @@
 
 //-----------------------------------------------------------------------------
 // Fonts
-#define MCCFontM "TahomaB"
+#define MCCFontM "PuristaMedium"
 #define MCCFontHTML "TahomaB"
 //"CourierNewB64" "TahomaB" "Bitstream" "Zeppelin32"
 
@@ -116,12 +116,132 @@ class MCC_RscText
   y = 0.0;
 };
 //----------------------------------------------------------
+class MCC_RscControlsGroupNoScrollbars 
+{ 
+	h = 1;
+	idc = -1;
+	shadow = 0;
+	style = 16;
+	type = 15;
+	w = 1;
+	x = 0;
+	y = 0;
+	
+	class Controls;
+	class HScrollbar
+	{
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+		autoScrollDelay = 5;
+		autoScrollEnabled = 0;
+		autoScrollRewind = 0;
+		autoScrollSpeed = -1;
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+		color[] = {1,1,1,1};
+		colorActive[] = {1,1,1,1};
+		colorDisabled[] = {1,1,1,0.3};
+		height = 0;
+		scrollSpeed = 0.06;
+		shadow = 0;
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		width = 0;
+	};
+	
+	class VScrollbar
+	{
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+		autoScrollDelay = 5;
+		autoScrollEnabled = 1;
+		autoScrollRewind = 0;
+		autoScrollSpeed = -1;
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+		color[] = {1,1,1,1};
+		colorActive[] = {1,1,1,1};
+		colorDisabled[] = {1,1,1,0.3};
+		height = 0;
+		scrollSpeed = 0.06;
+		shadow = 0;
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		width = 0;
+	};
+};
+
+class MCC_RscControlsGroup
+{ 
+	h = 1;
+	idc = -1;
+	shadow = 0;
+	style = 16;
+	type = 15;
+	w = 1;
+	x = 0;
+	y = 0;
+	
+	class Controls;
+	class HScrollbar
+	{
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+		autoScrollDelay = 5;
+		autoScrollEnabled = 0;
+		autoScrollRewind = 0;
+		autoScrollSpeed = -1;
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+		color[] = {1,1,1,1};
+		colorActive[] = {1,1,1,1};
+		colorDisabled[] = {1,1,1,0.3};
+		height = 0;
+		scrollSpeed = 0.06;
+		shadow = 0;
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		width = 0;
+	};
+	
+	class VScrollbar
+	{
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+		autoScrollDelay = 5;
+		autoScrollEnabled = 1;
+		autoScrollRewind = 0;
+		autoScrollSpeed = -1;
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+		color[] = {1,1,1,1};
+		colorActive[] = {1,1,1,1};
+		colorDisabled[] = {1,1,1,0.3};
+		height = 0;
+		scrollSpeed = 0.06;
+		shadow = 0;
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		width = 0;
+	};
+	
+	class ScrollBar
+	{
+        arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+		autoScrollDelay = 5;
+		autoScrollEnabled = 0;
+		autoScrollRewind = 0;
+		autoScrollSpeed = -1;
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+		color[] = {1,1,1,1};
+		colorActive[] = {1,1,1,1};
+		colorDisabled[] = {1,1,1,0.3};
+		height = 0;
+		scrollSpeed = 0.06;
+		shadow = 0;
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		width = 0;
+	};
+};
 
 class MCC_RscButton 
 {
   access = 0;
   borderSize = 0;
-  colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])","(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])","(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])",0.7};
+  colorBackground[] = {0.350,0.350,0.350,1};
   colorBackgroundActive[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])","(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])","(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])",1};
   colorBackgroundDisabled[] = {0.95,0.95,0.95,1};
   colorBorder[] = {0,0,0,1};
@@ -137,11 +257,11 @@ class MCC_RscButton
   offsetX = 0.003;
   offsetY = 0.003;
   shadow = 2;
-  sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-  soundClick[] = {"\A3\ui_f\data\sound\onclick",0.07,1};
-  soundEnter[] = {"\A3\ui_f\data\sound\onover",0.09,1};
-  soundEscape[] = {"\A3\ui_f\data\sound\onescape",0.09,1};
-  soundPush[] = {"\A3\ui_f\data\sound\new1",0,0};
+  sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+  soundClick[] = {"\A3\ui_f\data\sound\RscButton\soundClick",0.07,1};
+  soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1};
+  soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1};
+  soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1};
   style = 2;
   text = "";
   type = 1;
@@ -150,6 +270,44 @@ class MCC_RscButton
   y = 0;
 };
 
+class MCC_RscCheckBox 
+{
+	checked = 0;
+	color[] = {1,1,1,0.7};
+	colorBackground[] = {0,0,0,0};
+	colorBackgroundDisabled[] = {0,0,0,0};
+	colorBackgroundFocused[] = {0,0,0,0};
+	colorBackgroundHover[] = {0,0,0,0};
+	colorBackgroundPressed[] = {0,0,0,0};
+	colorDisabled[] = {1,1,1,0.2};
+	colorFocused[] = {1,1,1,1};
+	colorHover[] = {1,1,1,1};
+	colorPressed[] = {1,1,1,1};
+	h = "0.04 * safezoneH";
+	idc = -1;
+	soundClick[] = {"",0.1,1};
+	soundEnter[] = {"",0.1,1};
+	soundEscape[] = {"",0.1,1};
+	soundPush[] = {"",0.1,1};
+	style = 0;
+	textureChecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_checked_ca.paa";
+	textureDisabledChecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_checked_ca.paa";
+	textureDisabledUnchecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_unchecked_ca.paa";
+	textureFocusedChecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_checked_ca.paa";
+	textureFocusedUnchecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_unchecked_ca.paa";
+	textureHoverChecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_checked_ca.paa";
+	textureHoverUnchecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_unchecked_ca.paa";
+	texturePressedChecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_checked_ca.paa";
+	texturePressedUnchecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_unchecked_ca.paa";
+	textureUnchecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_unchecked_ca.paa";
+	tooltipColorBox[] = {1,1,1,1};
+	tooltipColorShade[] = {0,0,0,0.65};
+	tooltipColorText[] = {1,1,1,1};
+	type = 77;
+	w = "0.025 * safezoneW";
+	x = "0.375 * safezoneW + safezoneX";
+	y = "0.36 * safezoneH + safezoneY";
+};
 class MCC_RscButtonMenu : MCC_RscButton
 {
   action = "";
@@ -162,7 +320,7 @@ class MCC_RscButtonMenu : MCC_RscButton
   color2[] = {1,1,1,1};
   color[] = {1,1,1,1};
   colorBackground2[] = {1,1,1,0.5};
-  colorBackground[] = {0,0,0,0.8};
+  colorBackground[] = {0.450,0.450,0.450,1};
   colorDisabled[] = {1,1,1,0.25};
   colorText[] = {1,1,1,1};
   default = 0;
@@ -174,7 +332,7 @@ class MCC_RscButtonMenu : MCC_RscButton
   shadow = 0;
   shortcuts[] = {};
   size = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-  sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+  sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
   soundClick[] = {"\A3\ui_f\data\sound\onclick",0.07,1};
   soundEnter[] = {"\A3\ui_f\data\sound\onover",0.09,1};
   soundEscape[] = {"\A3\ui_f\data\sound\onescape",0.09,1};
@@ -289,7 +447,53 @@ class MCC_RscListbox
 			width = 0;
 		};
 	};
-	
+
+
+class MCC_RscTree 
+{
+	access = 0;
+	borderSize = 0;
+	colorArrow[] = {1,1,1,1};
+	colorBackground[] = {0,0,0,0};
+	colorBorder[] = {0,0,0,0};
+	colorDisabled[] = {1,1,1,0.25};
+	colorMarked[] = {0.2,0.3,0.7,1};
+	colorMarkedSelected[] = {0,0.5,0.5,1};
+	colorMarkedText[] = {0,0,0,1};
+	colorSelect[] = {1,1,1,0.7};
+	colorSelectBackground[] = {0,0,0,0.5};
+	colorSelectText[] = {0,0,0,1};
+	colorText[] = {1,1,1,1};
+	expandedTexture = "A3\ui_f\data\gui\rsccommon\rsctree\expandedTexture_ca.paa";
+	expandOnDoubleclick = 1;
+	font = "PuristaMedium";
+	hiddenTexture = "A3\ui_f\data\gui\rsccommon\rsctree\hiddenTexture_ca.paa";
+	maxHistoryDelay = 1;
+	multiselectEnabled = 0;
+	rowHeight = 0.0439091;
+	shadow = 0;
+	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	style = 0;
+	type = 12;
+	class ScrollBar
+		{
+			arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+			arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+			autoScrollDelay = 5;
+			autoScrollEnabled = 0;
+			autoScrollRewind = 0;
+			autoScrollSpeed = -1;
+			border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+			color[] = {1,1,1,0.6};
+			colorActive[] = {1,1,1,1};
+			colorDisabled[] = {1,1,1,0.3};
+			height = 0;
+			scrollSpeed = 0.06;
+			shadow = 0;
+			thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+			width = 0;
+		};
+};	
 class MCC_RscCombo 
 	{
 	access = 0;
@@ -811,7 +1015,7 @@ class MCC_RscToolbox {
 	  colorSelect[] = {0, 0, 0, 1};
 	  colorTextDisable[] = {0.4, 0.4, 0.4, 1};
 	  colorDisable[] = {0.4, 0.4, 0.4, 1};
-	  colorSelectedBg[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])","(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])","(profilenamespace getvariable ['GUI_BCG_RGB_B',0.5])",0.5};
+	  colorSelectedBg[] = {0.450,0.450,0.450,1};
 	  font = "PuristaMedium";
 	  sizeEx = 0.0208333;
 };

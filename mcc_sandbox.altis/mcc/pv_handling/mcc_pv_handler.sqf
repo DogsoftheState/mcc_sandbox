@@ -165,13 +165,11 @@ my_pv_handler =
 				case 0:	//regular
 				{
 					_zoneLogType = "MCC REGULAR";
-					//_mmcZoneTypeNr = MCC_ZoneType_nr1;
 					_specialUpsNr = "";
 				};
 				
 				case 1:	//repawn
 				{
-					//_mmcZoneTypeNr = MCC_ZoneType_nr2;
 					_zoneLogType = "MCC RESPAWN";
 					if ( _p_mcc_zonetypenr == 0 ) then
 					{
@@ -190,7 +188,6 @@ my_pv_handler =
 				case 2:	//patrol
 				{
 					_zoneLogType = "MCC PATROL";
-					//_mmcZoneTypeNr = MCC_ZoneType_nr3;
 					_specialUps = "NOWAIT";
 					_specialUpsNr = "";
 				};	
@@ -199,7 +196,6 @@ my_pv_handler =
 				{
 					_zoneLogType = "MCC REINFORCEMENT";
 					_specialUpsNr = "";
-					//_mmcZoneTypeNr = MCC_ZoneType_nr4;
 				};																					
 			};
 								
@@ -345,7 +341,8 @@ my_pv_handler =
 																
 								if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zone_behavior != "bisp") then 
 								{
-									nul = [leader _unitspawned, _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units,"spawned" ,_p_mcc_awareness  ] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+									//nul = [leader _unitspawned, _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units,"spawned" ,_p_mcc_awareness  ] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+									_unitspawned setVariable ["GAIA_ZONE_INTEND",[_p_mcc_zone_markername,_p_mcc_zone_behavior], true];
 								} 
 								else	
 								{
@@ -398,7 +395,8 @@ my_pv_handler =
 												{
 													if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zone_behavior != "bisp") then 
 													{
-														nul = [leader (_unitspawned select 2), _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER","NOWAIT","NOSLOW",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units,"spawned",_p_mcc_awareness] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+														//nul = [leader (_unitspawned select 2), _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER","NOWAIT","NOSLOW",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units,"spawned",_p_mcc_awareness] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+														(_unitspawned select 2) setVariable ["GAIA_ZONE_INTEND",[_p_mcc_zone_markername,_p_mcc_zone_behavior], true];
 													} 
 													else	
 													{
@@ -410,7 +408,8 @@ my_pv_handler =
 												{
 													if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zone_behavior != "bisp") then 
 													{
-														nul = [leader (_unitspawned select 2), _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER",_track_units,"spawned",_specialUps,_specialUpsNr,_specialUpsRandom, _p_mcc_awareness] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+														//nul = [leader (_unitspawned select 2), _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER",_track_units,"spawned",_specialUps,_specialUpsNr,_specialUpsRandom, _p_mcc_awareness] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+														(_unitspawned select 2) setVariable ["GAIA_ZONE_INTEND",[_p_mcc_zone_markername,_p_mcc_zone_behavior], true];
 													} 
 													else
 													{
@@ -422,7 +421,8 @@ my_pv_handler =
 												{					
 													if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zone_behavior != "bisp") then 
 													{
-														nul = [leader (_unitspawned select 2), _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER","NOWAIT",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units,"spawned",_p_mcc_awareness] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+														//nul = [leader (_unitspawned select 2), _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER","NOWAIT",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units,"spawned",_p_mcc_awareness] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+														(_unitspawned select 2) setVariable ["GAIA_ZONE_INTEND",[_p_mcc_zone_markername,_p_mcc_zone_behavior], true];
 													} 
 													else
 													{
@@ -463,13 +463,13 @@ my_pv_handler =
 										_p_mcc_spawnfaction = if (typeName _p_mcc_spawnfaction == "STRING") then {(call compile _p_mcc_spawnfaction)} else {_p_mcc_spawnfaction}; 
 										//Depending on faction we spawn for side
 										if (_p_mcc_grouptype=="GUE") then
-										    {_unitspawned=[_safepos, resistance, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call BIS_fnc_spawnGroup;};										
+										    {_unitspawned=[_safepos, resistance, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};										
 										if (_p_mcc_grouptype=="WEST") then
-										    {_unitspawned=[_safepos, west, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call BIS_fnc_spawnGroup;};																				
+										    {_unitspawned=[_safepos, west, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};																				
 										if (_p_mcc_grouptype=="EAST") then
-										    {_unitspawned=[_safepos, east, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call BIS_fnc_spawnGroup;};										
+										    {_unitspawned=[_safepos, east, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};										
 										if (_p_mcc_grouptype=="CIV") then
-										    {_unitspawned=[_safepos, civilian, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call BIS_fnc_spawnGroup;};										
+										    {_unitspawned=[_safepos, civilian, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};										
 										
 										{
 											_x setSkill ["aimingspeed", MCC_AI_Aim];
@@ -489,7 +489,8 @@ my_pv_handler =
 												{
 													if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zone_behavior != "bisp") then 
 													{
-														nul = [leader _unitspawned, _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER", "NOWAIT", "NOSLOW", "spawned",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units, _p_mcc_awareness  ] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+														//nul = [leader _unitspawned, _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER", "NOWAIT", "NOSLOW", "spawned",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units, _p_mcc_awareness  ] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+														_unitspawned setVariable ["GAIA_ZONE_INTEND",[_p_mcc_zone_markername,_p_mcc_zone_behavior], true];
 													} 
 													else
 													{
@@ -502,7 +503,8 @@ my_pv_handler =
 													_unitspawned setFormation (MCC_groupFormation select (floor random (count MCC_groupFormation)));
 													if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zone_behavior != "bisp") then 
 													{
-														nul = [leader _unitspawned, _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units, "spawned", _p_mcc_awareness   ] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+														//nul = [leader _unitspawned, _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units, "spawned", _p_mcc_awareness   ] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+														_unitspawned setVariable ["GAIA_ZONE_INTEND",[_p_mcc_zone_markername,_p_mcc_zone_behavior], true];
 													}
 													else
 													{
@@ -516,7 +518,8 @@ my_pv_handler =
 												{					
 													if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zone_behavior != "bisp") then 
 													{
-														nul = [leader _unitspawned, _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER", "NOWAIT",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units, "spawned", _p_mcc_awareness  ] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+														//nul = [leader _unitspawned, _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER", "NOWAIT",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units, "spawned", _p_mcc_awareness  ] execVm format ["%1scripts\UPSMON.sqf",MCC_path];
+														_unitspawned setVariable ["GAIA_ZONE_INTEND",[_p_mcc_zone_markername,_p_mcc_zone_behavior], true];
 													} 
 													else
 													{
@@ -530,7 +533,8 @@ my_pv_handler =
 												{					
 													if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zone_behavior != "bisp") then 
 													{
-														nul = [leader _unitspawned, _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER", "NOWAIT",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units, "spawned", _p_mcc_awareness  ] execVm format ["%1scripts\UPSMON.sqf",MCC_path];;
+														//nul = [leader _unitspawned, _p_mcc_zone_markername, _p_mcc_zone_behavior, "SHOWMARKER", "NOWAIT",_specialUps,_specialUpsNr,_specialUpsRandom,_track_units, "spawned", _p_mcc_awareness  ] execVm format ["%1scripts\UPSMON.sqf",MCC_path];;
+														_unitspawned setVariable ["GAIA_ZONE_INTEND",[_p_mcc_zone_markername,_p_mcc_zone_behavior], true];
 													}
 													else
 													{

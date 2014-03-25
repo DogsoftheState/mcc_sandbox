@@ -3,7 +3,7 @@
 // Example:[_totalEnemyUnits,_missionCenter,_radius,_arrayUnits,_priceGroup,_priceUnit,_side,_artillery] call MCC_fnc_MWSpawnStatic; 
 // Return - handler
 //========================================================================================================================================================================================
-private ["_side","_unitPlaced","_totalEnemyUnits","_radius","_arrayUnits","_group","_init","_perSpawn","_spawnPos",
+private ["_side","_unitPlaced","_totalEnemyUnits","_radius","_arrayUnits","_group","_init","_perSpawn","_spawnPos","_zone",
          "_priceGroup","_priceUnit","_price","_artillery","_pos","_missionCenter","_availablePos","_vehicleClass","_vehicle"];
 _totalEnemyUnits	= _this select 0;
 _missionCenter		= _this select 1;
@@ -13,6 +13,7 @@ _priceGroup			= _this select 4;
 _priceUnit			= _this select 5;
 _side				= _this select 6;
 _artillery			= _this select 7;	///0 - none, 1 - mortar, 2 - self propelled artillery, 3 - Random, 999 - not artillery piece
+_zone				= _this select 8;
 
 _unitPlaced = 0;
 
@@ -44,21 +45,25 @@ if (count _arrayUnits > 0) then
 		_pos = [((_availablePos select 0) select 0) select 0, ((_availablePos select 0) select 0) select 1,0];
 		_availablePos set [0, -1];
 		_availablePos = _availablePos - [-1]; 
-		
+		_group = createGroup _side; 
 		//Spawn the static pieces
 		for "_x" from 1 to _perSpawn step 1 do 
 		{ 
-			_radius = 20;
-			_spawnPos = _pos findEmptyPosition [10,_radius,_vehicleClass]; 
+			_radius = 40;
+			_spawnPos = _pos findEmptyPosition [20,_radius,_vehicleClass]; 
 			while {count _spawnPos == 0} do 
 			{
-				_radius = _radius +20;
-				_spawnPos = _pos findEmptyPosition [10,_radius,_vehicleClass]; 
+				_radius = _radius +40;
+				_spawnPos = _pos findEmptyPosition [20,_radius,_vehicleClass]; 
 				sleep 0.1; 
 			};
 			
-			_vehicle = [_pos, (random 360), _vehicleClass, _side] call bis_fnc_spawnvehicle; 
-			if (_artillery != 999) then {_nul = [(_vehicle select 0),1,2000,100,_artillery*6,_artillery*3,"Sh_82mm_AMOS",20] execVM MCC_path + "scripts\UPSMON\MON_artillery_add.sqf";};
+			_vehicle = [_spawnPos, (random 360), _vehicleClass, _group] call bis_fnc_spawnvehicle; 
+			if (_artillery != 999) then 
+							{
+								//_nul = [(_vehicle select 0),1,2000,100,_artillery*6,_artillery*3,"Sh_82mm_AMOS",20] execVM MCC_path + "scripts\UPSMON\MON_artillery_add.sqf";
+									(_vehicle select 0) setVariable ["GAIA_ZONE_INTEND",[_zone,"NOFOLLOW"], false];
+							};
 		};
 
 		_unitPlaced = _unitPlaced + (_priceUnit*_perSpawn);

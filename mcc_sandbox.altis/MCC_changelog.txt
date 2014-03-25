@@ -1,18 +1,102 @@
+Change log r2:0
+GAIA:
+- Fixed: Fortify updated with altered CBA taskdefend (credits CBA & Rommel).
+
+Engine:
+- Fixed: Groups/units created with "Create" button are not saved. 
+- Fixed: Error creating Resistance's groups/units created with "Create" button. 
+- Re-added: Role Selections. 
+
+3D Editor:
+- Added: Close button. 
+- Fixed: Drop down menus backgrounds are no longer opaque.
+- Added: Re-added structures in the drop down menu (hopefully BIS will introduce the new structures classes.. 
+- Added: Weapons' holders, intel exc to the 3D (on Dev branch).
+- Fixed: Recruit preset will recruit the whole unit's group (vehicle's crew). 
+- Added: Pickable items preset will have by default enableSimulation off so you can place them on tables exc. 
+
+GUI: 
+- Fixed: When opening a new container all other containers will be closed and not overlap. 
+- Fixed: In Box Gen drop down menus backgrounds are no longer opaque.
+- Fixed: Changing view mod hide the video feed.
+- Fixed: When selecting reinforcement or garrison the create button will not show only add to zone. 
+- Fixed: Missing units count for artillery and SF infantry when right clicking on a group icon. 
+
+VAS:
+- Updated to the latest version. 
+
+IED: 
+- Fixed: Non-jammable IED didn't explode. 
+
+Mission Wizard: 
+- Added: Mini map and zone combobox. 
+- Added: Random option for most of the wizard options - add more suprise to the mission maker. 
+- Added: Help tooltip to all options.
+- Fixed: Self propelled artillery spawn on top of each other. 
+
+Delete: 
+- Added: Delete lights - will delete all light sources in the area.
+
+
+
+Change log r19:
+Enging:
+- Added: Tooltips and indicators for Mission Settings.
+- Added: MCC AI's settings will effect units spawned via 3D editor or Group Gen. 
+- Fixed: MCC will now read addon's groups configs such as Aggressors. 
+- Fixed: Removed missing weapon config error message after respawn. 
+- Fixed: MCC zones visable on some clients
+- Fixed: Group Genrator will no longer draw waypoints leading [0,0,0]; 
+- Fixed: Save Gear didn't saved assigned items. 
+- Fixed: Removed explosion sounds from flares. 
+
+IED:
+- Fixed: IEDs will explode even if moved (car bomb) make sure to set the IED on radio activation so the explosion won't relay on the target's speed. 
+
+3D editor:
+- Reworkded: Total new look to the 3D editor interface. 
+- Added: Toggle thermal visions (WHot/BHot/NV/Thermal/Noraml) in 3D editor. 
+- Added: Hide/show 3D editor HUD with H key - for filming exc. 
+- Added: Compass to 3D editor
+- Added: Minimap to 3D editor.
+- Added: New structures classes to 3D editor
+- Changed: 3D editor safe distnace reduced to 10 meters and also added a timeout of 7 seconds if the cursor haven't been moved the vehicle will spawn anyway.
+
+Evac:
+- Added: Fast rope to evac. 
+- Added: Evac helicopters will return to their spawn location automaticlly after they have completed their drop. 
+
+Group Generator:
+- Reworked: Group Generator interface.
+- Added: Create zones, spawn units, exc from the Group Gen - in time it will replace menu 1 in MCC and a lot of functions will be called from there. 
+- Added: Create and save your own custom groups to profileNameSpace. Spawn or use them in the Mission Wizard. 
+
+- TODO Role selection
+- TODO access rights
+- TODO replace by checkboxes
+- TODO show SF in right click. 
+- TODO hints and tooltips
+- TODO: Tooltip missionWizard.
+- TODO Save all MCC to 2D editor
+- TODO 3D icons?!
+- TODO Save WP
+- TODO: Manual.
+
+- pre init check.
+- vehicle init check. 
+- seperate init?
+
+
+
+- TODO different Consoles
+- TODO CAS call
+
 Change log r18:
 - Added: Save Gear option in mission settings - by default MCC save gear is off so it won't collide with other medical systems (respawning without primary weapon bug after revive in BTC)
 - Fixed: Major lags when using the 3D editor. 
 - Fixed: Mission Wizard hostage task completed instantly. 
 - Fixed: Console evac didn't work
 - Fixed: Console Airdrop didn't work. 
-
-- pre init check.
-- vehicle init check. 
-- seperate init?
-- TODO Save groups to profileSpace
-- TODO Save all MCC to 2D editor
-- TODO Save WP
-- TODO different Consoles
-- TODO CAS call
 
 Change log r17:
 

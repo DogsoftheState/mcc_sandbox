@@ -253,7 +253,7 @@ if (_cargoNum > 0) then
 	{
 		if !( _customParaGroup ) then 
 		{ 
-			_unitspawned=[[100,100,5000], _side, (call compile _spawnParaGroup),[],[],[0.1,MCC_AI_Skill],[],[_cargoEmtpy, 0]] call BIS_fnc_spawnGroup;
+			_unitspawned=[[100,100,5000], _side, (call compile _spawnParaGroup),[],[],[0.1,MCC_AI_Skill],[],[_cargoEmtpy, 0]] call MCC_fnc_spawnGroup;
 			sleep 0.1;
 		}
 		else
@@ -331,7 +331,7 @@ if ( _paraMode == 2 ) then  // toss ropes for fast-rope
 	_heli flyInHeight 20;
 	sleep 4;		
 	doStop (driver _heli);
-	waitUntil { sleep 1; ( (abs(speed _heli) < 0.5) && ((getPosATL _heli select 2) < 25) ) };
+	waitUntil { sleep 1; ( (abs(speed _heli) < 0.5) && ((getPosATL _heli select 2) < 25) )  || !alive _heli || !alive (driver _heli)};
 
 	{	
 		_rope = createVehicle ["land_rope_f", [0,0,0], [], 0, "CAN_COLLIDE"];

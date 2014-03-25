@@ -8,15 +8,18 @@ MCC_GUI1initDone = false;
 CP_debug = false; 
 MW_debug = true; 
 
-if (MCC_isMode) then {
+if (MCC_isMode) then 
+{
 	MCC_path = "\mcc_sandbox_mod\";
 	CP_path	 = "\mcc_sandbox_mod\";
-		} else {
-			MCC_path = "";
-			CP_path	 = "";
-			[] execVM MCC_path +"init_mission.sqf";
-			enableSaving [false, false];
-			};
+} 
+else 
+{
+	MCC_path = "";
+	CP_path	 = "";
+	[] execVM MCC_path +"init_mission.sqf";
+	enableSaving [false, false];
+};
 
 waituntil {!isnil "MCC_path"};
 
@@ -157,6 +160,10 @@ call compile preprocessFile "init_module_custom.sqf";
 //=		 				DO NOT EDIT BENEATH THIS LINE
 //====================================================================================================================
 //*********************************************************************************************************************
+
+//----------------------gaia------------------------------------------------------
+call compile preprocessfile format ["%1gaia\gaia_init.sqf",MCC_path];
+
 //-----------------------Bon artillery --------------------------------------------
 _nul = [] execVM MCC_path +"bon_artillery\bon_arti_init.sqf";
 
@@ -196,10 +203,6 @@ if (isnil "MCC_alwaysAllowTeleport") then {MCC_alwaysAllowTeleport = false};
 // use mcc logic module to set to false to disable auto teleport to mcc start location 
 if (isnil "MCC_teleportAtStart") then {MCC_teleportAtStart = true};
 
-// use mcc logic module to set to false to disable Suunto and/or auto viewdistance adjust
-MCC_HALOviewDistance = true;
-MCC_HALOviewAltimeter = true;
-
 //define stuff for popup menu
 MCC_mouseButtonDown = false; //Mouse state
 MCC_mouseButtonUp = true; 
@@ -209,14 +212,9 @@ MCC_unitName = "";
 MCC_capture_state = false;
 MCC_capture_var = "";
 MCC_zones_numbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40];
-MCC_zones_x = [[10],[25],[50],[100],[200],[300],[400],[500],[600],[700],[800],[900],[1000],[1500],[2000],[2500],[3000],[4000],[5000],[6000],[7000],[8000],[9000],[10000]];
 MCC_zone_drawing = false;
-// NEW
+
 MCC_ZoneType = [["regular",0],["respawn",1],["patrol",2],["reinforcement",3]];
-MCC_ZoneType_nr1 = [["rectangle",0],["rectangle 45",1],["rectangle 30",2]]; //regular
-MCC_ZoneType_nr2 = [["unlimited",0],["1",1],["2",2],["3",3],["4",4],["5",5],["6",6],["7",7],["8",8],["9",9],["10",10]]; // respawn
-MCC_ZoneType_nr3 = [["2",0],["3",1],["4",2],["5",3],["6",4],["7",5],["8",6],["9",7],["10",8]]; // patrol
-MCC_ZoneType_nr4 = [["specific - 1",0],["specific - 2",1],["specific - 3",2],["anyware",3]]; // reinforcement
 MCC_Marker_type = "RECTANGLE";
 MCC_Marker_dir = 0;
 MCC_MarkerZoneColor = "ColorYellow";
@@ -228,7 +226,6 @@ mcc_hc = 0; // 0 = UPSMON target is server, 1 = UPSMON target is HeadlessClient
 mcc_spawn_dir = [0,0,0];
 MCC_trackdetail_units = false; 
 
-// end NEW
 MCC_unit_array_ready=true; 
 MCC_faction_index = 0; 
 MCC_type_index = 0; 
@@ -257,17 +254,20 @@ MCC_shapeMarker = ["RECTANGLE","ELLIPSE"];
 MCC_colorsarray = [["Black","ColorBlack"],["White","ColorWhite"],["Red","ColorRed"],["Green","ColorGreen"],["Blue","ColorBlue"],["Yellow","ColorYellow"]];
 
 MCC_spawn_empty =[["No",true],["Yes",false]];
-MCC_spawn_behavior = [
-                      ["Agressive", "MOVE","AI will patrol the zone and pursuit known enemies outside the zone"],
+mcc_spawnbehavior = ""; 
+MCC_spawn_behaviors = [
+                      ["aggressive", "MOVE","AI will patrol the zone and pursuit known enemies outside the zone"],
 					  ["Defensive","NOFOLLOW","AI will patrol the zone but will not pursuit known enemies outside the zone"],
-					  ["Passive", "NOMOVE","AI will not patrol the zone but after being engaged he will acquire agressive behavior"],
 					  ["Fortify","FORTIFY","AI will look for empty building and static weapons and dig inside"],
-					  ["Ambush","AMBUSH","AI will look for roads, place mines and wait in ambush position"],
-					  ["On-Road Offensive","ONROADO","Like Offensive but most likely AI will stay on road"],
-					  ["On-Road Defensive","ONROADD","Like Defensive but most likely AI will stay on road"],
-					  ["BIS Default","bis","Regular ArmA AI behavior"],
+					  ["None","bis","Regular ArmA AI behavior"],
 					  ["BIS Defence","bisd","AI sit down some will patrol around"],
 					  ["BIS Patrol","bisp","AI will patrol around"]
+					  ];
+
+MCC_GAIA_spawn_behaviors = [
+                      ["aggressive", "MOVE","AI will patrol the zone and pursuit known enemies outside the zone"],
+					  ["Defensive","NOFOLLOW","AI will patrol the zone but will not pursuit known enemies outside the zone"],
+					  ["Fortify","FORTIFY","AI will look for empty building and static weapons and dig inside"]				
 					  ];
 MCC_spawn_awereness = [["Default", "default"],["Aware","Aware"],["Combat", "Combat"],["Stealth","stealth"],["Careless","Careless"]];
 MCC_empty_index = 0;
@@ -279,15 +279,8 @@ MCC_enable_respawn = true;
 MCC_months_array = [["January", 1],["February",2],["March", 3],["April",4],["May",5],["June", 6],["July",7],["August", 8],["September",9],["October",10],["November",11],["December",12]];
 MCC_days_array =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
 MCC_minutes_array =[00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59];
-MCC_hours_array = [["00:00",0],["01:00",1],["02:00",2],["03:00",3],["04:00",4],["05:00",5],["06:00",6],["07:00",7],["08:00",8],["09:00",9],["10:00",10],["11:00",11],["12:00",12],["13:00",13],["14:00",14],["15:00",15],["16:00",16],["17:00",17],["18:00",18],["19:00",19],["20:00",20],["21:00",21],["22:00",22],["23:00",23]];
+MCC_hours_array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
 MCC_weather_array = [["Clear",[0, 0, 0, 0, 0]], ["Clouded",[0.5, 0.5, 0.5, 0.5, 0.5]],["Rainy",[0.8, 0.8, 0.8, 0.8, 0.8]],["Storm",[1, 1, 1,1,1]]];
-MCC_fog_array = [["None",0], [1,0.1], [2,0.2], [3,0.3], [4,0.4], [5,0.5], [6,0.6], [7,0.7], [8,0.8], [9,0.9], ["Full",1]];
-MCC_months_index=0;
-MCC_day_index=0;
-MCC_hours_index=0;
-MCC_minutes_index=0;
-MCC_weather_index=0;
-MCC_fog_index=0;
 
 MCC_grass_array = [["No grass",50],["Medium grass",25], ["High grass",12.5]];
 MCC_view_array = [1000,2000,3000,4000,5000,6000,7000,8000,9000,10000];
@@ -370,7 +363,6 @@ MCC_evacVehicles_last = 0;
 MCCFirstOpenUI= true;
 
 MCC_UMunitsNames = [];
-MCC_UMstatus = 0;
 MCC_UMUnit = 0;
 MCC_gearDialogClassIndex = 0;
 MCC_UMParadropRequestMarker = false; 
@@ -380,6 +372,7 @@ MCC_UMisJoining = false;
 
 MCC_align3D 		= false; //Align to surface in 3D editor? 
 MCC_smooth3D		= false; //Smooth placing
+MCC3DRuning			= false;
 MCC_align3DText 	= "Enabled";
 MCC_smooth3DText	= "Disabled";
 MCC_clientFPS 	= 0;
@@ -399,14 +392,22 @@ MCC_aiAimIndex							= 0;
 MCC_aiSpotIndex							= 3;
 MCC_aiCommandIndex						= 5;
 MCC_t2tIndex							= 1;
+MCC_consoleGPSIndex						= 0;
+MCC_consoleShowFriendsIndex				= 0;
+MCC_consoleCommandAIIndex				= 0;
+MCC_nameTagsIndex						= 0;
+MCC_artilleryComputerIndex				= 1;
+MCC_saveGearIndex						= 0;
 
+
+//Group Gen
 MCC_groupGenCurrenGroupArray = []; 
 MCC_groupGenGroupArray = []; 
-	
-MCC_groupGenGroupcount = 0; 		//group spawned
+
 MCC_groupGenGroupselectedIndex = 0;
 MCC_groupGenTempWP = [];
 MCC_groupGenTempWPLines = [];
+MCC_currentSide = 0; //0- west 1 - east 2- resistance 3 - civilian
 
 //Bon artillery
 MCC_bonCannons = []; 
@@ -508,6 +509,17 @@ U_TRAINING				= [];
 U_MINES					= [];
 U_ANIMALS				= [];
 
+S_AIRPORT				= [];
+S_MILITARY				= [];
+S_CULTURAL				= [];
+S_WALLS					= [];
+S_INFRAS				= [];
+S_COMMERSIAL			= [];
+S_INDUSTRIAL			= [];
+S_TOWN					= [];
+S_VILLAGE				= [];
+S_FENCES				= [];
+
 //Weapons
 W_AR					= [];
 W_BINOS					= [];
@@ -524,6 +536,20 @@ U_GRENADE				= [];
 U_EXPLOSIVE				= [];
 U_UNIFORM				= [];
 U_GLASSES				= [];
+
+//Objects 3D
+O_BACKPACKS				= [];
+O_INTEL					= [];
+O_ITEMS					= [];
+O_HEADGEAR				= [];
+O_UNIFORMS				= [];
+O_VESTS					= [];
+O_WEAPONSACCES			= [];
+O_WEAPONSHANDGUNS		= [];
+O_WEAPONSPRIMARY		= [];
+O_WEAPONSSECONDARY		= [];
+O_RESPWN				= [];
+O_SOUNDS				= [];
 
 MCC_3Dobjects			= [];		//Place holder for 3D objects
 MCC_3DobjectsCounter	= -1;
@@ -615,9 +641,17 @@ CP_guarSpawnPoints	= [];
 CP_dialogInitDone = true; 				//define if dialog is been initialize
 CP_weaponAttachments = ["","",""];	
 CP_defaultLevel = [1,0];
+CP_activated = false;
 
-CP_activated = false; 			//CP activated on MCC mode
+missionnamespace setVariable ["CP_activated", false]; 			//CP activated on MCC mode
 
+"CP_activated" addPublicVariableEventHandler 
+{
+	if(CP_activated && !isDedicated) then
+	{
+		_null=[] execVM CP_path + "scripts\player\player_init.sqf"
+	};
+};
 //---------------------------------------------
 //		Index
 //---------------------------------------------
@@ -734,7 +768,7 @@ CP_classesPic = [	CP_path +"configs\data\Officer.paa",
 //=============================Sync with server when JIP======================
 waituntil {alive player};
 
-MCC_groupGenGroupStatus = side player; 	
+MCC_groupGenGroupStatus = [west,east,resistance,civilian]; 	
 
 if (!isServer && !(MCC_isLocalHC)) then
 	{
@@ -752,6 +786,8 @@ if (!isServer && !(MCC_isLocalHC)) then
 			_html = "<t color='#818960' size='1.2' shadow='0' align='left' underline='true'>" + "Synchronizing with server" + "</t><br/><br/>";
 			//add _text
 			_html = _html + "<t color='#a9b08e' size='1' shadow='0' shadowColor='#312100' align='left'>" + "Wait a moment, Synchronizing with the server" + "</t>";
+			_html = _html + "<br/><t color='#a9b08e' size='1' shadow='0' shadowColor='#312100' align='left'>" + "Use Alt+T to teleport to your team" + "</t>";
+			
 			//add _footer
 			_html = _html + "<br/><br/><t color='#818960' size='0.85' shadow='0' align='right'>" + _footer + "</t>";
 			hintsilent parseText(_html);
@@ -779,7 +815,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	// Add to the action menu
 	if (getplayerUID player in MCC_allowedPlayers || "all" in MCC_allowedPlayers || serverCommandAvailable "#logout" || isServer) then 
 	{
-		mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= Mission generator =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+		mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 		player setvariable ["MCC_allowed",true,true];
 	};
 	
@@ -808,7 +844,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	//Handle Name Tags
 	[] spawn MCC_NameTagsPlayerLoop;
 };
-		
+/*		
 //===============Delete Groups (server and HC client only)====================
 if (isServer || MCC_isLocalHC) then 
 {
@@ -821,7 +857,7 @@ if (isServer || MCC_isLocalHC) then
 		};
 	};
 };
-
+*/
 //============== Namspace saves=================
 MCC_saveNames = profileNamespace getVariable "MCC_save";
 if (isnil "MCC_saveNames") then {
@@ -848,7 +884,14 @@ if (isnil "MCC_3DCompSaveFiles") then {
 MCC_3DCompSaveFiles = ["","","","","","","","","","","","","","","","","","","",""];
 	profileNamespace setVariable ["MCC_3DCompSaveFiles", MCC_3DCompSaveFiles];
 		};
-		
+
+	
+MCC_customGroupsSave = profileNamespace getVariable "MCC_customGroupsSave";
+if (isnil "MCC_customGroupsSave") then {	
+MCC_customGroupsSave = [];
+	profileNamespace setVariable ["MCC_customGroupsSave", MCC_customGroupsSave];
+		};
+	
 //============ engineer data ========================
 if (getNumber(configFile >> "CfgVehicles" >> typeOf player >> "canDeactivateMines") == 1) then	//Check if is engineer
 {	

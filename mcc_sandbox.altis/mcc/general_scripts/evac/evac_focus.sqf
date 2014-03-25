@@ -1,14 +1,15 @@
-#define MAIN 1050
 #define MCC_MINIMAP 9000
-#define MCC_SANDBOX2_IDD 2000
-#define MCC_EVAC_SELECTED 2022
-#define MCC_EVAC_INSERTION 2023
-#define MCC_EVAC_FLIGHTHIGHT 2024
+#define MCC_SANDBOX2_IDD (uiNamespace getVariable "MCC_groupGen_Dialog")
+#define MCC_EVAC_TYPE 40
+#define MCC_EVAC_CLASS 41
+#define MCC_EVAC_SELECTED 42
+#define MCC_EVAC_INSERTION 43
+#define MCC_EVAC_FLIGHTHIGHT 44
 
 disableSerialization;
 private ["_mccdialog","_type","_pos","_control","_markerType","_index","_comboBox","_insetionArray"];
-_mccdialog = findDisplay MCC_SANDBOX2_IDD;	
-waituntil {ctrlenabled MAIN};
+_mccdialog = MCC_SANDBOX2_IDD;	
+
 MCC_evacVehicles_index = lbCurSel MCC_EVAC_SELECTED;
 if (count MCC_evacVehicles > 0) then {
 	deletemarkerlocal "currentEvacSelected";
@@ -23,7 +24,7 @@ if (count MCC_evacVehicles > 0) then {
 	if (_type iskindof "Tank") then {_markerType = "b_armor";};
 	if (_type iskindof "helicopter") then {									//Case we choose aircrft
 		_markerType = "b_air";
-		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal"];
+		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope"];
 		ctrlShow [MCC_EVAC_FLIGHTHIGHT,true];
 		};
 
@@ -31,11 +32,12 @@ if (count MCC_evacVehicles > 0) then {
 	"currentEvacSelected" setMarkerTypeLocal _markerType;
 	"currentEvacSelected" setMarkerColorLocal "ColorBlue";
 	
-	if (MCC_evacVehicles_last != MCC_evacVehicles_index) then {
+	if (MCC_evacVehicles_last != MCC_evacVehicles_index) then 
+	{
 		_control = _mccdialog displayCtrl MCC_MINIMAP;
-		_control ctrlMapAnimAdd [1, 0.3, _pos];
+		_control ctrlMapAnimAdd [1, ctrlMapScale _control, _pos];
 		ctrlMapAnimCommit _control;
-		};
+	};
 	
 	MCC_evacVehicles_last = MCC_evacVehicles_index;
 	

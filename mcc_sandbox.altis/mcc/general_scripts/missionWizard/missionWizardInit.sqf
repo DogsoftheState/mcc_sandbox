@@ -29,25 +29,83 @@ private ["_missionCenter","_missionCenterTrigger","_playersNumber","_difficulty"
 		 "_preciseMarkers","_reinforcement","_artillery"];
 
 if (isnil "MCC_MWisGenerating") then {MCC_MWisGenerating = false}; 
+MCC_mcc_screen = 2;
 if (MCC_MWisGenerating) exitWith {player sideChat "MCC is now generating a mission please try again later"}; 
 MCC_MWisGenerating = true;
 
 //Get params
 _playersNumber 		= (lbCurSel MCC_MWPlayersIDC) + 1;
 _difficulty 		= (lbCurSel MCC_MWDifficultyIDC+1)*1.5;		//each player == 3 enemy players multiply by difficulty
-_stealth 			= if ((lbCurSel MCC_MWStealthIDC)==0) then {false} else {true};
-_isIED 				= if (lbCurSel MCC_MWIEDIDC == 0) then {false} else {true};
-_isSB 				= if (lbCurSel MCC_MWSBIDC == 0) then {false} else {true};
-_isAS				= if (lbCurSel MCC_MWArmedCiviliansIDC == 0) then {false} else {true};
-_isRoadblocks		= if (lbCurSel MCC_MWRoadBlocksIDC == 0) then {false} else {true};
-_armor 				= if ((lbCurSel MCC_MWArmorIDC)==0) then {false} else {true};
-_vehicles 			= if ((lbCurSel MCC_MWVehiclesIDC)==0) then {false} else {true};
+_stealth 			= if ((lbCurSel MCC_MWStealthIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWStealthIDC)==0) then {false} else {true};
+						}; 
+						
+_isIED 				= if ((lbCurSel MCC_MWIEDIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWIEDIDC)==0) then {false} else {true};
+						}; 
+						
+_isSB 				= if ((lbCurSel MCC_MWSBIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWSBIDC)==0) then {false} else {true};
+						};
+						
+_isAS				= if ((lbCurSel MCC_MWArmedCiviliansIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWArmedCiviliansIDC)==0) then {false} else {true};
+						}; 
+						
+_isRoadblocks		= if ((lbCurSel MCC_MWRoadBlocksIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWRoadBlocksIDC)==0) then {false} else {true};
+						}; 
+						
+_armor 				= if ((lbCurSel MCC_MWArmorIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWArmorIDC)==0) then {false} else {true};
+						}; 
+						
+_vehicles 			= if ((lbCurSel MCC_MWVehiclesIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWVehiclesIDC)==0) then {false} else {true};
+						};
+						
 _weatherChange		= if ((lbCurSel MCC_MWWeatherComboIDC)==0) then {true} else {false};
 _wholeMap			= if ((lbCurSel MCC_MCC_MWAreaComboIDC)==0) then {true} else {false};
 MW_debug			= if ((lbCurSel MCC_MWDebugComboIDC)==0) then {false} else {true};
 _preciseMarkers		= if ((lbCurSel MCC_MWPreciseMarkersComboIDC)==0) then {true} else {false};
 _reinforcement		= (lbCurSel MCC_MWReinforcementIDC);
 _artillery			= (lbCurSel MCC_MWArtilleryIDC);
+
 //CQB
 switch (lbCurSel MCC_MWCQBIDC) do	
 	{
@@ -67,6 +125,12 @@ switch (lbCurSel MCC_MWCQBIDC) do
 		{
 			_isCQB 	=  true;
 			_isCiv	=  true;
+		};
+		
+		case 3: 
+		{
+			_isCQB 	=  [true,false] call BIS_fnc_selectRandom;
+			_isCiv	=  [true,false] call BIS_fnc_selectRandom;
 		};
 	};
 	
@@ -104,10 +168,21 @@ if (isnil "_faction") exitWith
 	["MCC: Mission Wizard Error: Faction doesn't have any units in it"] call bis_fnc_halt;
 };
 
-//Build the faction's unitsArrays. 
+//Build the faction's unitsArrays and send it to the server. 
 _check = [] call MCC_fnc_MWCreateUnitsArray;
 waituntil {_check};	
-	
+
+//Send user custom groups to the server
+MCC_customGroupsSaveMW = [];
+{
+	if (_faction == (_x select 0)) then
+	{
+		MCC_customGroupsSaveMW set [count MCC_customGroupsSaveMW, [_x select 3,_x select 4,_x select 2]]; 
+	};
+} foreach MCC_customGroupsSave;	
+
+publicVariableServer "MCC_customGroupsSaveMW";
+
 if (MW_debug) then {player sidechat format ["Total enemy's units: %1", _totalEnemyUnits]};
 diag_log format ["MCC Mission Wizard total enemy Count = %1", _totalEnemyUnits];
 
@@ -524,7 +599,7 @@ if (_vehicles && (random 1 > 0.5)) then
 //Artillery
 if (_artillery != 0) then
 {
-	[[(_totalEnemyUnits*0.2),_missionCenter,_maxObjectivesDistance,MCC_MWunitsArrayStatic,5,10,_side,_artillery],"MCC_fnc_MWSpawnStatic",false,false] spawn BIS_fnc_MP;
+	[[(_totalEnemyUnits*0.2),_missionCenter,_maxObjectivesDistance,MCC_MWunitsArrayStatic,5,10,_side,_artillery,_zoneNumber],"MCC_fnc_MWSpawnStatic",false,false] spawn BIS_fnc_MP;
 	if (MW_debug) then {diag_log "Enemy's Artillery Spawned in main zone"};
 };
 
@@ -787,6 +862,11 @@ if (_reinforcement in [1,2,3] || _stealth) then
 	private "_text";
 	_text = switch (_reinforcement) do
 			{
+				case 0: 	
+				{ 
+					""
+				};
+				
 				case 1: 	
 				{ 
 					" aerial "

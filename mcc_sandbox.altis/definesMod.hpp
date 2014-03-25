@@ -1,19 +1,16 @@
 #define MCCPATH "\mcc_sandbox_mod\"
-#define MCCVersion "0.7"
+#define MCCVersion "0.1"
 #define MCCMODE true
 
 #include "\mcc_sandbox_mod\mcc\dialogs\mcc_dialogs.hpp"
-#include "\mcc_sandbox_mod\mcc\dialogs\mcc_guiTab1.hpp"
+
+
 #include "\mcc_sandbox_mod\mcc\dialogs\mcc_saveLoadScreen.hpp"
 #include "\mcc_sandbox_mod\mcc\dialogs\mcc_3d_dialog.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_boxGen.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_groupsGen.hpp"
-#include "\mcc_sandbox_mod\mcc\dialogs\mcc_guiTab2.hpp"
-#include "\mcc_sandbox_mod\mcc\dialogs\mcc_guiTab3.hpp"
-#include "\mcc_sandbox_mod\mcc\dialogs\mcc_guiTab4.hpp"
-#include "\mcc_sandbox_mod\mcc\dialogs\mcc_guiTab5.hpp"
-
-#include "\mcc_sandbox_mod\mcc\dialogs\mcc_guiTabLoading.hpp"
+#include "\mcc_sandbox_mod\mcc\Dialogs\mcc_loginDialog.hpp"
+#include "\mcc_sandbox_mod\mcc\Dialogs\mcc_MWMainDialog.hpp"
 
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_playerConsole.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\MCC_playerConsole2.hpp"
@@ -23,6 +20,7 @@
 
 #include "\mcc_sandbox_mod\mcc\Dialogs\MCCMW_briefingMap.hpp"
 
+#include "\mcc_sandbox_mod\mcc\Dialogs\compass.hpp"
 //--------------------------------CP------------------------------------------------
 
 #define CPPATH "\mcc_sandbox_mod\"
@@ -41,6 +39,12 @@
 #include "\mcc_sandbox_mod\spectator\spectating.hpp"
 #include "\mcc_sandbox_mod\hcam\hcam.hpp"
 //---------------------------Functions------------------------------------------------
+
+class RscTitles
+{
+	#include "\mcc_sandbox_mod\mcc\dialogs\compass.hpp"
+	#include "\mcc_sandbox_mod\hcam\hcam.hpp"
+};
 
 class CfgFunctions
 {
@@ -212,6 +216,11 @@ class CfgFunctions
 			{
 				description = "Teleport the player when start location has been found";
 			};
+			
+			class spawnGroup
+			{
+				description = "MCC Custom group spawning";
+			};
 		};
 		
 		class ui
@@ -348,6 +357,16 @@ class CfgFunctions
 			class groupGenRefresh
 			{
 				description = "Refresh the group gen markers";
+			};
+			
+			class groupSpawn
+			{
+				description = "Create a group on the server";
+			};
+			
+			class groupGenUMRefresh
+			{
+				description = "Refresh the group gen units lists";
 			};
 		};
 		
@@ -521,6 +540,8 @@ class CfgFunctions
 			class transferSaveMenu {};
 			class transferSaveGear {};
 			class VASP {};
+			class quickAttachment {};
+			class accList {};
 		};
 	}
 };
@@ -1024,6 +1045,20 @@ class CfgSounds	{
 	name = "missileLunch";
 	sound[] = {"\mcc_sandbox_mod\sounds\missile.ogg", 1, 1};
 	titles[] = {};
+	};
+	
+	class nvSound
+	{
+		name = "nvSound";
+		sound[] = {"\mcc_sandbox_mod\sounds\nvSound.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MCC_button
+	{
+		name = "MCC_button";
+		sound[] = {"sounds\MCC_button.ogg", 1, 1};
+		titles[] = {};
 	};
 };
 

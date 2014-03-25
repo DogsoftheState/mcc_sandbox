@@ -4,118 +4,521 @@
 #define MCC_MINIMAP 9000
 
 #define MCC_FACTION 8008
-#define UNIT_TYPE 3010
-#define UNIT_CLASS 3011
-#define MCC_GroupGenCurrentGroup_IDD 9003
-	
+
+#define MCCMISSIONMAKERNAME 1020
+#define MCCCLIENTFPS 1021
+#define MCCSERVERFPS 1022
 #define MCC_GroupGenInfoText_IDC 9013
-#define MCC_GroupGenWPBckgr_IDC 9014
-#define MCC_GroupGenWPCombo_IDC 9015
-#define MCC_GroupGenWPformationCombo_IDC 9016
-#define MCC_GroupGenWPspeedCombo_IDC 9017
-#define MCC_GroupGenWPbehaviorCombo_IDC 9018
-#define MCC_GroupGenWPAdd_IDC 9019
-#define MCC_GroupGenWPReplace_IDC 9020
-#define MCC_GroupGenWPClear_IDC 9021
+
+#define MCCSTOPCAPTURE 1014
 
 //-----------------------------------------------------------------------------
 // Main dialog
 //-----------------------------------------------------------------------------
-class mcc_groupGen {
-  idd = groupGen_IDD;
-  movingEnable = true;
-  onLoad = __EVAL("[] execVM '"+MCCPATH+"mcc\dialogs\mcc_groupGen_init.sqf'"); 
-  
-  controlsBackground[] = 
-  {
-	mcc_groupGenPic,
-	mcc_groupGen_CurrentgroupListBoxFrame,
-	MCC_mapBackground,
-	MCC_map
-  };
-  
+class mcc_groupGen 
+{
+	idd = groupGen_IDD;
+	movingEnable = true;
+	onLoad = __EVAL("_this execVM '"+MCCPATH+"mcc\dialogs\mcc_groupGen_init.sqf'"); 
 
-  //---------------------------------------------
-  objects[] = 
-  { 
-  };
-  
-  controls[] = 
-  {
-	mcc_groupGen_tittle,
-	mcc_groupGen_factionTittle,
-	mcc_groupGen_factionComboBox,
-	mcc_groupGen_typeTittle,
-	mcc_groupGen_typeComboBox,
-	mcc_groupGen_classTittle,
-	mcc_groupGen_classComboBox,
-	mcc_groupGen_CurrentGroupTittle,
-	mcc_groupGen_CurrentgroupListBox,
-	mcc_groupGen_classAddButton,
-	mcc_groupGen_groupListBoxCreaterButton,
-	mcc_groupGen_groupListBoxClearButton,
-	closeGeneratorButton,
+	controlsBackground[] = 
+	{
+		mcc_groupGenPic,
+		MCC_mapBackground,
+		MCC_map,
+		MCC_Logo,
+		MCC_fram1
+	};
 
-	mcc_groupGen_WestButton,
-	mcc_groupGen_EastButton,
-	mcc_groupGen_GuerButton,
-	mcc_groupGen_CivButton,
 
-	MCC_GroupGenInfoText,	//WP
-	MCC_GroupGenWPBckgr,
-	MCC_GroupGenWPCombo,
-	MCC_GroupGenWPformationCombo,
-	MCC_GroupGenWPspeedCombo,
-	MCC_GroupGenWPbehaviorCombo,
-	MCC_GroupGenWPAdd,
-	MCC_GroupGenWPReplace,
-	MCC_GroupGenWPClear
-  };
+	//---------------------------------------------
+	objects[] = 
+	{ 
+	};
   
+	class controls
+	{
+		//========================================= Controls========================================
+		//Tittle
+		
+		//Faction
+		class mcc_groupGen_factionTittle: MCC_RscText 
+		{
+			idc = -1;
+			
+			text = "Faction:";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			
+			x = 0.184896 * safezoneW + safezoneX;
+			y = 0.0601715 * safezoneH + safezoneY;
+			w = 0.0458333 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		
+		class mcc_groupGen_factionComboBox: MCC_RscCombo 
+		{
+			idc = MCC_FACTION;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			onLBSelChanged = __EVAL("[2] execVM '"+MCCPATH+"mcc\pop_menu\faction.sqf'");
+				
+			x = 0.236458 * safezoneW + safezoneX;
+			y = 0.0601715 * safezoneH + safezoneY;
+			w = 0.114583 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};		
+		
+		class closeGeneratorButton: MCC_RscButtonMenu
+		{
+			idc = -1;
+			
+			text = "Close";
+			action = "closeDialog 0; {deletemarkerlocal _x;} foreach MCC_groupGenTempWP;{deletemarkerlocal _x;} foreach MCC_groupGenTempWPLines;";
+			
+			x = 0.84375 * safezoneW + safezoneX;
+			y = 0.796884 * safezoneH + safezoneY;
+			w = 0.0916667 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		 
+		//Map
+		class mcc_groupGen_WestButton: MCC_RscButton 
+		{
+			idc = -1;
+			tooltip = "Show only West's side units"; 
+			text = "West";
+			colorText[] = {0,0,1,1};
+			onButtonClick = __EVAL("[west] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
+			
+			x = 0.654688 * safezoneW + safezoneX;
+			y = 0.565974 * safezoneH + safezoneY;
+			w = 0.0458333 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		
+		class mcc_groupGen_EastButton: MCC_RscButton 
+		{
+			idc = -1;
+			tooltip = "Show only East's side units"; 
+			text = "East";
+			colorText[] = {1,0,0,1};
+			onButtonClick = __EVAL("[east] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
+			
+			x = 0.70625 * safezoneW + safezoneX;
+			y = 0.565974 * safezoneH + safezoneY;
+			w = 0.0458333 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		
+		class mcc_groupGen_GuerButton: MCC_RscButton 
+		{
+			idc = -1;
+			tooltip = "Show only Guer's side units"; 
+			text = "Guer";
+			colorText[] = {0,1,0,1};
+			onButtonClick = __EVAL("[resistance] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
+			
+			x = 0.757813 * safezoneW + safezoneX;
+			y = 0.565974 * safezoneH + safezoneY;
+			w = 0.0458333 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		
+		class mcc_groupGen_CivButton: MCC_RscButton 
+		{
+			idc = -1;
+			tooltip = "Show only civilian's side units"; 
+			text = "Civ";
+			onButtonClick = __EVAL("[civilian] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
+			
+			x = 0.809375 * safezoneW + safezoneX;
+			y = 0.565974 * safezoneH + safezoneY;
+			w = 0.0458333 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		
+		class mcc_groupGen_PlayersButton: MCC_RscButton
+		{
+			idc = -1;
+			tooltip = "Show players only"; 
+			onButtonClick = __EVAL("['players'] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
+
+			text = "Players"; //--- ToDo: Localize;
+			x = 0.603125 * safezoneW + safezoneX;
+			y = 0.565974 * safezoneH + safezoneY;
+			w = 0.0458333 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		
+		class mcc_groupGen_AllButton: MCC_RscButton
+		{
+			idc = -1;
+			tooltip = "Show all units"; 
+			onButtonClick = __EVAL("[west,east,resistance,civilian,'players'] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
+
+			text = "All"; //--- ToDo: Localize;
+			x = 0.551562 * safezoneW + safezoneX;
+			y = 0.565974 * safezoneH + safezoneY;
+			w = 0.0458333 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		
+		
+		
+	//---------------------- ZONES --------------------------------	
+		class MCC_zoneTittle: MCC_RscText 
+		{
+			idc = -1;	
+			text = "Zone:";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+
+			x = 0.184896 * safezoneW + safezoneX;
+			y = 0.57697 * safezoneH + safezoneY;
+			w = 0.0458333 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		
+		class MCC_zone: MCC_RscCombo 
+		{
+			idc = 1023;	
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			onLBSelChanged = __EVAL("[0,0,0] execVM '"+MCCPATH+"mcc\pop_menu\zones.sqf'");
+			
+			x = 0.236458 * safezoneW + safezoneX;
+			y = 0.57697 * safezoneH + safezoneY;
+			w = 0.0572917 * safezoneW;
+			h = 0.0219914 * safezoneH;	
+		};
+		
+		class MCC_zoneUpdate: MCC_RscButton 
+		{
+			idc = -1;	
+			text = "Update Zone"; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			tooltip = "Click and drag on the minimap to make a zone"; 
+			onButtonClick = "if (mcc_missionmaker == (name player)) then {MCC_zone_drawing= true;} else {player globalchat 'Access Denied'};";
+			
+			x = 0.299479 * safezoneW + safezoneX;
+			y = 0.57697 * safezoneH + safezoneY;
+			w = 0.120313 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		
+		class MCC_gaiaBehaviorTittle: MCC_RscText
+		{
+			idc = -1;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			text = "Behavior:"; //--- ToDo: Localize;
+					
+			x = 0.184896 * safezoneW + safezoneX;
+			y = 0.609957 * safezoneH + safezoneY;
+			w = 0.045 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		
+		class MCC_gaiaBehaviorCombo: MCC_RscCombo
+		{
+			idc = 1;
+			onLBSelChanged = "MCC_behavior_index = (lbcurSel (_this select 0))";
+
+			x = 0.236458 * safezoneW + safezoneX;
+			y = 0.609957 * safezoneH + safezoneY;
+			w = 0.0572917 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+		};
+		
+		class MCC_gaiaBehaviorButton: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = "if (!isnil 'MCC_GroupGenGroupSelected') then {if (count MCC_GroupGenGroupSelected > 0) then {{_x setVariable ['GAIA_ZONE_INTEND',[mcc_zone_markername,((MCC_spawn_behaviors select MCC_behavior_index) select 1)], true]}foreach MCC_GroupGenGroupSelected}};";
+
+			text = "Give to Gaia"; //--- ToDo: Localize;
+			x = 0.299479 * safezoneW + safezoneX;
+			y = 0.609957 * safezoneH + safezoneY;
+			w = 0.0572917 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			tooltip = "Give the selected groups to GAIA control with the selected zone and behavior"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		class MCC_giveToPlayer: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = "if (!isnil 'MCC_GroupGenGroupSelected') then {if (count MCC_GroupGenGroupSelected > 0) then {{_x setVariable ['MCC_canbecontrolled',true,true]; _x setVariable ['GAIA_ZONE_INTEND',[],true]}foreach MCC_GroupGenGroupSelected}};";
+
+			text = "Give to Player"; //--- ToDo: Localize;
+			x = 0.3625 * safezoneW + safezoneX;
+			y = 0.609957 * safezoneH + safezoneY;
+			w = 0.0572917 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			tooltip = "Give the selected groups to player's control via the M-Tac MCC handheld console"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		//---------------------------------------- BENCHMARK ----------------------------------------
+		class MCC_MissionMakerTittle: MCC_RscText 
+		{
+			idc = -1; 
+			text = "Mission Maker:"; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			
+			x = 0.3625 * safezoneW + safezoneX;
+			y = 0.0161887 * safezoneH + safezoneY;
+			w = 0.056 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		
+		class MCC_MissionMakerName: MCC_RscText 
+		{
+			idc = MCCMISSIONMAKERNAME;	
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			
+			x = 0.419792 * safezoneW + safezoneX;
+			y = 0.0161887 * safezoneH + safezoneY;
+			w = 0.0572917 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		
+		class MCC_clientFPSTittle: MCC_RscText 
+		{	
+			idc = -1;	
+			text = "Client FPS:"; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			
+			x = 0.488542 * safezoneW + safezoneX;
+			y = 0.0161887 * safezoneH + safezoneY;
+			w = 0.0515625 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		
+		class MCC_ServerFPSTittle: MCC_RscText 
+		{	
+			idc = -1;	
+			text = "Server FPS:";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			
+			x = 0.585938 * safezoneW + safezoneX;
+			y = 0.0161887 * safezoneH + safezoneY;
+			w = 0.0515625 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		
+		class MCC_clientFPS: MCC_RscText 
+		{
+			idc = MCCCLIENTFPS; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			
+			x = 0.540104 * safezoneW + safezoneX;
+			y = 0.0161887 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;		
+		};
+		
+		class MCC_ServerFPS: MCC_RscText 
+		{
+			idc = MCCSERVERFPS;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			
+			x = 0.6375 * safezoneW + safezoneX;
+			y = 0.0161887 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;	
+		};
+		
+		//---------------------------------------- BUTTONS ------------------------------------------
+		class MCC_stopCapture: MCC_RscButton 
+		{
+			idc = MCCSTOPCAPTURE;
+			text = "Stop Capturing"; 
+			x = 0.746354 * safezoneW + safezoneX;
+			y = 0.0491758 * safezoneH + safezoneY;
+			w = 0.108854 * safezoneW;
+			h = 0.0329871 * safezoneH;
+			onButtonClick = "ctrlEnable [1014,false];MCC_capture_state=false;";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+		};
+		
+		class MCC_saveLoad: MCC_RscButtonMenu 
+		{
+			idc = -1; 
+			text = "Save/Load"; 
+			x = 0.746354 * safezoneW + safezoneX;
+			y = 0.796884 * safezoneH + safezoneY;
+			w = 0.0916667 * safezoneW;
+			h = 0.0329871 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			onButtonClick = "if (mcc_missionmaker == (name player)) then {createDialog 'MCC_SaveLoadScreen';} else {player globalchat 'Access Denied'};";
+		};
+		
+		class MCC_login: MCC_RscButtonMenu 
+		{
+			idc = -1; 
+			text = "Logout"; 
+			x = 0.648958 * safezoneW + safezoneX;
+			y = 0.796884 * safezoneH + safezoneY;
+			w = 0.0916667 * safezoneW;
+			h = 0.0329871 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			tooltip = "Login or logout as the mission maker"; 
+			onButtonClick = __EVAL("nul=[0] execVM '"+MCCPATH+"mcc\pop_menu\mcc_login.sqf'");
+		};
+		
+		class MCC_ghostMode: MCC_RscButton 
+		{
+			idc = -1;
+			text = "Ghost Mode"; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			tooltip = "Make the mission maker invisible to enemies"; 
+			onButtonClick = "if (mcc_missionmaker == (name player)) then{if (captive player) then {player setcaptive false; [['Mission maker is no longer cheating'],'MCC_fnc_globalHint',true,false] call BIS_fnc_MP;} else {player setcaptive true; [['Mission maker is cheating'],'MCC_fnc_globalHint',true,false] spawn BIS_fnc_MP;}} else {player globalchat 'Access Denied'};";
+			
+			x = 0.448438 * safezoneW + safezoneX;
+			y = 0.0491758 * safezoneH + safezoneY;
+			w = 0.0515625 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+
+		class MCC_spectator: MCC_RscButton
+		{
+			idc = -1;
+			text = "Spectator"; 
+			tooltip = "Open spectator camera"; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");
+			
+			x = 0.505729 * safezoneW + safezoneX;
+			y = 0.0491758 * safezoneH + safezoneY;
+			w = 0.0515625 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+
+		class MCC_Teleport: MCC_RscButton 
+		{
+			idc = -1;
+			text = "Teleport"; 
+			tooltip = "Teleport the mission maker and any vehicle he is in to a new location"; 
+			onButtonClick = "if (mcc_missionmaker == (name player)) then {hint 'Click on the map';onMapSingleClick 'vehicle player setPos _pos;onMapSingleClick '''';true;'} else {player globalchat 'Access Denied'};";
+			
+			x = 0.563021 * safezoneW + safezoneX;
+			y = 0.0491758 * safezoneH + safezoneY;
+			w = 0.0515625 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		
+		class MCC_MissionWIn: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = __EVAL("[5] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
+			text = "Mission Won"; //--- ToDo: Localize;
+			colorText[] = {0,1,0,0.8};
+			tooltip = "End mission with - Mission Accomplished"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+
+			x = 0.3625 * safezoneW + safezoneX;
+			y = 0.0491758 * safezoneH + safezoneY;
+			w = 0.0630208 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		
+		class MCC_MissionLost: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = __EVAL("[6] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
+			text = "Mission Failed"; //--- ToDo: Localize;
+			colorText[] = {1,0,0,0.8};
+			tooltip = "End mission with - Mission Failed"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+
+			x = 0.6375 * safezoneW + safezoneX;
+			y = 0.0491758 * safezoneH + safezoneY;
+			w = 0.0630208 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		
+		class MCC_openMWButton: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = "createDialog 'MCCMWDialog'";
+			text = "Mission Generator"; 
+			tooltip = "Open mission wizard"; 			
+			
+			x = 0.43125 * safezoneW + safezoneX;
+			y = 0.565974 * safezoneH + safezoneY;
+			w = 0.103125 * safezoneW;
+			h = 0.0329871 * safezoneH;
+			
+		};
+		
+		class MCC_toolTip: MCC_RscStructuredText
+		{
+			idc = 303;
+			x = 0.236458 * safezoneW + safezoneX;
+			y = 0.642944 * safezoneH + safezoneY;
+			w = 0.223438 * safezoneW;
+			h = 0.120953 * safezoneH;
+		};
+		
+		//Left		
+		#include "mcc_groupGenLeftButtons.hpp"
+		#include "mcc_groupGenSpawn.hpp"
+		#include "mcc_groupGenCAS.hpp"
+		#include "mcc_groupGenArtillery.hpp"			
+		#include "mcc_groupGenEvac.hpp"
+		#include "mcc_groupGenIED.hpp"
+		#include "mcc_groupGenConvoy.hpp"
+		#include "mcc_groupGenAirdrop.hpp"
+		#include "mcc_groupGenDelete.hpp"
+		
+		//Right
+		#include "mcc_groupGenRightButtons.hpp"
+		#include "mcc_groupGenWeather.hpp"
+		#include "mcc_groupGenTime.hpp"
+		#include "mcc_groupGenRespawn.hpp"
+		#include "mcc_groupGenDebug.hpp"
+		#include "mcc_groupGenMarkers.hpp"
+		#include "mcc_groupGenBriefings.hpp"
+		#include "mcc_groupGenTasks.hpp"
+		#include "mcc_groupGenJukebox.hpp"	
+		#include "mcc_groupGenTriggers.hpp"	
+		#include "mcc_groupGenCS.hpp"			
+		
+		#include "mcc_groupGenUM.hpp"
+		#include "mcc_groupGenWaypoints.hpp"
+		
+		
+		//---------------------- For group ID ---------------------
+		class MCC_GroupGenInfoText: MCC_RscStructuredText
+		{
+			idc = MCC_GroupGenInfoText_IDC;
+			x = 0.1 * safezoneW + safezoneX;
+			y = 0.1 * safezoneH + safezoneY;
+			w = 0.1 * safezoneW;
+			h = 0.1 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.5)";
+			colorBackground[] = {0,0,0,0.9};
+		};
+	};
+	
  //========================================= Background========================================
 	class mcc_groupGenPic: MCC_RscText	
 	{
 		idc = -1;
 		text = "";
-		colorBackground[] = { 0, 0, 0, 0.6 };
+		colorBackground[] = { 0.051, 0.051, 0.051,1};
 		
-		x = 0.161979 * safezoneW + safezoneX;
-		y = 0.159133 * safezoneH + safezoneY;
-		w = 0.7 * safezoneW;
-		h = 0.7 * safezoneH;
+		x = 0.0989583 * safezoneW + safezoneX;
+		y = 0.0161887 * safezoneH + safezoneY;
+		w = 0.845 * safezoneW;
+		h = 0.824678 * safezoneH;
 	};
-	class mcc_groupGen_groupsframe: MCC_RscFrame 
-	{
-		idc = -1;
-		
-		x = 0.161979 * safezoneW + safezoneX;
-		y = 0.638986 * safezoneH + safezoneY;
-		w = 0.698958 * safezoneW;
-		h = 0.208919 * safezoneH;
-	};
-	
-	class mcc_groupGen_CurrentgroupListBoxFrame: MCC_RscText 
-	{
-		idc = -1;
-		
-		x = 0.43125 * safezoneW + safezoneX;
-		y = 0.664936 * safezoneH + safezoneY;
-		w = 0.160417 * safezoneW;
-		h = 0.164936 * safezoneH;
-		
-		colorBackground[] = { 0, 0, 0, 0.6 };
-		colorText[] = { 1, 1, 1, 0 };
-		text = "";
-	};
+
 //===========================================Map==============================================
 	class MCC_mapBackground : MCC_RscText 
 	{
 		idc = -1;
 		
-		x = 0.167708 * safezoneW + safezoneX;
-		y = 0.203116 * safezoneH + safezoneY;
-		w = 0.6875 * safezoneW;
-		h = 0.428833 * safezoneH;
+		x = 0.190625 * safezoneW + safezoneX;
+		y = 0.0931586 * safezoneH + safezoneY;
+		w = 0.664583 * safezoneW;
+		h = 0.46182 * safezoneH;
 		
 		colorBackground[] = { 1, 1, 1, 1}; 
 		colorText[] = { 1, 1, 1, 0};
@@ -126,10 +529,10 @@ class mcc_groupGen {
 	{
 		idc = MCC_MINIMAP; 
 		
-		x = 0.167708 * safezoneW + safezoneX;
-		y = 0.203116 * safezoneH + safezoneY;
-		w = 0.6875 * safezoneW;
-		h = 0.428833 * safezoneH;
+		x = 0.190625 * safezoneW + safezoneX;
+		y = 0.0931586 * safezoneH + safezoneY;
+		w = 0.664583 * safezoneW;
+		h = 0.46182 * safezoneH;
 		
 		text = "";
 		onMouseButtonDown = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\mouseDown.sqf'");
@@ -137,316 +540,25 @@ class mcc_groupGen {
 		onMouseButtonDblClick = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\mouseDblClick.sqf'");
 		onMouseMoving = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\mouseMoving.sqf'");
 	};
- //========================================= Controls========================================
-	//Tittle
-  	class mcc_groupGen_tittle: MCC_RscText 
+	
+	class MCC_Logo: MCC_RscPicture
 	{
 		idc = -1;
-		
-		text = "Groups Generator";
-		colorText[] = {0,1,1,1};
-		colorBackground[] = { 1, 1, 1, 0 };
-		
-		x = 0.442708 * safezoneW + safezoneX;
-		y = 0.170129 * safezoneH + safezoneY;
-		w = 0.164063 * safezoneW;
-		h = 0.035 * safezoneH;	
+		text = __EVAL(MCCPATH +"data\mccLogo.paa");
+		x = 0.104687 * safezoneW + safezoneX;
+		y = 0.72 * safezoneH + safezoneY;
+		w = 0.0859375 * safezoneW;
+		h = 0.109957 * safezoneH;
 	};
 	
-	//Faction
-	class mcc_groupGen_factionTittle: MCC_RscText 
+	class MCC_fram1: MCC_RscText
 	{
 		idc = -1;
+		colorBackground[] = { 0.150, 0.150, 0.150,1};
 		
-		text = "Faction:";
-		colorText[] = {0,1,1,1};
-		colorBackground[] = { 1, 1, 1, 0 };
-		
-		x = 0.179167 * safezoneW + safezoneX;
-		y = 0.675931 * safezoneH + safezoneY;
-		w = 0.0630208 * safezoneW;
-		h = 0.0219914 * safezoneH;	
+		x = 0.435833 * safezoneW + safezoneX;
+		y = 0.043458 * safezoneH + safezoneY;
+		w = 0.189063 * safezoneW;
+		h = 0.0439828 * safezoneH;
 	};
-	
-	class mcc_groupGen_factionComboBox: MCC_RscCombo 
-	{
-		idc = MCC_FACTION;
-		
-		onLBSelChanged = __EVAL("[5] execVM '"+MCCPATH+"mcc\pop_menu\faction.sqf'");
-		
-		x = 0.247917 * safezoneW + safezoneX;
-		y = 0.675931 * safezoneH + safezoneY;
-		w = 0.0990328 * safezoneW;
-		h = 0.0260715 * safezoneH;
-	};
-	
-	//Type
-	class mcc_groupGen_typeTittle: MCC_RscText 
-	{
-		idc = -1;
-		
-		text = "Type:";
-		colorText[] = {0,1,1,1};
-		colorBackground[] = { 1, 1, 1, 0 };
-		
-		x = 0.179167 * safezoneW + safezoneX;
-		y = 0.708919 * safezoneH + safezoneY;
-		w = 0.0630208 * safezoneW;
-		h = 0.0219914 * safezoneH;
-	};
-	
-	class mcc_groupGen_typeComboBox: MCC_RscCombo 
-	{
-		idc = UNIT_TYPE;
-		
-		onLBSelChanged=__EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_change.sqf'");
-		
-		x = 0.247917 * safezoneW + safezoneX;
-		y = 0.708919 * safezoneH + safezoneY;
-		w = 0.0990328 * safezoneW;
-		h = 0.0260715 * safezoneH;
-	};
-	
-	//Class
-	class mcc_groupGen_classTittle: MCC_RscText 
-	{
-		idc = -1;
-		
-		text = "Class:";
-		colorText[] = {0,1,1,1};
-		colorBackground[] = { 1, 1, 1, 0 };
-		
-		x = 0.179167 * safezoneW + safezoneX;
-		y = 0.741906 * safezoneH + safezoneY;
-		w = 0.0630208 * safezoneW;
-		h = 0.0219914 * safezoneH;
-	};
-	
-	class mcc_groupGen_classComboBox: MCC_RscCombo 
-	{
-		idc = UNIT_CLASS;
-		
-		x = 0.247917 * safezoneW + safezoneX;
-		y = 0.741906 * safezoneH + safezoneY;
-		w = 0.0990328 * safezoneW;
-		h = 0.0260715 * safezoneH;
-	};
-	
-	class closeGeneratorButton: MCC_RscButton
-	{
-		idc = -1;
-		
-		text = "Close";
-		action = "MCC_mcc_screen=0; closeDialog 0; {deletemarkerlocal _x;} foreach MCC_groupGenTempWP;{deletemarkerlocal _x;} foreach MCC_groupGenTempWPLines;";
-		
-		x = 0.757813 * safezoneW + safezoneX;
-		y = 0.80788 * safezoneH + safezoneY;
-		w = 0.0984375 * safezoneW;
-		h = 0.035 * safezoneH;			
-	};
-	
-	//Current Group
-	class mcc_groupGen_CurrentGroupTittle: MCC_RscText 
-	{
-		idc = -1;
-		
-		text = "Group:";
-		colorText[] = {0,1,1,1};
-		colorBackground[] = { 1, 1, 1, 0 };
-		
-		x = 0.43125 * safezoneW + safezoneX;
-		y = 0.642944 * safezoneH + safezoneY;
-		w = 0.0630208 * safezoneW;
-		h = 0.0219914 * safezoneH;
-	};
-	
-	class mcc_groupGen_CurrentgroupListBox: MCC_RscListBox 
-	{
-		idc = MCC_GroupGenCurrentGroup_IDD;
-		
-		x = 0.43125 * safezoneW + safezoneX;
-		y = 0.664936 * safezoneH + safezoneY;
-		w = 0.160417 * safezoneW;
-		h = 0.164936 * safezoneH;
-	};
-	class mcc_groupGen_classAddButton: MCC_RscButton 
-	{
-		idc = -1;
-		
-		text = "Add";
-		
-		x = 0.356771 * safezoneW + safezoneX;
-		y = 0.741906 * safezoneH + safezoneY;
-		w = 0.065625 * safezoneW;
-		h = 0.035 * safezoneH; 
-		
-		onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_change.sqf'");
-	};
-	
-	class mcc_groupGen_groupListBoxClearButton: MCC_RscButton 
-	{
-		idc = -1;
-		
-		text = "Clear";
-		onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_change.sqf'");
-		
-		x = 0.603125 * safezoneW + safezoneX;
-		y = 0.752901 * safezoneH + safezoneY;
-		w = 0.065625 * safezoneW;
-		h = 0.035 * safezoneH;
-	};
-	
-	class mcc_groupGen_groupListBoxCreaterButton: MCC_RscButton 
-	{
-		idc = -1;
-		
-		text = "Create";
-		onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\spawn_request.sqf'");
-		
-		x = 0.603125 * safezoneW + safezoneX;
-		y = 0.796884 * safezoneH + safezoneY;
-		w = 0.065625 * safezoneW;
-		h = 0.035 * safezoneH; 
-	};
-	
-	//=================================Waypoints=================================
-	//InfoText
-	class MCC_GroupGenInfoText: MCC_RscStructuredText
-	{
-		idc = MCC_GroupGenInfoText_IDC;
-		x = 0.1 * safezoneW + safezoneX;
-		y = 0.1 * safezoneH + safezoneY;
-		w = 0.1 * safezoneW;
-		h = 0.1 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.5)";
-		colorBackground[] = {0,0,0,0.9};
-	};
-	class MCC_GroupGenWPBckgr: MCC_RscStructuredText
-	{
-		idc = MCC_GroupGenWPBckgr_IDC;
-		x = 0.1 * safezoneW + safezoneX;
-		y = 0.1 * safezoneH + safezoneY;
-		w = 0.1 * safezoneW;
-		h = 0.1 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.5)";
-		colorBackground[] = {0,0,0,0.8};
-	};
-	class MCC_GroupGenWPCombo: MCC_RscCombo
-	{
-		idc = MCC_GroupGenWPCombo_IDC;
-		x = 0.1 * safezoneW + safezoneX;
-		y = 0.1 * safezoneH + safezoneY;
-		w = 0.105 * safezoneW;
-		h = 0.0280062 * safezoneH;
-	};
-	class MCC_GroupGenWPformationCombo: MCC_RscCombo
-	{
-		idc = MCC_GroupGenWPformationCombo_IDC;
-		x = 0.1 * safezoneW + safezoneX;
-		y = 0.1 * safezoneH + safezoneY;
-		w = 0.105 * safezoneW;
-		h = 0.0280062 * safezoneH;
-	};
-	class MCC_GroupGenWPspeedCombo: MCC_RscCombo
-	{
-		idc = MCC_GroupGenWPspeedCombo_IDC;
-		x = 0.1 * safezoneW + safezoneX;
-		y = 0.1 * safezoneH + safezoneY;
-		w = 0.105 * safezoneW;
-		h = 0.0280062 * safezoneH;
-	};
-	class MCC_GroupGenWPbehaviorCombo: MCC_RscCombo
-	{
-		idc = MCC_GroupGenWPbehaviorCombo_IDC;
-		x = 0.1 * safezoneW + safezoneX;
-		y = 0.1 * safezoneH + safezoneY;
-		w = 0.105 * safezoneW;
-		h = 0.0280062 * safezoneH;
-	};
-	class MCC_GroupGenWPAdd: MCC_RscButton {
-		idc = MCC_GroupGenWPAdd_IDC;
-		text = "ADD";
-		x = 0.1 * safezoneW + safezoneX;
-		y = 0.1 * safezoneH + safezoneY;
-		w = 0.1 * safezoneW;
-		h = 0.1 * safezoneH;
-		tooltip = "Add a waypoint to all selected groups"; 
-		onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\manageWP.sqf'");
-	};
-	class MCC_GroupGenWPReplace: MCC_RscButton {
-		idc = MCC_GroupGenWPReplace_IDC;
-		text = "Replace";
-		x = 0.1 * safezoneW + safezoneX;
-		y = 0.1 * safezoneH + safezoneY;
-		w = 0.1 * safezoneW;
-		h = 0.1 * safezoneH;
-		tooltip = "Remove all waypoints from any selected groups and add a new waypoint"; 
-		onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\manageWP.sqf'");
-	};
-	class MCC_GroupGenWPClear: MCC_RscButton {
-		idc = MCC_GroupGenWPClear_IDC;
-		text = "Clear";
-		x = 0.1 * safezoneW + safezoneX;
-		y = 0.1 * safezoneH + safezoneY;
-		w = 0.1 * safezoneW;
-		h = 0.1 * safezoneH;
-		tooltip = "Remove all waypoints from any selected groups"; 
-		onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\manageWP.sqf'");
-	};
-	 
-	//Map
-	class mcc_groupGen_WestButton: MCC_RscButton 
-	{
-		idc = -1;
-		
-		text = "West";
-		colorText[] = {0,0,1,1};
-		onButtonClick = __EVAL("[west] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
-		
-		x = 0.620313 * safezoneW + safezoneX;
-		y = 0.642944 * safezoneH + safezoneY;
-		w = 0.0458333 * safezoneW;
-		h = 0.0329871 * safezoneH;
-	};
-	
-	class mcc_groupGen_EastButton: MCC_RscButton 
-	{
-		idc = -1;
-		
-		text = "East";
-		colorText[] = {1,0,0,1};
-		onButtonClick = __EVAL("[east] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
-		
-		x = 0.671875 * safezoneW + safezoneX;
-		y = 0.642944 * safezoneH + safezoneY;
-		w = 0.0458333 * safezoneW;
-		h = 0.0329871 * safezoneH;			
-	};
-	
-	class mcc_groupGen_GuerButton: MCC_RscButton 
-	{
-		idc = -1;
-		
-		text = "Guer";
-		colorText[] = {0,1,0,1};
-		onButtonClick = __EVAL("[resistance] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
-		
-		x = 0.723438 * safezoneW + safezoneX;
-		y = 0.642944 * safezoneH + safezoneY;
-		w = 0.0458333 * safezoneW;
-		h = 0.0329871 * safezoneH;		
-	};
-	
-	class mcc_groupGen_CivButton: MCC_RscButton 
-	{
-		idc = -1;
-		
-		text = "Civ";
-		onButtonClick = __EVAL("[civilian] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
-		
-		x = 0.775 * safezoneW + safezoneX;
-		y = 0.642944 * safezoneH + safezoneY;
-		w = 0.0458333 * safezoneW;
-		h = 0.0329871 * safezoneH;
-	};
- };
+};

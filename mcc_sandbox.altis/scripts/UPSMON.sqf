@@ -937,7 +937,6 @@ while {_loop} do {
 	
 	
 	//Checks if surrender is enabled
-	if ( isNil "_surrender" ) then {_surrender = 0};
 	if ( _surrender > 0 ) then {
 		_surrended = call (compile format ["KRON_UPS_%1_SURRENDED",_side]); 				
 	};

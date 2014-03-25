@@ -1,12 +1,7 @@
 //(c) 03.13 shay gman
-#define MCC_SANDBOX_IDD 1000
-#define MCCMISSIONMAKERNAME 1020
 
 private ["_ar", "_mccdialog", "_login","_null","_isServer"];
 
-disableSerialization;
-
-_mccdialog = findDisplay MCC_SANDBOX_IDD;
 //update request number
 mcc_request=mcc_request+1;
 
@@ -19,11 +14,19 @@ _ar = [
 	];
 
 // Send data over the network, or when on server, execute directly
-if (isServer) then {
+if (isServer) then 
+{
 	[_ar,"mcc_fnc_login",false,false] spawn BIS_fnc_MP;
-	} else {
-		[_ar,"mcc_fnc_login",true,false] spawn BIS_fnc_MP;
-		};
+} 
+else 
+{
+	[_ar,"mcc_fnc_login",true,false] spawn BIS_fnc_MP;
+};
+
+//Close dialog 
+sleep 0.5; 
 closeDialog 0;
-_null = [] execVM MCC_path + 'mcc\dialogs\mcc_PopupMenu.sqf';
+_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
+
+
 
